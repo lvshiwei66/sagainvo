@@ -1,7 +1,7 @@
 "use client";
 
 import { Invoice, Totals } from "@/lib/types";
-import { exportPDF, exportCSV } from "@/lib/pdf-export";
+import { exportPDFWithLogo, exportCSV } from "@/lib/pdf-export";
 
 interface InvoicePreviewProps {
   invoice: Invoice;
@@ -10,8 +10,8 @@ interface InvoicePreviewProps {
 }
 
 export default function InvoicePreview({ invoice, totals, className }: InvoicePreviewProps) {
-  const handleExportPDF = () => {
-    exportPDF(invoice, totals);
+  const handleExportPDF = async () => {
+    await exportPDFWithLogo(invoice, totals);
   };
 
   const handleExportCSV = () => {
@@ -33,9 +33,20 @@ export default function InvoicePreview({ invoice, totals, className }: InvoicePr
         {/* Invoice Preview */}
         <div className="p-6">
           <div className="border rounded-lg p-6 bg-white">
-            {/* Invoice Title */}
-            <div className="text-center mb-6">
-              <h1 className="text-2xl font-light text-slate-900 tracking-wide">INVOICE</h1>
+            {/* Invoice Title and Logo */}
+            <div className="flex justify-between items-start mb-6">
+              <div className="text-center">
+                <h1 className="text-2xl font-light text-slate-900 tracking-wide">INVOICE</h1>
+              </div>
+              {invoice.logoUrl && (
+                <div className="max-w-[120px] max-h-[60px]">
+                  <img
+                    src={invoice.logoUrl}
+                    alt="Company Logo"
+                    className="max-w-full max-h-full object-contain"
+                  />
+                </div>
+              )}
             </div>
 
             {/* Invoice Meta */}

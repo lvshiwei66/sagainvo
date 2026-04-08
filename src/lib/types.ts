@@ -37,6 +37,9 @@ export interface Invoice {
   status: "draft" | "sent" | "paid";
   createdAt: string;
   updatedAt: string;
+  logoUrl?: string;
+  backgroundUrl?: string;
+  signatureUrl?: string;
 }
 
 export interface Totals {
@@ -74,4 +77,7 @@ export const defaultInvoice: Invoice = {
   status: "draft",
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
+  logoUrl: undefined,
+  backgroundUrl: undefined,
+  signatureUrl: undefined,
 };
