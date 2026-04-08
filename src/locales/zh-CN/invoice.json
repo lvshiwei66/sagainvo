@@ -1,0 +1,23 @@
+{
+  "title": "发票",
+  "meta": {
+    "invoiceNumber": "发票编号:",
+    "date": "日期:",
+    "dueDate": "截止日期:"
+  },
+  "from": "来自:",
+  "to": "收件人:",
+  "table": {
+    "description": "描述",
+    "qty": "数量",
+    "rate": "单价",
+    "amount": "金额"
+  },
+  "totals": {
+    "subtotal": "小计:",
+    "tax": "税额 ({rate}%):",
+    "total": "总计:"
+  },
+  "notes": "备注:",
+  "terms": "条款:"
+}
