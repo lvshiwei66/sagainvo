@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "home": "首页",
+    "newInvoice": "新建发票",
+    "templates": "模板",
+    "clients": "客户",
+    "items": "项目",
+    "history": "历史记录",
+    "settings": "设置"
+  },
+  "actions": {
+    "downloadPDF": "下载 PDF",
+    "downloadCSV": "下载 CSV",
+    "print": "打印",
+    "addLineItem": "添加项目",
+    "tryDemo": "试用演示",
+    "save": "保存",
+    "close": "关闭"
+  },
+  "placeholders": {
+    "invoiceNumber": "发票号-001",
+    "businessName": "公司名称 *",
+    "clientName": "客户姓名 *",
+    "email": "邮箱 *",
+    "phone": "电话",
+    "address": "街道地址",
+    "cityStateZip": "城市, 州, 邮编",
+    "country": "国家",
+    "company": "公司",
+    "description": "描述",
+    "qty": "数量",
+    "rate": "单价",
+    "notes": "感谢您的惠顾！",
+    "terms": "付款期限为30天内"
+  },
+  "labels": {
+    "invoiceDetails": "发票详情",
+    "designElements": "设计元素",
+    "companyLogo": "公司标志",
+    "fromYourBusiness": "来自（您的公司）",
+    "toClient": "收件人（客户）",
+    "lineItems": "明细项目",
+    "notes": "备注",
+    "terms": "条款",
+    "invoiceNumber": "发票号码 *",
+    "date": "日期 *",
+    "dueDate": "截止日期",
+    "taxRate": "税率 (%)"
+  },
+  "settings": {
+    "modal": {
+      "title": "设置"
+    },
+    "language": {
+      "title": "语言",
+      "description": "选择您偏好的语言",
+      "english": "English",
+      "chinese": "中文"
+    }
+  }
+}
