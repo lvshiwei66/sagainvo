@@ -2,12 +2,15 @@
 
 import { FileText, Home, Plus, Clipboard, Users, Package, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 interface SidebarProps {
   className?: string;
 }
 
 export default function Sidebar({ className }: SidebarProps) {
+  const pathname = usePathname();
+
   return (
     <aside className={cn(
       "fixed left-0 top-0 h-full w-64 bg-slate-900 text-white z-40 hidden lg:block",
@@ -27,7 +30,10 @@ export default function Sidebar({ className }: SidebarProps) {
           <li>
             <a
               href="/"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+              className={cn(
+                "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
+                pathname === "/" ? "bg-primary text-white" : "hover:bg-slate-800"
+              )}
             >
               <Home className="h-5 w-5" />
               <span>Home</span>
@@ -36,7 +42,10 @@ export default function Sidebar({ className }: SidebarProps) {
           <li>
             <a
               href="/editor"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white"
+              className={cn(
+                "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
+                pathname === "/editor" ? "bg-primary text-white" : "hover:bg-slate-800"
+              )}
             >
               <Plus className="h-5 w-5" />
               <span>New Invoice</span>
@@ -44,8 +53,11 @@ export default function Sidebar({ className }: SidebarProps) {
           </li>
           <li>
             <a
-              href="#"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+              href="/templates"
+              className={cn(
+                "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
+                pathname === "/templates" ? "bg-primary text-white" : "hover:bg-slate-800"
+              )}
             >
               <Clipboard className="h-5 w-5" />
               <span>Templates</span>

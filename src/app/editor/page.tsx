@@ -5,7 +5,7 @@ import { useIsClient } from "usehooks-ts";
 import Sidebar from "@/components/layout/Sidebar";
 import InvoiceForm from "@/components/invoice/InvoiceForm";
 import InvoicePreview from "@/components/invoice/InvoicePreview";
-import { Invoice, LineItem, defaultInvoice } from "@/lib/types";
+import { Invoice, LineItem, defaultInvoice, InvoiceTemplate } from "@/lib/types";
 import { calculateTotals } from "@/lib/calculator";
 import { saveInvoice, loadInvoice } from "@/lib/storage";
 import { demoInvoiceData } from "@/lib/demo-data";
@@ -59,6 +59,17 @@ export default function EditorPage() {
     setInvoice(demoInvoiceData);
   };
 
+  const applyTemplate = (template: InvoiceTemplate) => {
+    // Confirm with user before applying template if there's existing data
+    if (invoice.items.length > 1 || invoice.from.businessName || invoice.to.clientName) {
+      if (!window.confirm('This will replace your current invoice data with the template. Continue?')) {
+        return;
+      }
+    }
+
+    setInvoice(template.template);
+  };
+
   const totals = calculateTotals(invoice.items, invoice.taxRate);
 
   // Prevent rendering until client-side hydration
@@ -90,6 +101,7 @@ export default function EditorPage() {
               onAddLineItem={addLineItem}
               onRemoveLineItem={removeLineItem}
               onLoadDemoData={loadDemoData}
+              onApplyTemplate={applyTemplate}
             />
           </div>
 
