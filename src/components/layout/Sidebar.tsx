@@ -1,5 +1,6 @@
 "use client";
 
+import { FileText, Home, Plus, Clipboard, Users, Package, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
@@ -15,7 +16,7 @@ export default function Sidebar({ className }: SidebarProps) {
       {/* Logo */}
       <div className="p-4 border-b border-slate-800">
         <div className="flex items-center gap-2">
-          <span className="text-2xl">📄</span>
+          <FileText className="h-6 w-6" />
           <span className="font-semibold">Saga Invoice</span>
         </div>
       </div>
@@ -28,7 +29,7 @@ export default function Sidebar({ className }: SidebarProps) {
               href="/"
               className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
             >
-              <span>🏠</span>
+              <Home className="h-5 w-5" />
               <span>Home</span>
             </a>
           </li>
@@ -37,7 +38,7 @@ export default function Sidebar({ className }: SidebarProps) {
               href="/editor"
               className="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white"
             >
-              <span>➕</span>
+              <Plus className="h-5 w-5" />
               <span>New Invoice</span>
             </a>
           </li>
@@ -46,7 +47,7 @@ export default function Sidebar({ className }: SidebarProps) {
               href="#"
               className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
             >
-              <span>📋</span>
+              <Clipboard className="h-5 w-5" />
               <span>Templates</span>
             </a>
           </li>
@@ -55,7 +56,7 @@ export default function Sidebar({ className }: SidebarProps) {
               href="#"
               className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
             >
-              <span>👥</span>
+              <Users className="h-5 w-5" />
               <span>Clients</span>
             </a>
           </li>
@@ -64,7 +65,7 @@ export default function Sidebar({ className }: SidebarProps) {
               href="#"
               className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
             >
-              <span>📦</span>
+              <Package className="h-5 w-5" />
               <span>Items</span>
             </a>
           </li>
@@ -73,7 +74,7 @@ export default function Sidebar({ className }: SidebarProps) {
               href="#"
               className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
             >
-              <span>📄</span>
+              <FileText className="h-5 w-5" />
               <span>History</span>
             </a>
           </li>
@@ -86,7 +87,7 @@ export default function Sidebar({ className }: SidebarProps) {
           href="#"
           className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
         >
-          <span>⚙️</span>
+          <Settings className="h-5 w-5" />
           <span>Settings</span>
         </a>
       </div>

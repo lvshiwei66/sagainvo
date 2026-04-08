@@ -18,6 +18,10 @@ const config: Config = {
         warning: "#F59E0B",
         error: "#EF4444",
       },
+      fontFamily: {
+        sans: ['"Helvetica Neue"', "Helvetica", "Arial", "sans-serif"],
+        mono: ['"Courier New"', "Courier", "monospace"],
+      },
     },
   },
   plugins: [],
