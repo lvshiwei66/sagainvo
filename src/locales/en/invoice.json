@@ -1,0 +1,23 @@
+{
+  "title": "INVOICE",
+  "meta": {
+    "invoiceNumber": "Invoice #:",
+    "date": "Date:",
+    "dueDate": "Due Date:"
+  },
+  "from": "From:",
+  "to": "To:",
+  "table": {
+    "description": "Description",
+    "qty": "Qty",
+    "rate": "Rate",
+    "amount": "Amount"
+  },
+  "totals": {
+    "subtotal": "Subtotal:",
+    "tax": "Tax ({rate}%):",
+    "total": "Total:"
+  },
+  "notes": "Notes:",
+  "terms": "Terms:"
+}

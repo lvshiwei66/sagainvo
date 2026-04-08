@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "home": "Home",
+    "newInvoice": "New Invoice",
+    "templates": "Templates",
+    "clients": "Clients",
+    "items": "Items",
+    "history": "History",
+    "settings": "Settings"
+  },
+  "actions": {
+    "downloadPDF": "Download PDF",
+    "downloadCSV": "Download CSV",
+    "print": "Print",
+    "addLineItem": "Add Line Item",
+    "tryDemo": "Try Demo",
+    "save": "Save",
+    "close": "Close"
+  },
+  "placeholders": {
+    "invoiceNumber": "INV-001",
+    "businessName": "Business Name *",
+    "clientName": "Client Name *",
+    "email": "Email *",
+    "phone": "Phone",
+    "address": "Street Address",
+    "cityStateZip": "City, State, ZIP",
+    "country": "Country",
+    "company": "Company",
+    "description": "Description",
+    "qty": "Qty",
+    "rate": "Rate",
+    "notes": "Thank you for your business!",
+    "terms": "Payment due within 30 days"
+  },
+  "labels": {
+    "invoiceDetails": "Invoice Details",
+    "designElements": "Design Elements",
+    "companyLogo": "Company Logo",
+    "fromYourBusiness": "From (Your Business)",
+    "toClient": "To (Client)",
+    "lineItems": "Line Items",
+    "notes": "Notes",
+    "terms": "Terms",
+    "invoiceNumber": "Invoice Number *",
+    "date": "Date *",
+    "dueDate": "Due Date",
+    "taxRate": "Tax Rate (%)"
+  },
+  "settings": {
+    "modal": {
+      "title": "Settings"
+    },
+    "language": {
+      "title": "Language",
+      "description": "Choose your preferred language",
+      "english": "English",
+      "chinese": "中文"
+    }
+  }
+}
