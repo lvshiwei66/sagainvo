@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useIsClient } from 'usehooks-ts';
+import { useIsClient } from "usehooks-ts";
 import Sidebar from "@/components/layout/Sidebar";
 import InvoiceForm from "@/components/invoice/InvoiceForm";
 import InvoicePreview from "@/components/invoice/InvoicePreview";
@@ -35,7 +35,9 @@ export default function EditorPage() {
   const updateLineItem = (index: number, updates: Partial<LineItem>) => {
     setInvoice((prev) => ({
       ...prev,
-      items: prev.items.map((item, i) => (i === index ? { ...item, ...updates } : item)),
+      items: prev.items.map((item, i) =>
+        i === index ? { ...item, ...updates } : item,
+      ),
     }));
   };
 
@@ -92,12 +94,8 @@ export default function EditorPage() {
           </div>
 
           {/* Preview Section with independent scroll */}
-          <div className="w-full lg:w-[50%] p-6 overflow-y-auto max-h-[calc(100vh-0px)] border-l bg-white">
-            <InvoicePreview
-              invoice={invoice}
-              totals={totals}
-              className=""
-            />
+          <div className="w-full lg:w-[50%] p-6 overflow-y-auto max-h-[calc(100vh-0px)] border-l ">
+            <InvoicePreview invoice={invoice} totals={totals} className="" />
           </div>
         </div>
       </div>
