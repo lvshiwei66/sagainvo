@@ -1,3 +1,5 @@
+import { FileText, Zap, Shield, Download } from "lucide-react";
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -6,7 +8,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">📄</span>
+              <FileText className="h-6 w-6" />
               <h1 className="text-xl font-semibold text-slate-900">Saga Invoice</h1>
             </div>
             <a
@@ -48,17 +50,17 @@ export default function Home() {
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="text-3xl mb-4">⚡</div>
+              <Zap className="h-8 w-8 mb-4 text-primary" />
               <h4 className="text-lg font-medium text-slate-900 mb-2">Lightning Fast</h4>
               <p className="text-slate-600">Create professional invoices in under 30 seconds.</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="text-3xl mb-4">🔒</div>
+              <Shield className="h-8 w-8 mb-4 text-primary" />
               <h4 className="text-lg font-medium text-slate-900 mb-2">Privacy First</h4>
               <p className="text-slate-600">Your data stays in your browser. No server storage.</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <div className="text-3xl mb-4">📥</div>
+              <Download className="h-8 w-8 mb-4 text-primary" />
               <h4 className="text-lg font-medium text-slate-900 mb-2">Export Anywhere</h4>
               <p className="text-slate-600">Download as PDF or CSV. Print directly.</p>
             </div>
