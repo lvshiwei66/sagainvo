@@ -342,6 +342,7 @@ export async function exportPDFWithHTML2Canvas(invoice: Invoice, totals: Totals)
   document.body.appendChild(printDiv);
 
   try {
+    // @ts-ignore - scale is a valid option for html2canvas
     const canvas = await html2canvas(printDiv, {
       scale: 2, // Higher resolution for better quality
       useCORS: true,
