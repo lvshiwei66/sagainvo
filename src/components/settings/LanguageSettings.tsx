@@ -3,23 +3,23 @@ import { useI18n } from '@/i18n/context';
 import SettingsSection from './SettingsSection';
 
 const LanguageSettings: React.FC = () => {
-  const { locale, t, toggleLocale } = useI18n();
+  const { locale, tCommon, setLocale } = useI18n();
 
   const languages = [
-    { code: 'en', name: t('settings.language.english') || 'English', nativeName: 'English' },
-    { code: 'zh-CN', name: t('settings.language.chinese') || '中文', nativeName: '中文' },
+    { code: 'en', name: tCommon('settings.language.english') || 'English', nativeName: 'English' },
+    { code: 'zh-CN', name: tCommon('settings.language.chinese') || '中文', nativeName: '中文' },
   ];
 
   const handleLanguageChange = (langCode: string) => {
     if (locale !== langCode) {
-      toggleLocale();
+      setLocale(langCode as 'en' | 'zh-CN');
     }
   };
 
   return (
     <SettingsSection
-      title={t('settings.language.title') || 'Language'}
-      description={t('settings.language.description') || 'Choose your preferred language'}
+      title={tCommon('settings.language.title') || 'Language'}
+      description={tCommon('settings.language.description') || 'Choose your preferred language'}
     >
       <div className="space-y-3">
         {languages.map((lang) => (
