@@ -2,7 +2,10 @@
 import { LanguageCode } from '@/i18n-config';
 
 // Helper to load translation files dynamically
-export const loadTranslations = async (locale: LanguageCode) => {
+export const loadTranslations = async (locale: LanguageCode): Promise<{
+  common: Record<string, string>;
+  invoice: Record<string, string>;
+}> => {
   try {
     const [commonTranslations, invoiceTranslations] = await Promise.all([
       import(`../locales/${locale}/common.json`),

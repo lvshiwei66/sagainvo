@@ -16,38 +16,71 @@ jest.mock('../SettingsSection', () => {
   };
 });
 
-// Create a wrapper for testing with I18n context
-const renderWithI18n = (locale = 'en') => {
-  return render(
-    <I18nProvider initialLocale={locale}>
-      <LanguageSettings />
-    </I18nProvider>
-  );
-};
+// Mock the useI18n hook to control locale and toggleLocale
+const mockToggleLocale = jest.fn();
+const mockLocale = 'en';
+
+jest.mock('@/i18n/context', () => ({
+  ...jest.requireActual('@/i18n/context'),
+  useI18n: () => ({
+    locale: mockLocale,
+    toggleLocale: mockToggleLocale,
+    setLocale: mockToggleLocale,
+  }),
+}));
 
 describe('LanguageSettings', () => {
-  beforeEach(() => {
-    // Clear localStorage before each test
-    localStorage.clear();
+  const renderWithI18n = (locale = 'en') => {
+    return render(
+      <I18nProvider initialLocale={locale}>
+        <LanguageSettings />
+      </I18nProvider>
+    );
+  };
 
-    // Clear all mocks
+  beforeEach(() => {
+    localStorage.clear();
+    mockToggleLocale.mockClear();
     jest.clearAllMocks();
   });
 
-  test('renders language options correctly', () => {
+  it('displays available languages', () => {
+    renderWithI18n();
+
+    expect(screen.getByText('English')).toBeInTheDocument();
+    expect(screen.getByText('中文')).toBeInTheDocument();
+  });
+
+  it('displays available languages with radio labels', () => {
     renderWithI18n();
 
     expect(screen.getByLabelText(/English/)).toBeInTheDocument();
     expect(screen.getByLabelText(/中文/)).toBeInTheDocument();
   });
 
-  test('displays correct initial language selection', () => {
+  it('shows current language as selected', () => {
+    renderWithI18n('en');
+
+    const englishRadio = screen.getByLabelText(/English/);
+    expect(englishRadio).toBeChecked();
+  });
+
+  it('displays correct initial language selection', () => {
     renderWithI18n('en');
     const englishRadio = screen.getByLabelText(/English/);
     expect(englishRadio.checked).toBe(true);
   });
 
-  test('allows language change', () => {
+  it('allows language switching', () => {
+    renderWithI18n();
+
+    const chineseRadio = screen.getByLabelText(/中文/);
+    fireEvent.click(chineseRadio);
+
+    expect(mockToggleLocale).toHaveBeenCalledTimes(1);
+  });
+
+  it('allows language change', () => {
     renderWithI18n('en');
     const chineseRadio = screen.getByLabelText(/中文/);
 
@@ -55,7 +88,7 @@ describe('LanguageSettings', () => {
     expect(chineseRadio.checked).toBe(true);
   });
 
-  test('renders section title and description', () => {
+  it('renders section title and description', () => {
     renderWithI18n();
 
     expect(screen.getByText('Language')).toBeInTheDocument();

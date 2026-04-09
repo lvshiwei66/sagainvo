@@ -6,8 +6,8 @@ const LanguageSettings: React.FC = () => {
   const { locale, tCommon, setLocale } = useI18n();
 
   const languages = [
-    { code: 'en', name: tCommon('settings.language.english') || 'English', nativeName: 'English' },
-    { code: 'zh-CN', name: tCommon('settings.language.chinese') || '中文', nativeName: '中文' },
+    { code: 'en', name: 'English', nativeName: 'English' },
+    { code: 'zh-CN', name: '中文', nativeName: '中文' },
   ];
 
   const handleLanguageChange = (langCode: string) => {

@@ -2,6 +2,7 @@
 
 import { Invoice, Totals } from "@/lib/types";
 import { exportPDFWithLogo, exportCSV } from "@/lib/pdf-export";
+import { useI18n } from "@/i18n/context";
 
 interface InvoicePreviewProps {
   invoice: Invoice;
@@ -14,6 +15,8 @@ export default function InvoicePreview({
   totals,
   className,
 }: InvoicePreviewProps) {
+  const { tCommon, tInvoice } = useI18n();
+
   const handleExportPDF = async () => {
     await exportPDFWithLogo(invoice, totals);
   };
@@ -29,12 +32,6 @@ export default function InvoicePreview({
   return (
     <div className={className}>
       <div className="shadow-sm overflow-hidden">
-        {/* Preview Header */}
-        {/*<div className="px-6 py-4 bg-white flex gap-3">
-          <h2 className="text-lg font-medium text-slate-900">
-            Invoice Preview
-          </h2>
-        </div>*/}
         {/* Invoice Preview */}
         <div className="pb-6 drop-shadow-md">
           <div className="border p-6 bg-white">
@@ -42,7 +39,7 @@ export default function InvoicePreview({
             <div className="flex justify-between items-start mb-6">
               <div className="text-center">
                 <h1 className="text-2xl font-light text-slate-900 tracking-wide">
-                  INVOICE
+                  {tInvoice("title")}
                 </h1>
               </div>
               {invoice.logoUrl && (
@@ -60,15 +57,15 @@ export default function InvoicePreview({
             <div className="flex justify-between mb-6">
               <div className="text-sm text-slate-600">
                 <div>
-                  <span className="font-medium">Invoice #:</span>{" "}
+                  <span className="font-medium">{tInvoice("meta.invoiceNumber")}</span>{" "}
                   {invoice.number || "---"}
                 </div>
                 <div>
-                  <span className="font-medium">Date:</span>{" "}
+                  <span className="font-medium">{tInvoice("meta.date")}</span>{" "}
                   {invoice.date || "---"}
                 </div>
                 <div>
-                  <span className="font-medium">Due Date:</span>{" "}
+                  <span className="font-medium">{tInvoice("meta.dueDate")}</span>{" "}
                   {invoice.dueDate || "---"}
                 </div>
               </div>
@@ -78,7 +75,7 @@ export default function InvoicePreview({
             <div className="grid grid-cols-2 gap-6 mb-6">
               <div>
                 <h3 className="text-sm font-medium text-slate-500 mb-2">
-                  From:
+                  {tInvoice("from")}
                 </h3>
                 <div className="text-sm text-slate-900">
                   {invoice.from.businessName || "---"}
@@ -95,7 +92,7 @@ export default function InvoicePreview({
                 </div>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-slate-500 mb-2">To:</h3>
+                <h3 className="text-sm font-medium text-slate-500 mb-2">{tInvoice("to")}</h3>
                 <div className="text-sm text-slate-900">
                   {invoice.to.clientName || "---"}
                   {invoice.to.company && <div>{invoice.to.company}</div>}
@@ -118,16 +115,16 @@ export default function InvoicePreview({
               <thead>
                 <tr className="border-b">
                   <th className="text-left text-sm font-medium text-slate-500 py-2">
-                    Description
+                    {tInvoice("table.description")}
                   </th>
                   <th className="text-right text-sm font-medium text-slate-500 py-2">
-                    Qty
+                    {tInvoice("table.qty")}
                   </th>
                   <th className="text-right text-sm font-medium text-slate-500 py-2">
-                    Rate
+                    {tInvoice("table.rate")}
                   </th>
                   <th className="text-right text-sm font-medium text-slate-500 py-2">
-                    Amount
+                    {tInvoice("table.amount")}
                   </th>
                 </tr>
               </thead>
@@ -155,21 +152,21 @@ export default function InvoicePreview({
             <div className="flex justify-end">
               <div className="w-48 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-slate-600">Subtotal:</span>
+                  <span className="text-slate-600">{tInvoice("totals.subtotal")}</span>
                   <span className="font-mono text-slate-900">
                     ${totals.subtotal.toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-600">
-                    Tax ({invoice.taxRate}%):
+                    {tInvoice("totals.tax", { rate: invoice.taxRate })}
                   </span>
                   <span className="font-mono text-slate-900">
                     ${totals.taxAmount.toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between text-base font-medium border-t pt-2">
-                  <span className="text-slate-900">Total:</span>
+                  <span className="text-slate-900">{tInvoice("totals.total")}</span>
                   <span className="font-mono text-slate-900">
                     ${totals.total.toFixed(2)}
                   </span>
@@ -183,7 +180,7 @@ export default function InvoicePreview({
                 {invoice.notes && (
                   <div>
                     <h3 className="text-sm font-medium text-slate-500 mb-1">
-                      Notes:
+                      {tInvoice("notes")}
                     </h3>
                     <p className="text-sm text-slate-600">{invoice.notes}</p>
                   </div>
@@ -191,7 +188,7 @@ export default function InvoicePreview({
                 {invoice.terms && (
                   <div>
                     <h3 className="text-sm font-medium text-slate-500 mb-1">
-                      Terms:
+                      {tInvoice("terms")}
                     </h3>
                     <p className="text-sm text-slate-600">{invoice.terms}</p>
                   </div>
@@ -207,19 +204,19 @@ export default function InvoicePreview({
             onClick={handleExportPDF}
             className="flex-1 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md font-medium transition-colors"
           >
-            Download PDF
+            {tCommon("actions.downloadPDF")}
           </button>
           <button
             onClick={handleExportCSV}
             className="flex-1 border border-slate-300 hover:bg-slate-100 text-slate-700 px-4 py-2 rounded-md font-medium transition-colors"
           >
-            Download CSV
+            {tCommon("actions.downloadCSV")}
           </button>
           <button
             onClick={handlePrint}
             className="flex-1 border border-slate-300 hover:bg-slate-100 text-slate-700 px-4 py-2 rounded-md font-medium transition-colors"
           >
-            Print
+            {tCommon("actions.print")}
           </button>
         </div>
       </div>
