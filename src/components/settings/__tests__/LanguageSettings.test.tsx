@@ -4,16 +4,17 @@ import { I18nProvider } from '@/i18n/context';
 import LanguageSettings from '../LanguageSettings';
 
 // Mock the SettingsSection component
-jest.mock('../SettingsSection', () => ({
-  __esModule: true,
-  default: ({ children, title, description }: { children: React.ReactNode; title: string; description: string }) => (
-    <div data-testid="settings-section">
-      <h2>{title}</h2>
-      <p>{description}</p>
-      {children}
-    </div>
-  )
-}));
+jest.mock('../SettingsSection', () => {
+  return function MockSettingsSection({ children, title, description }) {
+    return (
+      <div data-testid="settings-section">
+        <h2>{title}</h2>
+        <p>{description}</p>
+        {children}
+      </div>
+    );
+  };
+});
 
 // Create a wrapper for testing with I18n context
 const renderWithI18n = (locale = 'en') => {
@@ -42,13 +43,13 @@ describe('LanguageSettings', () => {
 
   test('displays correct initial language selection', () => {
     renderWithI18n('en');
-    const englishRadio = screen.getByLabelText(/English/) as HTMLInputElement;
+    const englishRadio = screen.getByLabelText(/English/);
     expect(englishRadio.checked).toBe(true);
   });
 
   test('allows language change', () => {
     renderWithI18n('en');
-    const chineseRadio = screen.getByLabelText(/中文/) as HTMLInputElement;
+    const chineseRadio = screen.getByLabelText(/中文/);
 
     fireEvent.click(chineseRadio);
     expect(chineseRadio.checked).toBe(true);
