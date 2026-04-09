@@ -29,11 +29,40 @@ export default function TemplatesPage() {
           </div>
 
           {selectedTemplate ? (
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div
+              className="bg-white rounded-lg shadow-sm p-6 mb-6"
+              style={{ borderLeft: `4px solid ${selectedTemplate.themeColor}` }}
+            >
               <div className="flex justify-between items-center">
                 <div>
                   <h2 className="text-lg font-medium text-slate-900">Using Template: {selectedTemplate.name}</h2>
                   <p className="text-slate-600">{selectedTemplate.description}</p>
+
+                  {/* Display template theme characteristics */}
+                  <div className="mt-3 flex flex-wrap gap-4 text-sm">
+                    <div>
+                      <span className="text-slate-500">Theme Color:</span>
+                      <div className="flex items-center mt-1">
+                        <div
+                          className="w-4 h-4 rounded mr-2 border"
+                          style={{ backgroundColor: selectedTemplate.themeColor }}
+                        ></div>
+                        <span>{selectedTemplate.themeColor}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">Text Font:</span>
+                      <span className={`ml-2 px-2 py-1 rounded ${selectedTemplate.textFont === 'sans' ? 'font-family-sans' : selectedTemplate.textFont === 'serif' ? 'font-family-serif' : 'font-family-mono'}`}>
+                        {selectedTemplate.textFont}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">Number Font:</span>
+                      <span className={`ml-2 px-2 py-1 rounded ${selectedTemplate.numberFont === 'sans' ? 'font-family-sans' : selectedTemplate.numberFont === 'serif' ? 'font-family-serif' : 'font-family-mono'}`}>
+                        {selectedTemplate.numberFont}
+                      </span>
+                    </div>
+                  </div>
                 </div>
                 <button
                   onClick={() => setSelectedTemplate(null)}
@@ -45,8 +74,7 @@ export default function TemplatesPage() {
 
               <div className="mt-6 p-4 bg-slate-50 rounded-lg">
                 <p className="text-slate-700">
-                  You've selected the <strong>{selectedTemplate.name}</strong> template.
-                  Click the button below to start creating your invoice with this template.
+                  {'You\'ve selected the '}<strong>{selectedTemplate.name}</strong>{' template\n                  with '}{selectedTemplate.themeColor}{' theme color, '}{selectedTemplate.textFont}{' text font,\n                  and '}{selectedTemplate.numberFont}{' number font.\n                  Click the button below to start creating your invoice with this template.'}
                 </p>
                 <a
                   href="/editor"

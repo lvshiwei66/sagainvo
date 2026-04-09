@@ -46,9 +46,10 @@ export interface InvoiceTemplate {
   id: string;
   name: string;
   description: string;
-  thumbnail?: string;
   category: "modern" | "classic" | "minimal" | "colorful";
-  tags: string[];
+  themeColor: string;        // 主题色 HEX 值
+  textFont: "sans" | "serif" | "mono";   // 文字字体
+  numberFont: "sans" | "serif" | "mono"; // 数字字体
   template: Invoice;
   isDefault: boolean;
 }

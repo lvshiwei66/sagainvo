@@ -1,4 +1,4 @@
-import { InvoiceTemplate, Invoice } from '../lib/types';
+import { InvoiceTemplate } from '../types';
 
 export const demoTemplates: InvoiceTemplate[] = [
   {
@@ -6,7 +6,9 @@ export const demoTemplates: InvoiceTemplate[] = [
     name: 'Modern Professional',
     description: 'Clean and professional design with subtle blue accents, perfect for corporate clients.',
     category: 'modern',
-    tags: ['professional', 'corporate', 'blue'],
+    themeColor: '#2563EB',        // Professional blue
+    textFont: 'sans',            // Sans-serif for text
+    numberFont: 'mono',          // Monospace for numbers
     template: {
       id: '',
       number: 'INV-001',
@@ -40,6 +42,8 @@ export const demoTemplates: InvoiceTemplate[] = [
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       logoUrl: undefined,
+      backgroundUrl: undefined,
+      signatureUrl: undefined,
     },
     isDefault: true,
   },
@@ -48,7 +52,9 @@ export const demoTemplates: InvoiceTemplate[] = [
     name: 'Classic Business',
     description: 'Traditional business layout with elegant typography and timeless design.',
     category: 'classic',
-    tags: ['traditional', 'formal', 'business'],
+    themeColor: '#78716C',        // Classic gray-brown
+    textFont: 'serif',           // Serif for traditional feel
+    numberFont: 'sans',          // Sans-serif for numbers
     template: {
       id: '',
       number: 'INV-001',
@@ -82,6 +88,8 @@ export const demoTemplates: InvoiceTemplate[] = [
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       logoUrl: undefined,
+      backgroundUrl: undefined,
+      signatureUrl: undefined,
     },
     isDefault: true,
   },
@@ -90,7 +98,9 @@ export const demoTemplates: InvoiceTemplate[] = [
     name: 'Minimal Clean',
     description: 'Ultra clean and minimal design focusing on essential information.',
     category: 'minimal',
-    tags: ['minimal', 'clean', 'simple'],
+    themeColor: '#000000',        // Black for high contrast
+    textFont: 'sans',            // Clean sans-serif
+    numberFont: 'sans',          // Same sans-serif for numbers (clean look)
     template: {
       id: '',
       number: 'INV-001',
@@ -124,6 +134,8 @@ export const demoTemplates: InvoiceTemplate[] = [
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       logoUrl: undefined,
+      backgroundUrl: undefined,
+      signatureUrl: undefined,
     },
     isDefault: true,
   },
@@ -132,7 +144,9 @@ export const demoTemplates: InvoiceTemplate[] = [
     name: 'Colorful Creative',
     description: 'Vibrant and creative design suitable for agencies and creative professionals.',
     category: 'colorful',
-    tags: ['creative', 'vibrant', 'colorful'],
+    themeColor: '#EC4899',        // Vibrant pink
+    textFont: 'sans',            // Modern sans-serif
+    numberFont: 'mono',          // Monospace for digital feel
     template: {
       id: '',
       number: 'INV-001',
@@ -167,6 +181,8 @@ export const demoTemplates: InvoiceTemplate[] = [
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       logoUrl: undefined,
+      backgroundUrl: undefined,
+      signatureUrl: undefined,
     },
     isDefault: true,
   }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Invoice, LineItem } from "@/lib/types";
+import { Invoice, LineItem, InvoiceTemplate } from "@/lib/types";
 import { X, RotateCcw } from "lucide-react";
 import { useI18n } from '@/i18n/context';
 import ImageUpload from "@/components/ui/ImageUpload";
@@ -12,6 +12,7 @@ interface InvoiceFormProps {
   onAddLineItem: () => void;
   onRemoveLineItem: (index: number) => void;
   onLoadDemoData: () => void;
+  onApplyTemplate?: (template: InvoiceTemplate) => void;
 }
 
 export default function InvoiceForm({
@@ -21,6 +22,7 @@ export default function InvoiceForm({
   onAddLineItem,
   onRemoveLineItem,
   onLoadDemoData,
+  onApplyTemplate,
 }: InvoiceFormProps) {
   const { tInvoice } = useI18n();
 
