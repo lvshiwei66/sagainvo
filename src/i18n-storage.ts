@@ -3,6 +3,11 @@ import { LanguageCode, defaultLanguage } from '@/i18n-config';
 
 const LANGUAGE_STORAGE_KEY = 'sagainvo:language';
 
+// Type guard to validate language codes
+const isValidLanguageCode = (code: string): code is LanguageCode => {
+  return ['en', 'zh-CN'].includes(code);
+};
+
 export const getStoredLanguage = (): LanguageCode => {
   if (typeof window === 'undefined') {
     return defaultLanguage;
@@ -10,12 +15,8 @@ export const getStoredLanguage = (): LanguageCode => {
 
   try {
     const stored = localStorage.getItem(LANGUAGE_STORAGE_KEY);
-    if (stored) {
-      // Validate that the stored language is supported
-      const supportedLanguages = ['en', 'zh-CN'] as const;
-      if (supportedLanguages.includes(stored as LanguageCode)) {
-        return stored as LanguageCode;
-      }
+    if (stored && isValidLanguageCode(stored)) {
+      return stored;
     }
 
     // Fall back to browser detection

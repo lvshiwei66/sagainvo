@@ -3,52 +3,62 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { I18nProvider } from '@/i18n/context';
 import LanguageSettings from '../LanguageSettings';
 
-// Mock the useI18n hook to control locale and toggleLocale
-const mockToggleLocale = jest.fn();
-const mockLocale = 'en';
-
-jest.mock('@/i18n/context', () => ({
-  ...jest.requireActual('@/i18n/context'),
-  useI18n: () => ({
-    locale: mockLocale,
-    toggleLocale: mockToggleLocale,
-  }),
-}));
-
-describe('LanguageSettings', () => {
-  const renderWithI18n = (component: React.ReactNode) => {
-    return render(
-      <I18nProvider initialLocale={mockLocale}>
-        {component}
-      </I18nProvider>
+// Mock the SettingsSection component
+jest.mock('../SettingsSection', () => {
+  return function MockSettingsSection({ children, title, description }) {
+    return (
+      <div data-testid="settings-section">
+        <h2>{title}</h2>
+        <p>{description}</p>
+        {children}
+      </div>
     );
   };
+});
 
+// Create a wrapper for testing with I18n context
+const renderWithI18n = (locale = 'en') => {
+  return render(
+    <I18nProvider initialLocale={locale}>
+      <LanguageSettings />
+    </I18nProvider>
+  );
+};
+
+describe('LanguageSettings', () => {
   beforeEach(() => {
-    mockToggleLocale.mockClear();
+    // Clear localStorage before each test
+    localStorage.clear();
+
+    // Clear all mocks
+    jest.clearAllMocks();
   });
 
-  it('displays available languages', () => {
-    renderWithI18n(<LanguageSettings />);
+  test('renders language options correctly', () => {
+    renderWithI18n();
 
-    expect(screen.getByText('English')).toBeInTheDocument();
-    expect(screen.getByText('中文')).toBeInTheDocument();
+    expect(screen.getByLabelText(/English/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/中文/)).toBeInTheDocument();
   });
 
-  it('shows current language as selected', () => {
-    renderWithI18n(<LanguageSettings />);
-
-    // With locale 'en', English should be selected
-    const englishRadio = screen.getByLabelText('English');
-    expect(englishRadio).toBeChecked();
+  test('displays correct initial language selection', () => {
+    renderWithI18n('en');
+    const englishRadio = screen.getByLabelText(/English/);
+    expect(englishRadio.checked).toBe(true);
   });
 
-  it('allows language switching', () => {
-    renderWithI18n(<LanguageSettings />);
+  test('allows language change', () => {
+    renderWithI18n('en');
+    const chineseRadio = screen.getByLabelText(/中文/);
 
-    const chineseRadio = screen.getByLabelText('中文');
     fireEvent.click(chineseRadio);
+    expect(chineseRadio.checked).toBe(true);
+  });
 
-    expect(mockToggleLocale).toHaveBeenCalledTimes(1);
+  test('renders section title and description', () => {
+    renderWithI18n();
+
+    expect(screen.getByText('Language')).toBeInTheDocument();
+    expect(screen.getByText('Choose your preferred language')).toBeInTheDocument();
   });
 });
