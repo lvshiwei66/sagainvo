@@ -1,7 +1,7 @@
 "use client";
 
-import { Invoice, LineItem } from "@/lib/types";
-import { X, RotateCcw } from "lucide-react";
+import { Invoice, LineItem, InvoiceTemplate } from "@/lib/types";
+import { X, RotateCcw, Copy } from "lucide-react";
 import ImageUpload from "@/components/ui/ImageUpload";
 
 interface InvoiceFormProps {
@@ -11,6 +11,7 @@ interface InvoiceFormProps {
   onAddLineItem: () => void;
   onRemoveLineItem: (index: number) => void;
   onLoadDemoData: () => void;
+  onApplyTemplate?: (template: InvoiceTemplate) => void;
 }
 
 export default function InvoiceForm({
@@ -20,6 +21,7 @@ export default function InvoiceForm({
   onAddLineItem,
   onRemoveLineItem,
   onLoadDemoData,
+  onApplyTemplate,
 }: InvoiceFormProps) {
   return (
     <div className="space-y-6">
@@ -354,7 +356,7 @@ export default function InvoiceForm({
       </div>
 
       {/* Demo Data Button */}
-      <div className="bg-white rounded-lg shadow-sm p-6">
+      <div className="bg-white rounded-lg shadow-sm p-6 space-y-3">
         <button
           onClick={onLoadDemoData}
           className="w-full py-3 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md font-medium transition-colors"
@@ -362,6 +364,16 @@ export default function InvoiceForm({
           <RotateCcw className="h-4 w-4" />
           Try Demo
         </button>
+
+        {onApplyTemplate && (
+          <a
+            href="/templates"
+            className="w-full py-3 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors"
+          >
+            <Copy className="h-4 w-4" />
+            Choose Template
+          </a>
+        )}
       </div>
     </div>
   );

@@ -42,6 +42,17 @@ export interface Invoice {
   signatureUrl?: string;
 }
 
+export interface InvoiceTemplate {
+  id: string;
+  name: string;
+  description: string;
+  thumbnail?: string;
+  category: "modern" | "classic" | "minimal" | "colorful";
+  tags: string[];
+  template: Invoice;
+  isDefault: boolean;
+}
+
 export interface Totals {
   subtotal: number;
   taxAmount: number;

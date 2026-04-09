@@ -7,6 +7,7 @@ import { useI18n } from "@/i18n/context";
 import { useState } from 'react';
 import SettingsModal from '@/components/settings/SettingsModal';
 import LanguageSettings from '@/components/settings/LanguageSettings';
+import { usePathname } from "next/navigation";
 
 interface SidebarProps {
   className?: string;
@@ -14,6 +15,7 @@ interface SidebarProps {
 
 export default function Sidebar({ className }: SidebarProps) {
   const { tCommon } = useI18n();
+  const pathname = usePathname();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const openSettings = () => {
@@ -43,7 +45,10 @@ export default function Sidebar({ className }: SidebarProps) {
           <li>
             <a
               href="/"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+              className={cn(
+                "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
+                pathname === "/" ? "bg-primary text-white" : "hover:bg-slate-800"
+              )}
             >
               <Home className="h-5 w-5" />
               <span>{tCommon("nav.home")}</span>
@@ -52,7 +57,10 @@ export default function Sidebar({ className }: SidebarProps) {
           <li>
             <a
               href="/editor"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white"
+              className={cn(
+                "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
+                pathname === "/editor" ? "bg-primary text-white" : "hover:bg-slate-800"
+              )}
             >
               <Plus className="h-5 w-5" />
               <span>{tCommon("nav.newInvoice")}</span>
@@ -60,8 +68,11 @@ export default function Sidebar({ className }: SidebarProps) {
           </li>
           <li>
             <a
-              href="#"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+              href="/templates"
+              className={cn(
+                "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
+                pathname === "/templates" ? "bg-primary text-white" : "hover:bg-slate-800"
+              )}
             >
               <Clipboard className="h-5 w-5" />
               <span>{tCommon("nav.templates")}</span>

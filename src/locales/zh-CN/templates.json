@@ -1,0 +1,23 @@
+{
+  "templates": {
+    "title": "发票模板",
+    "subtitle": "从我们专业设计的模板中选择，创建精美的发票。",
+    "chooseTemplate": "选择模板",
+    "usingTemplate": "正在使用模板:",
+    "chooseDifferent": "选择其他模板",
+    "createWithTemplate": "使用模板创建发票",
+    "templatePreview": "模板预览",
+    "tags": "标签",
+    "builtIn": "内置",
+    "category": {
+      "modern": "现代",
+      "classic": "经典",
+      "minimal": "极简",
+      "colorful": "多彩"
+    },
+    "actions": {
+      "useTemplate": "使用模板",
+      "close": "关闭"
+    }
+  }
+}
