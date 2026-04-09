@@ -1,23 +1,87 @@
 {
-  "title": "INVOICE",
-  "meta": {
-    "invoiceNumber": "Invoice #:",
-    "date": "Date:",
-    "dueDate": "Due Date:"
-  },
-  "from": "From:",
-  "to": "To:",
-  "table": {
-    "description": "Description",
-    "qty": "Qty",
-    "rate": "Rate",
-    "amount": "Amount"
-  },
-  "totals": {
-    "subtotal": "Subtotal:",
-    "tax": "Tax ({rate}%):",
-    "total": "Total:"
-  },
-  "notes": "Notes:",
-  "terms": "Terms:"
+  "invoice": {
+    "details": {
+      "header": "Invoice Details",
+      "number": "Invoice Number",
+      "numberPlaceholder": "INV-001",
+      "date": "Date",
+      "dueDate": "Due Date",
+      "taxRate": "Tax Rate (%)"
+    },
+    "design": {
+      "header": "Design Elements",
+      "logoLabel": "Company Logo"
+    },
+    "from": {
+      "header": "From (Your Business)",
+      "businessNamePlaceholder": "Business Name *",
+      "businessName": "Business Name",
+      "addressPlaceholder": "Street Address",
+      "address": "From Address",
+      "locationPlaceholder": "City, State, ZIP",
+      "location": "From City, State, ZIP",
+      "countryPlaceholder": "Country",
+      "country": "From Country",
+      "emailPlaceholder": "Email *",
+      "email": "From Email",
+      "phonePlaceholder": "Phone",
+      "phone": "From Phone"
+    },
+    "to": {
+      "header": "To (Client)",
+      "clientNamePlaceholder": "Client Name *",
+      "clientName": "Client Name",
+      "companyPlaceholder": "Company",
+      "company": "Client Company",
+      "addressPlaceholder": "Street Address",
+      "address": "Client Address",
+      "locationPlaceholder": "City, State, ZIP",
+      "location": "Client City, State, ZIP",
+      "countryPlaceholder": "Country",
+      "country": "Client Country",
+      "emailPlaceholder": "Email",
+      "email": "Client Email",
+      "phonePlaceholder": "Phone",
+      "phone": "Client Phone"
+    },
+    "lineItems": {
+      "header": "Line Items",
+      "descriptionPlaceholder": "Description",
+      "quantityPlaceholder": "Qty",
+      "ratePlaceholder": "Rate",
+      "addButton": "+ Add Line Item"
+    },
+    "notes": {
+      "label": "Notes",
+      "placeholder": "Thank you for your business!"
+    },
+    "terms": {
+      "label": "Terms",
+      "placeholder": "Payment due within 30 days"
+    },
+    "demo": {
+      "button": "Try Demo"
+    },
+    "preview": {
+      "title": "INVOICE",
+      "logoAlt": "Company Logo",
+      "invoiceNumber": "Invoice #:",
+      "date": "Date:",
+      "dueDate": "Due Date:",
+      "from": "From:",
+      "to": "To:",
+      "description": "Description",
+      "qty": "Qty",
+      "rate": "Rate",
+      "amount": "Amount",
+      "subtotal": "Subtotal:",
+      "taxLabel": "Tax",
+      "total": "Total:",
+      "notesLabel": "Notes:",
+      "termsLabel": "Terms:",
+      "downloadPdf": "Download PDF",
+      "downloadCsv": "Download CSV",
+      "print": "Print"
+    }
+  }
 }

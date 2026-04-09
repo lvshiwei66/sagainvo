@@ -1,23 +1,87 @@
 {
-  "title": "发票",
-  "meta": {
-    "invoiceNumber": "发票编号:",
-    "date": "日期:",
-    "dueDate": "截止日期:"
-  },
-  "from": "来自:",
-  "to": "收件人:",
-  "table": {
-    "description": "描述",
-    "qty": "数量",
-    "rate": "单价",
-    "amount": "金额"
-  },
-  "totals": {
-    "subtotal": "小计:",
-    "tax": "税额 ({rate}%):",
-    "total": "总计:"
-  },
-  "notes": "备注:",
-  "terms": "条款:"
+  "invoice": {
+    "details": {
+      "header": "发票详情",
+      "number": "发票号码",
+      "numberPlaceholder": "发票-001",
+      "date": "日期",
+      "dueDate": "到期日",
+      "taxRate": "税率 (%)"
+    },
+    "design": {
+      "header": "设计元素",
+      "logoLabel": "公司标志"
+    },
+    "from": {
+      "header": "来自（您的公司）",
+      "businessNamePlaceholder": "公司名称 *",
+      "businessName": "公司名称",
+      "addressPlaceholder": "街道地址",
+      "address": "发件人地址",
+      "locationPlaceholder": "城市, 省份, 邮编",
+      "location": "发件人城市, 省份, 邮编",
+      "countryPlaceholder": "国家",
+      "country": "发件人国家",
+      "emailPlaceholder": "邮箱 *",
+      "email": "发件人邮箱",
+      "phonePlaceholder": "电话",
+      "phone": "发件人电话"
+    },
+    "to": {
+      "header": "收件人（客户）",
+      "clientNamePlaceholder": "客户姓名 *",
+      "clientName": "客户姓名",
+      "companyPlaceholder": "公司",
+      "company": "客户公司",
+      "addressPlaceholder": "街道地址",
+      "address": "客户地址",
+      "locationPlaceholder": "城市, 省份, 邮编",
+      "location": "客户城市, 省份, 邮编",
+      "countryPlaceholder": "国家",
+      "country": "客户国家",
+      "emailPlaceholder": "邮箱",
+      "email": "客户邮箱",
+      "phonePlaceholder": "电话",
+      "phone": "客户电话"
+    },
+    "lineItems": {
+      "header": "明细项目",
+      "descriptionPlaceholder": "描述",
+      "quantityPlaceholder": "数量",
+      "ratePlaceholder": "单价",
+      "addButton": "+ 添加项目"
+    },
+    "notes": {
+      "label": "备注",
+      "placeholder": "感谢您的惠顾！"
+    },
+    "terms": {
+      "label": "条款",
+      "placeholder": "付款期限为30天内"
+    },
+    "demo": {
+      "button": "试用演示"
+    },
+    "preview": {
+      "title": "发票",
+      "logoAlt": "公司标志",
+      "invoiceNumber": "发票号:",
+      "date": "日期:",
+      "dueDate": "到期日:",
+      "from": "来自:",
+      "to": "收件人:",
+      "description": "描述",
+      "qty": "数量",
+      "rate": "单价",
+      "amount": "金额",
+      "subtotal": "小计:",
+      "taxLabel": "税额",
+      "total": "总计:",
+      "notesLabel": "备注:",
+      "termsLabel": "条款:",
+      "downloadPdf": "下载 PDF",
+      "downloadCsv": "下载 CSV",
+      "print": "打印"
+    }
+  }
 }
