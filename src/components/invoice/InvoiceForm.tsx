@@ -1,7 +1,8 @@
 "use client";
 
-import { Invoice, LineItem, InvoiceTemplate } from "@/lib/types";
-import { X, RotateCcw, Copy } from "lucide-react";
+import { Invoice, LineItem } from "@/lib/types";
+import { X, RotateCcw } from "lucide-react";
+import { useI18n } from '@/i18n/context';
 import ImageUpload from "@/components/ui/ImageUpload";
 
 interface InvoiceFormProps {
@@ -11,7 +12,6 @@ interface InvoiceFormProps {
   onAddLineItem: () => void;
   onRemoveLineItem: (index: number) => void;
   onLoadDemoData: () => void;
-  onApplyTemplate?: (template: InvoiceTemplate) => void;
 }
 
 export default function InvoiceForm({
@@ -21,56 +21,57 @@ export default function InvoiceForm({
   onAddLineItem,
   onRemoveLineItem,
   onLoadDemoData,
-  onApplyTemplate,
 }: InvoiceFormProps) {
+  const { tInvoice } = useI18n();
+
   return (
     <div className="space-y-6">
       {/* Invoice Header */}
       <div className="bg-white rounded-lg shadow-sm p-6">
         <h2 className="text-lg font-medium text-slate-900 mb-4">
-          Invoice Details
+          {tInvoice('invoice.details.header') || 'Invoice Details'}
         </h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
-              Invoice Number *
+              {tInvoice('invoice.details.number') || 'Invoice Number'} *
             </label>
             <input
               type="text"
               value={invoice.number}
               onChange={(e) => onUpdate({ number: e.target.value })}
               className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="INV-001"
-              aria-label="Invoice Number"
+              placeholder={tInvoice('invoice.details.numberPlaceholder') || 'INV-001'}
+              aria-label={tInvoice('invoice.details.number') || 'Invoice Number'}
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
-              Date *
+              {tInvoice('invoice.details.date') || 'Date'} *
             </label>
             <input
               type="date"
               value={invoice.date}
               onChange={(e) => onUpdate({ date: e.target.value })}
               className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              aria-label="Date"
+              aria-label={tInvoice('invoice.details.date') || 'Date'}
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
-              Due Date
+              {tInvoice('invoice.details.dueDate') || 'Due Date'}
             </label>
             <input
               type="date"
               value={invoice.dueDate}
               onChange={(e) => onUpdate({ dueDate: e.target.value })}
               className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              aria-label="Due Date"
+              aria-label={tInvoice('invoice.details.dueDate') || 'Due Date'}
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
-              Tax Rate (%)
+              {tInvoice('invoice.details.taxRate') || 'Tax Rate (%)'}
             </label>
             <input
               type="number"
@@ -82,7 +83,7 @@ export default function InvoiceForm({
               step="0.1"
               min="0"
               max="100"
-              aria-label="Tax Rate"
+              aria-label={tInvoice('invoice.details.taxRate') || 'Tax Rate'}
             />
           </div>
         </div>
@@ -91,11 +92,11 @@ export default function InvoiceForm({
       {/* Design Section with Logo */}
       <div className="bg-white rounded-lg shadow-sm p-6">
         <h2 className="text-lg font-medium text-slate-900 mb-4">
-          Design Elements
+          {tInvoice('invoice.design.header') || 'Design Elements'}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
           <ImageUpload
-            label="Company Logo"
+            label={tInvoice('invoice.design.logoLabel') || 'Company Logo'}
             value={invoice.logoUrl}
             onChange={(logoUrl) => onUpdate({ logoUrl })}
           />
@@ -105,7 +106,7 @@ export default function InvoiceForm({
       {/* From Section */}
       <div className="bg-white rounded-lg shadow-sm p-6">
         <h2 className="text-lg font-medium text-slate-900 mb-4">
-          From (Your Business)
+          {tInvoice('invoice.from.header') || 'From (Your Business)'}
         </h2>
         <div className="space-y-3">
           <input
@@ -117,8 +118,8 @@ export default function InvoiceForm({
               })
             }
             className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            placeholder="Business Name *"
-            aria-label="Business Name"
+            placeholder={tInvoice('invoice.from.businessNamePlaceholder') || 'Business Name *'}
+            aria-label={tInvoice('invoice.from.businessName') || 'Business Name'}
           />
           <input
             type="text"
@@ -127,8 +128,8 @@ export default function InvoiceForm({
               onUpdate({ from: { ...invoice.from, address: e.target.value } })
             }
             className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            placeholder="Street Address"
-            aria-label="From Address"
+            placeholder={tInvoice('invoice.from.addressPlaceholder') || 'Street Address'}
+            aria-label={tInvoice('invoice.from.address') || 'From Address'}
           />
           <div className="grid grid-cols-2 gap-3">
             <input
@@ -140,8 +141,8 @@ export default function InvoiceForm({
                 })
               }
               className="px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="City, State, ZIP"
-              aria-label="From City, State, ZIP"
+              placeholder={tInvoice('invoice.from.locationPlaceholder') || 'City, State, ZIP'}
+              aria-label={tInvoice('invoice.from.location') || 'From City, State, ZIP'}
             />
             <input
               type="text"
@@ -150,8 +151,8 @@ export default function InvoiceForm({
                 onUpdate({ from: { ...invoice.from, country: e.target.value } })
               }
               className="px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Country"
-              aria-label="From Country"
+              placeholder={tInvoice('invoice.from.countryPlaceholder') || 'Country'}
+              aria-label={tInvoice('invoice.from.country') || 'From Country'}
             />
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -162,8 +163,8 @@ export default function InvoiceForm({
                 onUpdate({ from: { ...invoice.from, email: e.target.value } })
               }
               className="px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Email *"
-              aria-label="From Email"
+              placeholder={tInvoice('invoice.from.emailPlaceholder') || 'Email *'}
+              aria-label={tInvoice('invoice.from.email') || 'From Email'}
             />
             <input
               type="tel"
@@ -172,8 +173,8 @@ export default function InvoiceForm({
                 onUpdate({ from: { ...invoice.from, phone: e.target.value } })
               }
               className="px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Phone"
-              aria-label="From Phone"
+              placeholder={tInvoice('invoice.from.phonePlaceholder') || 'Phone'}
+              aria-label={tInvoice('invoice.from.phone') || 'From Phone'}
             />
           </div>
         </div>
@@ -181,7 +182,7 @@ export default function InvoiceForm({
 
       {/* To Section */}
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <h2 className="text-lg font-medium text-slate-900 mb-4">To (Client)</h2>
+        <h2 className="text-lg font-medium text-slate-900 mb-4">{tInvoice('invoice.to.header') || 'To (Client)'}</h2>
         <div className="space-y-3">
           <input
             type="text"
@@ -190,8 +191,8 @@ export default function InvoiceForm({
               onUpdate({ to: { ...invoice.to, clientName: e.target.value } })
             }
             className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            placeholder="Client Name *"
-            aria-label="Client Name"
+            placeholder={tInvoice('invoice.to.clientNamePlaceholder') || 'Client Name *'}
+            aria-label={tInvoice('invoice.to.clientName') || 'Client Name'}
           />
           <input
             type="text"
@@ -200,8 +201,8 @@ export default function InvoiceForm({
               onUpdate({ to: { ...invoice.to, company: e.target.value } })
             }
             className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            placeholder="Company"
-            aria-label="Client Company"
+            placeholder={tInvoice('invoice.to.companyPlaceholder') || 'Company'}
+            aria-label={tInvoice('invoice.to.company') || 'Client Company'}
           />
           <input
             type="text"
@@ -210,8 +211,8 @@ export default function InvoiceForm({
               onUpdate({ to: { ...invoice.to, address: e.target.value } })
             }
             className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            placeholder="Street Address"
-            aria-label="Client Address"
+            placeholder={tInvoice('invoice.to.addressPlaceholder') || 'Street Address'}
+            aria-label={tInvoice('invoice.to.address') || 'Client Address'}
           />
           <div className="grid grid-cols-2 gap-3">
             <input
@@ -223,8 +224,8 @@ export default function InvoiceForm({
                 })
               }
               className="px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="City, State, ZIP"
-              aria-label="Client City, State, ZIP"
+              placeholder={tInvoice('invoice.to.locationPlaceholder') || 'City, State, ZIP'}
+              aria-label={tInvoice('invoice.to.location') || 'Client City, State, ZIP'}
             />
             <input
               type="text"
@@ -233,8 +234,8 @@ export default function InvoiceForm({
                 onUpdate({ to: { ...invoice.to, country: e.target.value } })
               }
               className="px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Country"
-              aria-label="Client Country"
+              placeholder={tInvoice('invoice.to.countryPlaceholder') || 'Country'}
+              aria-label={tInvoice('invoice.to.country') || 'Client Country'}
             />
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -245,8 +246,8 @@ export default function InvoiceForm({
                 onUpdate({ to: { ...invoice.to, email: e.target.value } })
               }
               className="px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Email"
-              aria-label="Client Email"
+              placeholder={tInvoice('invoice.to.emailPlaceholder') || 'Email'}
+              aria-label={tInvoice('invoice.to.email') || 'Client Email'}
             />
             <input
               type="tel"
@@ -255,8 +256,8 @@ export default function InvoiceForm({
                 onUpdate({ to: { ...invoice.to, phone: e.target.value } })
               }
               className="px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Phone"
-              aria-label="Client Phone"
+              placeholder={tInvoice('invoice.to.phonePlaceholder') || 'Phone'}
+              aria-label={tInvoice('invoice.to.phone') || 'Client Phone'}
             />
           </div>
         </div>
@@ -264,7 +265,7 @@ export default function InvoiceForm({
 
       {/* Line Items */}
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <h2 className="text-lg font-medium text-slate-900 mb-4">Line Items</h2>
+        <h2 className="text-lg font-medium text-slate-900 mb-4">{tInvoice('invoice.lineItems.header') || 'Line Items'}</h2>
         <div className="space-y-3">
           {invoice.items.map((item, index) => (
             <div key={index} className="flex gap-3 items-start group">
@@ -275,7 +276,7 @@ export default function InvoiceForm({
                   onLineItemChange(index, { description: e.target.value })
                 }
                 className="flex-1 px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="Description"
+                placeholder={tInvoice('invoice.lineItems.descriptionPlaceholder') || 'Description'}
               />
               <input
                 type="number"
@@ -286,7 +287,7 @@ export default function InvoiceForm({
                   })
                 }
                 className="w-20 px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="Qty"
+                placeholder={tInvoice('invoice.lineItems.quantityPlaceholder') || 'Qty'}
                 min="0"
               />
               <input
@@ -298,7 +299,7 @@ export default function InvoiceForm({
                   })
                 }
                 className="w-24 px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="Rate"
+                placeholder={tInvoice('invoice.lineItems.ratePlaceholder') || 'Rate'}
                 min="0"
                 step="0.01"
               />
@@ -321,7 +322,7 @@ export default function InvoiceForm({
           onClick={onAddLineItem}
           className="mt-4 w-full py-2 border-2 border-dashed border-slate-300 rounded-md text-slate-500 hover:border-primary hover:text-primary transition-colors"
         >
-          + Add Line Item
+          {tInvoice('invoice.lineItems.addButton') || '+ Add Line Item'}
         </button>
       </div>
 
@@ -330,50 +331,40 @@ export default function InvoiceForm({
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
-              Notes
+              {tInvoice('invoice.notes.label') || 'Notes'}
             </label>
             <textarea
               value={invoice.notes}
               onChange={(e) => onUpdate({ notes: e.target.value })}
               rows={3}
               className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
-              placeholder="Thank you for your business!"
+              placeholder={tInvoice('invoice.notes.placeholder') || 'Thank you for your business!'}
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
-              Terms
+              {tInvoice('invoice.terms.label') || 'Terms'}
             </label>
             <textarea
               value={invoice.terms}
               onChange={(e) => onUpdate({ terms: e.target.value })}
               rows={3}
               className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
-              placeholder="Payment due within 30 days"
+              placeholder={tInvoice('invoice.terms.placeholder') || 'Payment due within 30 days'}
             />
           </div>
         </div>
       </div>
 
       {/* Demo Data Button */}
-      <div className="bg-white rounded-lg shadow-sm p-6 space-y-3">
+      <div className="bg-white rounded-lg shadow-sm p-6">
         <button
           onClick={onLoadDemoData}
           className="w-full py-3 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md font-medium transition-colors"
         >
           <RotateCcw className="h-4 w-4" />
-          Try Demo
+          {tInvoice('invoice.demo.button') || 'Try Demo'}
         </button>
-
-        {onApplyTemplate && (
-          <a
-            href="/templates"
-            className="w-full py-3 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors"
-          >
-            <Copy className="h-4 w-4" />
-            Choose Template
-          </a>
-        )}
       </div>
     </div>
   );
