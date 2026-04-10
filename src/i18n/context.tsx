@@ -22,9 +22,15 @@ interface I18nProviderProps {
 }
 
 export const I18nProvider = ({ children, initialLocale }: I18nProviderProps) => {
-  const [locale, setLocaleState] = useState<LanguageCode>(
-    initialLocale || getBrowserLocale()
-  );
+  // Initialize locale from localStorage on client side, fallback to initialLocale or browser detection
+  const [locale, setLocaleState] = useState<LanguageCode>(() => {
+    // On server side or if localStorage is not available, use initialLocale or browser detection
+    if (typeof window === 'undefined') {
+      return initialLocale || getBrowserLocale();
+    }
+    // On client side, always read from localStorage first
+    return getStoredLanguage();
+  });
 
   const [translations, setTranslations] = useState({
     common: {} as Record<string, string>,
@@ -49,6 +55,7 @@ export const I18nProvider = ({ children, initialLocale }: I18nProviderProps) => 
 
   const setLocale = (newLocale: LanguageCode) => {
     setLocaleState(newLocale);
+    // setStoredLanguage is called in the useEffect above when locale changes
   };
 
   const tCommon = (key: string, params?: Record<string, string | number>) => {
