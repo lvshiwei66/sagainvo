@@ -29,8 +29,8 @@ export async function switchToLanguage(page: Page, language: 'en' | 'zh-CN'): Pr
   // Wait for language change to take effect
   await page.waitForTimeout(800);
 
-  // Close modal by clicking backdrop
-  await page.click('[data-testid="modal-backdrop"]');
+  // Close modal by pressing Escape (more reliable than clicking backdrop)
+  await page.press('body', 'Escape');
   await page.waitForTimeout(300);
 }
 

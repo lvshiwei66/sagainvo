@@ -1,6 +1,7 @@
 import React from 'react';
 import { InvoiceTemplate } from '@/lib/types';
 import TemplateThumbnail from './TemplateThumbnail';
+import { useI18n } from '@/i18n/context';
 
 interface TemplatePreviewProps {
   template: InvoiceTemplate;
@@ -13,6 +14,8 @@ export default function TemplatePreview({
   onClose,
   onSelect
 }: TemplatePreviewProps) {
+  const { tCommon } = useI18n();
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
@@ -47,13 +50,13 @@ export default function TemplatePreview({
               onClick={onClose}
               className="px-4 py-2 border border-slate-300 rounded-md text-slate-700 hover:bg-slate-50"
             >
-              Close
+              {tCommon('templates.actions.close')}
             </button>
             <button
               onClick={onSelect}
               className="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-md"
             >
-              Use Template
+              {tCommon('templates.actions.useTemplate')}
             </button>
           </div>
         </div>

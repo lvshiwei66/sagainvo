@@ -1,6 +1,7 @@
 import React from 'react';
 import { InvoiceTemplate } from '@/lib/types';
 import TemplateThumbnail from './TemplateThumbnail';
+import { useI18n } from '@/i18n/context';
 
 interface TemplateCardProps {
   template: InvoiceTemplate;
@@ -13,6 +14,8 @@ export default function TemplateCard({
   isSelected = false,
   onClick
 }: TemplateCardProps) {
+  const { tCommon } = useI18n();
+
   return (
     <div
       className={`bg-white rounded-lg shadow-sm border-2 overflow-hidden cursor-pointer transition-all hover:shadow-md ${
@@ -26,7 +29,7 @@ export default function TemplateCard({
           <h3 className="font-medium text-slate-900 truncate">{template.name}</h3>
           {template.isDefault && (
             <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-              Built-in
+              {tCommon('templates.builtIn')}
             </span>
           )}
         </div>

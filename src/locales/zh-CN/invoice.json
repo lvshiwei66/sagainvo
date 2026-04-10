@@ -1,5 +1,6 @@
 {
   "invoice": {
+    "title": "发票",
     "details": {
       "header": "发票详情",
       "number": "发票号码",
@@ -7,6 +8,43 @@
       "date": "日期",
       "dueDate": "到期日",
       "taxRate": "税率 (%)"
+    },
+    "meta": {
+      "invoiceNumber": "发票",
+      "dateLabel": "日期"
+    },
+    "labels": {
+      "from": "来自",
+      "to": "致",
+      "description": "描述",
+      "quantity": "数量",
+      "rate": "单价",
+      "amount": "金额",
+      "subtotal": "小计",
+      "tax": "税额",
+      "total": "总计",
+      "notes": "备注",
+      "terms": "条款"
+    },
+    "categories": {
+      "modern": "现代",
+      "classic": "经典",
+      "minimal": "极简",
+      "colorful": "多彩"
+    },
+    "demo": {
+      "company": "您的公司",
+      "address": "地址",
+      "city": "城市, 省份, 邮编",
+      "email": "联系邮箱",
+      "clientName": "客户姓名",
+      "clientCompany": "客户公司",
+      "clientEmail": "客户邮箱",
+      "serviceDesc": "服务描述",
+      "anotherService": "另一个服务",
+      "thankYou": "谢谢！",
+      "net30": "30天内付款",
+      "button": "试用演示"
     },
     "design": {
       "header": "设计元素",
@@ -58,9 +96,6 @@
     "terms": {
       "label": "条款",
       "placeholder": "付款期限为30天内"
-    },
-    "demo": {
-      "button": "试用演示"
     },
     "preview": {
       "title": "发票",
