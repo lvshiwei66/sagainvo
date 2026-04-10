@@ -42,3 +42,6 @@ next-env.d.ts
 temp/
 test-results/
 playwright-report/
+
+# artifacts
+artifacts/
