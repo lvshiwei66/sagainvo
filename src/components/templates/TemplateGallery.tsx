@@ -5,12 +5,14 @@ import { InvoiceTemplate } from '@/lib/types';
 import TemplateCard from './TemplateCard';
 import TemplatePreview from './TemplatePreview';
 import { demoTemplates } from '@/lib/templates/demo-templates';
+import { useI18n } from '@/i18n/context';
 
 interface TemplateGalleryProps {
   onSelect: (template: InvoiceTemplate) => void;
 }
 
 export default function TemplateGallery({ onSelect }: TemplateGalleryProps) {
+  const { tCommon } = useI18n();
   const [showPreview, setShowPreview] = useState<InvoiceTemplate | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'modern' | 'classic' | 'minimal' | 'colorful'>('all');
@@ -35,7 +37,7 @@ export default function TemplateGallery({ onSelect }: TemplateGalleryProps) {
           }`}
           onClick={() => setFilter('all')}
         >
-          All
+          {tCommon('templates.tags')}
         </button>
         <button
           className={`px-3 py-1.5 rounded-full text-sm ${
@@ -45,7 +47,7 @@ export default function TemplateGallery({ onSelect }: TemplateGalleryProps) {
           }`}
           onClick={() => setFilter('modern')}
         >
-          Modern
+          {tCommon('templates.category.modern')}
         </button>
         <button
           className={`px-3 py-1.5 rounded-full text-sm ${
@@ -55,7 +57,7 @@ export default function TemplateGallery({ onSelect }: TemplateGalleryProps) {
           }`}
           onClick={() => setFilter('classic')}
         >
-          Classic
+          {tCommon('templates.category.classic')}
         </button>
         <button
           className={`px-3 py-1.5 rounded-full text-sm ${
@@ -65,7 +67,7 @@ export default function TemplateGallery({ onSelect }: TemplateGalleryProps) {
           }`}
           onClick={() => setFilter('minimal')}
         >
-          Minimal
+          {tCommon('templates.category.minimal')}
         </button>
         <button
           className={`px-3 py-1.5 rounded-full text-sm ${
@@ -75,7 +77,7 @@ export default function TemplateGallery({ onSelect }: TemplateGalleryProps) {
           }`}
           onClick={() => setFilter('colorful')}
         >
-          Colorful
+          {tCommon('templates.category.colorful')}
         </button>
       </div>
 

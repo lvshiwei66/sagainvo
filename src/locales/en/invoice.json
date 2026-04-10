@@ -1,5 +1,6 @@
 {
   "invoice": {
+    "title": "INVOICE",
     "details": {
       "header": "Invoice Details",
       "number": "Invoice Number",
@@ -7,6 +8,43 @@
       "date": "Date",
       "dueDate": "Due Date",
       "taxRate": "Tax Rate (%)"
+    },
+    "meta": {
+      "invoiceNumber": "INV",
+      "dateLabel": "Date"
+    },
+    "labels": {
+      "from": "FROM",
+      "to": "TO",
+      "description": "Description",
+      "quantity": "Qty",
+      "rate": "Rate",
+      "amount": "Amount",
+      "subtotal": "Subtotal",
+      "tax": "Tax",
+      "total": "TOTAL",
+      "notes": "Notes",
+      "terms": "Terms"
+    },
+    "categories": {
+      "modern": "Modern",
+      "classic": "Classic",
+      "minimal": "Minimal",
+      "colorful": "Colorful"
+    },
+    "demo": {
+      "company": "Your Company",
+      "address": "Address Line",
+      "city": "City, State 12345",
+      "email": "contact@email.com",
+      "clientName": "Client Name",
+      "clientCompany": "Company Name",
+      "clientEmail": "contact@client.com",
+      "serviceDesc": "Service Description",
+      "anotherService": "Another Service",
+      "thankYou": "Thank you!",
+      "net30": "Net 30",
+      "button": "Try Demo"
     },
     "design": {
       "header": "Design Elements",
@@ -58,9 +96,6 @@
     "terms": {
       "label": "Terms",
       "placeholder": "Payment due within 30 days"
-    },
-    "demo": {
-      "button": "Try Demo"
     },
     "preview": {
       "title": "INVOICE",

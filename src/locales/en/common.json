@@ -15,6 +15,35 @@
     "save": "Save",
     "close": "Close"
   },
+  "templates": {
+    "title": "Invoice Templates",
+    "subtitle": "Choose from our professionally designed templates to create beautiful invoices.",
+    "chooseTemplate": "Choose a Template",
+    "usingTemplate": "Using Template:",
+    "chooseDifferent": "Choose Different Template",
+    "createWithTemplate": "Create Invoice with Template",
+    "templatePreview": "Template Preview",
+    "themeColor": "Theme Color",
+    "textFont": "Text Font",
+    "numberFont": "Number Font",
+    "selectedTemplateMessage1": "You've selected the ",
+    "selectedTemplateMessage2": " template with ",
+    "selectedTemplateMessage3": " theme color, ",
+    "selectedTemplateMessage4": " text font, and ",
+    "selectedTemplateMessage5": " number font. Click the button below to start creating your invoice with this template.",
+    "tags": "Tags",
+    "builtIn": "Built-in",
+    "category": {
+      "modern": "Modern",
+      "classic": "Classic",
+      "minimal": "Minimal",
+      "colorful": "Colorful"
+    },
+    "actions": {
+      "useTemplate": "Use Template",
+      "close": "Close"
+    }
+  },
   "placeholders": {
     "invoiceNumber": "INV-001",
     "businessName": "Business Name *",
