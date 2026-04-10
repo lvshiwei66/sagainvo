@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "首页",
+    "newInvoice": "新建发票",
+    "templates": "模板",
+    "history": "历史记录",
+    "settings": "设置"
+  },
+  "actions": {
+    "downloadPDF": "下载 PDF",
+    "downloadCSV": "下载 CSV",
+    "print": "打印",
+    "addLineItem": "添加项目",
+    "tryDemo": "试用演示",
+    "save": "保存",
+    "close": "关闭"
+  },
+  "templates": {
+    "title": "发票模板",
+    "subtitle": "从我们专业设计的模板中选择，创建精美的发票。",
+    "chooseTemplate": "选择模板",
+    "usingTemplate": "正在使用模板:",
+    "chooseDifferent": "选择其他模板",
+    "createWithTemplate": "使用模板创建发票",
+    "templatePreview": "模板预览",
+    "themeColor": "主题色",
+    "textFont": "文字字体",
+    "numberFont": "数字字体",
+    "selectedTemplateMessage1": "您已选择了",
+    "selectedTemplateMessage2": "模板，使用",
+    "selectedTemplateMessage3": "主题色，",
+    "selectedTemplateMessage4": "文字字体和",
+    "selectedTemplateMessage5": "数字字体。点击下面的按钮开始使用此模板创建发票。",
+    "tags": "标签",
+    "builtIn": "内置",
+    "category": {
+      "modern": "现代",
+      "classic": "经典",
+      "minimal": "极简",
+      "colorful": "多彩"
+    },
+    "actions": {
+      "useTemplate": "使用模板",
+      "close": "关闭"
+    }
+  },
+  "placeholders": {
+    "invoiceNumber": "发票号 -001",
+    "businessName": "公司名称 *",
+    "clientName": "客户姓名 *",
+    "email": "邮箱 *",
+    "phone": "电话",
+    "address": "街道地址",
+    "cityStateZip": "城市，州，邮编",
+    "country": "国家",
+    "company": "公司",
+    "description": "描述",
+    "qty": "数量",
+    "rate": "单价",
+    "notes": "感谢您的惠顾！",
+    "terms": "付款期限为 30 天内"
+  },
+  "labels": {
+    "invoiceDetails": "发票详情",
+    "designElements": "设计元素",
+    "companyLogo": "公司标志",
+    "fromYourBusiness": "来自（您的公司）",
+    "toClient": "收件人（客户）",
+    "lineItems": "明细项目",
+    "notes": "备注",
+    "terms": "条款",
+    "invoiceNumber": "发票号码 *",
+    "date": "日期 *",
+    "dueDate": "截止日期",
+    "taxRate": "税率 (%)"
+  },
+  "settings": {
+    "modal": {
+      "title": "设置"
+    },
+    "language": {
+      "title": "语言",
+      "description": "选择您偏好的语言",
+      "english": "English",
+      "chinese": "中文"
+    }
+  }
+}

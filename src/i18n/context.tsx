@@ -22,20 +22,24 @@ interface I18nProviderProps {
 }
 
 export const I18nProvider = ({ children, initialLocale }: I18nProviderProps) => {
-  // Initialize locale from localStorage on client side, fallback to initialLocale or browser detection
-  const [locale, setLocaleState] = useState<LanguageCode>(() => {
-    // On server side or if localStorage is not available, use initialLocale or browser detection
-    if (typeof window === 'undefined') {
-      return initialLocale || getBrowserLocale();
-    }
-    // On client side, always read from localStorage first
-    return getStoredLanguage();
-  });
+  // Always use initialLocale from server-side to avoid hydration mismatch
+  // User's language preference from localStorage will be loaded after mount
+  const [locale, setLocaleState] = useState<LanguageCode>(initialLocale);
 
   const [translations, setTranslations] = useState({
     common: {} as Record<string, string>,
     invoice: {} as Record<string, string>
   });
+
+  // Sync with localStorage after mount to restore user's language preference
+  // This runs only on client side after hydration
+  useEffect(() => {
+    const storedLang = getStoredLanguage();
+    // Only update if stored language is different from initial and is a valid stored value
+    if (storedLang && storedLang !== initialLocale) {
+      setLocaleState(storedLang);
+    }
+  }, [initialLocale]);
 
   // Load translations when locale changes
   useEffect(() => {

@@ -1,20 +1,22 @@
 // src/i18n/utils.ts
 import { LanguageCode } from '@/i18n-config';
 
-// Helper to load translation files dynamically
+// Helper to load translation files dynamically from public directory
+// This function is designed to work in client-side components
 export const loadTranslations = async (locale: LanguageCode): Promise<{
   common: Record<string, string>;
   invoice: Record<string, string>;
 }> => {
   try {
-    const [commonTranslations, invoiceTranslations] = await Promise.all([
-      import(`../locales/${locale}/common.json`),
-      import(`../locales/${locale}/invoice.json`)
+    // Client side: fetch from public directory
+    const [commonResponse, invoiceResponse] = await Promise.all([
+      fetch(`/locales/${locale}/common.json`).then(r => r.json()),
+      fetch(`/locales/${locale}/invoice.json`).then(r => r.json())
     ]);
 
     return {
-      common: commonTranslations.default,
-      invoice: invoiceTranslations.default
+      common: commonResponse,
+      invoice: invoiceResponse
     };
   } catch (error) {
     console.error(`Failed to load translations for ${locale}:`, error);

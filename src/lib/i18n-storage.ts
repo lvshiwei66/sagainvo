@@ -3,6 +3,9 @@ import { LanguageCode, defaultLanguage } from '@/i18n-config';
 
 const LANGUAGE_STORAGE_KEY = 'sagainvo:language';
 
+// Get stored language from localStorage
+// IMPORTANT: This function should only be called on client side
+// For server-side rendering, use getStoredLanguageServerSafe instead
 export const getStoredLanguage = (): LanguageCode => {
   if (typeof window === 'undefined') {
     return defaultLanguage;
@@ -31,6 +34,14 @@ export const getStoredLanguage = (): LanguageCode => {
     console.warn('Could not access localStorage, using default language:', error);
     return defaultLanguage;
   }
+};
+
+// Server-safe version that always returns default language
+// This ensures server and client render the same content on initial mount
+export const getStoredLanguageServerSafe = (): LanguageCode => {
+  // Always return default language on server side
+  // Client will hydrate with the same value, then update from localStorage after mount
+  return defaultLanguage;
 };
 
 export const setStoredLanguage = (lang: LanguageCode): void => {
