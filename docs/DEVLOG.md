@@ -6,73 +6,87 @@
 
 ## 2026-04-10
 
-### 项目初始化
-
-**参与者**: lvshiwei
-
-#### 决策记录
-
-1. **创建架构决策记录 (ADR) 系统**
-   - 目的：记录项目中的架构决策，避免决策散落在聊天记录中
-   - 目录：`docs/adr/`
-   - 格式：遵循 Michael Nygard 的轻量 ADR 格式
-
-2. **建立项目文档体系**
-   - 创建 `PRD.md` - 产品需求文档
-   - 创建 `DEVLOG.md` - 开发日志
-   - 创建 `PROJECT_STATUS.md` - 项目状态
-
-#### 技术决策
-
-| 决策 | 选择 | 备选方案 | 理由 |
-|------|------|----------|------|
-| 前端框架 | Next.js 14 | React SPA, Vue | App Router、SSG 支持 |
-| 样式方案 | Tailwind CSS | CSS Modules, Styled Components | 快速开发、一致的设计系统 |
-| 数据存储 | localStorage | IndexedDB, 后端 API | MVP 简单、无需登录 |
-| 语言 | TypeScript | JavaScript | 类型安全、更好的开发体验 |
-
-#### 当前状态
-
-- [x] 项目文档体系创建
-- [x] Git 分支管理规范创建
-- [x] GitHub 模板创建 (PR, Issues)
-- [ ] 发票编辑器核心功能
-- [ ] PDF 导出功能
-
-#### 问题与风险
-
-暂无
-
----
-
-## 2026-04-10 (下午)
-
-### 分支管理规范
+### 项目全面调查与文档同步
 
 **参与者**: lvshiwei
 
 #### 完成内容
 
-- [x] 创建 `BRANCH_GUIDELINES.md` - Git 分支管理规范
-- [x] 创建 `.github/PULL_REQUEST_TEMPLATE.md` - PR 模板
-- [x] 创建 `.github/ISSUE_TEMPLATE/bug_report.md` - Bug 报告模板
-- [x] 创建 `.github/ISSUE_TEMPLATE/feature_request.md` - 功能请求模板
-- [x] 更新 `docs/README.md` - 添加分支管理文档链接
+- [x] 全面调查项目现状（代码、测试、文档）
+- [x] 更新 MEMORY.md 知识库
+- [x] 创建项目文档体系记忆
+- [x] 创建功能完成状态记忆
+- [x] 创建 5 个架构决策记录 (ADR)
 
-#### 决策记录
+#### 项目现状总结
 
-- **采用 GitHub Flow 模型**
-  - 描述：轻量级分支模型，适合快速迭代的 MVP 项目
-  - 主分支：`main`（受保护）
-  - 功能分支：`feature/*`, `fix/*`, `docs/*`
-  
-- **采用 Conventional Commits**
-  - 类型：feat, fix, docs, style, refactor, test, chore
-  - 格式：`<type>: <description>`
+**代码统计**:
+- TypeScript 文件：36 个 (src 目录)
+- E2E 测试文件：10+ 个 (Playwright)
+- 单元测试文件：4 个 (Jest + React Testing Library)
 
-- **PR 合并策略**
-  - 优先使用 Squash and Merge
-  - 保持提交历史清晰
+**功能完成状态**:
+| 功能 | 状态 |
+|------|------|
+| 发票编辑器 | ✅ 完成 |
+| 本地存储 | ✅ 完成 |
+| PDF 导出 | ✅ 完成 |
+| CSV 导出 | ✅ 完成 |
+| i18n (en/zh-CN) | ✅ 完成 |
+| 发票模板系统 | ✅ 完成 |
+| 设置模块 | ✅ 完成 |
+| 图片上传 | ✅ 完成 |
+
+**技术栈**:
+- Next.js 14.2 + TypeScript + Tailwind CSS
+- next-intl (国际化)
+- html2canvas + jsPDF (PDF 导出)
+- Playwright (E2E 测试)
+- Jest + React Testing Library (单元测试)
+
+#### 待跟进事项
+
+- [ ] 更新 PROJECT_STATUS.md 刷新功能完成度
+- [ ] 创建架构决策记录 (ADR)
+- [ ] 客户管理/商品库完整 CRUD 界面
+- [ ] 发票历史列表页面
+
+---
+
+### 删除客户管理和商品库模块
+
+**参与者**: lvshiwei
+
+#### 决策背景
+
+重新评估 MVP 范围后，决定删除客户管理和商品/服务库模块：
+- 这两个功能偏离核心场景（快速开具发票）
+- 用户可通过模板复用实现类似功能
+- 减少复杂度和维护成本
+
+#### 完成内容
+
+- [x] 删除 Sidebar 中的客户和项目导航项
+- [x] 从翻译文件中移除 clients 和 items 键
+- [x] 更新 PRD.md 标记为已移除
+- [x] 更新 PROJECT_STATUS.md 标记为已移除
+- [x] 在 PRD.md 的"不做的事情"中添加这两个功能
+
+#### 影响范围
+
+| 文件 | 变更 |
+|------|------|
+| `src/components/layout/Sidebar.tsx` | 移除 Users/Package 图标和导航项 |
+| `src/locales/en/common.json` | 移除 nav.clients, nav.items |
+| `src/locales/zh-CN/common.json` | 移除 nav.clients, nav.items |
+| `docs/PRD.md` | 功能状态标记为已移除 |
+| `docs/PROJECT_STATUS.md` | 功能状态标记为已移除 |
+
+#### 后续计划
+
+- 聚焦核心功能：发票创建、PDF/CSV 导出
+- 打印支持待开发
+- 历史发票功能延后
 
 ---
 

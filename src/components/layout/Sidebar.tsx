@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, Home, Plus, Clipboard, Users, Package, Settings } from "lucide-react";
+import { FileText, Home, Plus, Clipboard, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import LanguageSwitcher from "@/components/settings/LanguageSwitcher";
 import { useI18n } from "@/i18n/context";
@@ -81,25 +81,8 @@ export default function Sidebar({ className }: SidebarProps) {
           <li>
             <a
               href="#"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
-            >
-              <Users className="h-5 w-5" />
-              <span>{tCommon("nav.clients")}</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
-            >
-              <Package className="h-5 w-5" />
-              <span>{tCommon("nav.items")}</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+              className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors opacity-50 cursor-not-allowed"
+              title="Coming soon"
             >
               <FileText className="h-5 w-5" />
               <span>{tCommon("nav.history")}</span>

@@ -14,6 +14,8 @@
 | [PROJECT_STATUS.md](PROJECT_STATUS.md) | 项目状态 - 进度、待办、风险 | PM | 每周 |
 | [CLAUDE.md](../CLAUDE.md) | 项目指南 - 代码库使用说明 | AI | 结构变更时 |
 | [BRANCH_GUIDELINES.md](BRANCH_GUIDELINES.md) | Git 分支管理规范 | Tech Lead | 按需 |
+| [FAQ.md](FAQ.md) | 常见问题解答 | 全体 | 按需 |
+| [TROUBLESHOOTING.md](TROUBLESHOOTING.md) | 故障排查指南 | 全体 | 按需 |
 
 ## 🏗️ 架构决策
 
