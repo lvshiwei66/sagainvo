@@ -22,24 +22,12 @@ interface I18nProviderProps {
 }
 
 export const I18nProvider = ({ children, initialLocale }: I18nProviderProps) => {
-  // Always use initialLocale from server-side to avoid hydration mismatch
-  // User's language preference from localStorage will be loaded after mount
+  // Start with initialLocale to match server-side render
   const [locale, setLocaleState] = useState<LanguageCode>(initialLocale || getBrowserLocale());
-
   const [translations, setTranslations] = useState({
     common: {} as Record<string, string>,
     invoice: {} as Record<string, string>
   });
-
-  // Sync with localStorage after mount to restore user's language preference
-  // This runs only on client side after hydration
-  useEffect(() => {
-    const storedLang = getStoredLanguage();
-    // Only update if stored language is different from initial and is a valid stored value
-    if (storedLang && storedLang !== initialLocale) {
-      setLocaleState(storedLang);
-    }
-  }, [initialLocale]);
 
   // Load translations when locale changes
   useEffect(() => {
@@ -57,9 +45,26 @@ export const I18nProvider = ({ children, initialLocale }: I18nProviderProps) => 
     loadAndSetTranslations();
   }, [locale]);
 
+  // After the component mounts, check localStorage but only update if needed
+  // Use useRef to store the initial value to avoid re-running when initialLocale changes
+  useEffect(() => {
+    const storedLang = getStoredLanguage();
+
+    // Only update if the stored language is different from the current one
+    // and it's different from the initial locale that came from the server
+    if (storedLang && storedLang !== locale && storedLang !== initialLocale) {
+      // Use setTimeout to delay the state update after the initial render
+      // to minimize hydration mismatch
+      const timer = setTimeout(() => {
+        setLocaleState(storedLang);
+      }, 0);
+
+      return () => clearTimeout(timer);
+    }
+  }, []); // Empty dependency array so this only runs once after mount
+
   const setLocale = (newLocale: LanguageCode) => {
     setLocaleState(newLocale);
-    // setStoredLanguage is called in the useEffect above when locale changes
   };
 
   const tCommon = (key: string, params?: Record<string, string | number>) => {
