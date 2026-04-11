@@ -32,22 +32,31 @@ export const I18nProvider = ({ children, initialLocale }: I18nProviderProps) => 
   // Load translations when locale changes
   useEffect(() => {
     const loadAndSetTranslations = async () => {
-      const rawTranslations = await loadTranslations(locale);
-      setTranslations({
-        common: flattenTranslations(rawTranslations.common),
-        invoice: flattenTranslations(rawTranslations.invoice)
-      });
+      try {
+        const rawTranslations = await loadTranslations(locale);
+        setTranslations({
+          common: flattenTranslations(rawTranslations.common),
+          invoice: flattenTranslations(rawTranslations.invoice)
+        });
 
-      // Update stored language
-      setStoredLanguage(locale);
+        // Update stored language
+        setStoredLanguage(locale);
+      } catch (error) {
+        console.error('Failed to load translations:', error);
+        // Optionally set error state or fallback translations
+      }
     };
 
     loadAndSetTranslations();
   }, [locale]);
 
+  // Use a ref to track if we've already synchronized with localStorage
+  const syncRef = React.useRef(false);
+
   // After the component mounts, check localStorage but only update if needed
-  // Use useRef to store the initial value to avoid re-running when initialLocale changes
   useEffect(() => {
+    if (syncRef.current) return; // Prevent multiple syncs
+
     const storedLang = getStoredLanguage();
 
     // Only update if the stored language is different from the current one
@@ -59,9 +68,13 @@ export const I18nProvider = ({ children, initialLocale }: I18nProviderProps) => 
         setLocaleState(storedLang);
       }, 0);
 
+      syncRef.current = true; // Mark as synced
+
       return () => clearTimeout(timer);
     }
-  }, []); // Empty dependency array so this only runs once after mount
+
+    syncRef.current = true; // Mark as synced even if no change needed
+  }, [locale, initialLocale]); // Include locale and initialLocale in deps for correct sync logic
 
   const setLocale = (newLocale: LanguageCode) => {
     setLocaleState(newLocale);

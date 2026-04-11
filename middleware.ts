@@ -1,27 +1,47 @@
 // middleware.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { defaultLanguage } from '@/i18n-config';
+import { defaultLanguage, supportedLanguages, parseAcceptLanguage } from '@/i18n-config';
+import { LANGUAGE_COOKIE_KEY } from '@/lib/i18n-storage';
 
 export function middleware(request: NextRequest) {
-  // Get the preferred language from the cookie, header, or fallback to default
-  const pathname = request.nextUrl.pathname;
+  try {
+    const pathname = request.nextUrl.pathname;
 
-  // Skip middleware for API routes and static assets
-  if (pathname.startsWith('/api/') || pathname.startsWith('/_next')) {
+    // Skip middleware for API routes and static assets
+    if (pathname.startsWith('/api/') || pathname.startsWith('/_next')) {
+      return NextResponse.next();
+    }
+
+    const response = NextResponse.next();
+
+    // Priority 1: Check existing cookie
+    const cookieLang = request.cookies.get(LANGUAGE_COOKIE_KEY)?.value;
+    if (cookieLang && supportedLanguages.includes(cookieLang)) {
+      return response;
+    }
+
+    // Priority 2: Parse Accept-Language header
+    const acceptLanguage = request.headers.get('accept-language');
+    let currentLang = defaultLanguage;
+
+    if (acceptLanguage) {
+      currentLang = parseAcceptLanguage(acceptLanguage);
+    }
+
+    // Set the language cookie with detected language
+    response.cookies.set(LANGUAGE_COOKIE_KEY, currentLang, {
+      httpOnly: false, // Accessible by client-side JavaScript
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 31536000, // 1 year
+    });
+
+    return response;
+  } catch (error) {
+    console.error('Middleware error:', error);
     return NextResponse.next();
   }
-
-  // For now, simply ensure the request has a language cookie
-  // In a more advanced setup, we could parse Accept-Language headers
-  const response = NextResponse.next();
-  const currentLang = request.cookies.get('NEXT_LOCALE')?.value || defaultLanguage;
-
-  // Set the language cookie if it doesn't exist
-  if (!request.cookies.get('NEXT_LOCALE')) {
-    response.cookies.set('NEXT_LOCALE', currentLang);
-  }
-
-  return response;
 }
 
 export const config = {

@@ -190,10 +190,10 @@ export default function InvoicePreview({
                       {item.quantity}
                     </td>
                     <td className={`py-3 text-sm text-slate-600 text-right ${getNumberFontClass()}`}>
-                      <span className={getNumberFontClass()}>${item.rate.toFixed(2)}</span>
+                      ${item.rate.toFixed(2)}
                     </td>
                     <td className={`py-3 text-sm font-mono text-slate-900 text-right ${getNumberFontClass()}`}>
-                      <span className={getNumberFontClass()}>${(item.quantity * item.rate).toFixed(2)}</span>
+                      ${(item.quantity * item.rate).toFixed(2)}
                     </td>
                   </tr>
                 ))}
@@ -206,7 +206,7 @@ export default function InvoicePreview({
                 <div className={`flex justify-between text-sm ${getTextFontClass()}`}>
                   <span className="text-slate-600">{tInvoice("preview.subtotal")}</span>
                   <span className={`text-slate-900 ${getNumberFontClass()}`}>
-                    <span className={getNumberFontClass()}>${totals.subtotal.toFixed(2)}</span>
+                    ${totals.subtotal.toFixed(2)}
                   </span>
                 </div>
                 <div className={`flex justify-between text-sm ${getTextFontClass()}`}>
@@ -214,7 +214,7 @@ export default function InvoicePreview({
                     {tInvoice("preview.taxLabel", { rate: invoice.taxRate })}
                   </span>
                   <span className={`text-slate-900 ${getNumberFontClass()}`}>
-                    <span className={getNumberFontClass()}>${totals.taxAmount.toFixed(2)}</span>
+                    ${totals.taxAmount.toFixed(2)}
                   </span>
                 </div>
                 <div
@@ -228,7 +228,7 @@ export default function InvoicePreview({
                     className={`text-slate-900 ${getNumberFontClass()}`}
                     style={{ color: themeColor !== '#2563EB' ? themeColor : undefined }}
                   >
-                    <span className={getNumberFontClass()}>${totals.total.toFixed(2)}</span>
+                    ${totals.total.toFixed(2)}
                   </span>
                 </div>
               </div>

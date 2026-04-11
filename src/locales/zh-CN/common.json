@@ -15,6 +15,9 @@
     "save": "保存",
     "close": "关闭"
   },
+  "logo": {
+    "alt": "公司标志"
+  },
   "templates": {
     "title": "发票模板",
     "subtitle": "从我们专业设计的模板中选择，创建精美的发票。",
@@ -31,6 +34,7 @@
     "selectedTemplateMessage3": "主题色，",
     "selectedTemplateMessage4": "文字字体和",
     "selectedTemplateMessage5": "数字字体。点击下面的按钮开始使用此模板创建发票。",
+    "selectedTemplateMessage": "您已选择了 {{templateName}} 模板，使用 {{themeColor}} 主题色，{{textFont}} 文字字体和 {{numberFont}} 数字字体。点击下面的按钮开始使用此模板创建发票。",
     "tags": "标签",
     "builtIn": "内置",
     "category": {

@@ -1,9 +1,6 @@
 // src/app/i18n-provider-wrapper.tsx
-'use server';
-
 import { ReactNode } from 'react';
 import { I18nProvider } from '@/i18n/context';
-import { cookies } from 'next/headers';
 import { getStoredLanguageServerSafe } from '@/lib/i18n-storage';
 
 interface I18nProviderWrapperProps {
