@@ -282,6 +282,12 @@ adr/README.md
 4. [ ] 如有设计变更，更新 [design.md](docs/design.md)
 5. [ ] 提交信息遵循 [Conventional Commits](#git-工作流规范)
 
+### 修复错误前
+
+1. [ ] 确认错误与 issue 描述一致
+2. [ ] 从 main 创建新分支，命名要求 `fix/xxx` 或 `bug-fix/xxx`
+3. [ ] 必须使用 worktree 模式绑定新分支，确保并行开发不会冲突
+
 ### Git 操作前
 
 1. [ ] 查阅 [BRANCH_GUIDELINES.md](docs/BRANCH_GUIDELINES.md)
