@@ -99,15 +99,15 @@ export default function InvoicePreview({
             <div className="flex justify-between mb-6">
               <div className={`text-sm text-slate-600 ${getTextFontClass()}`}>
                 <div>
-                  <span className="font-medium">{tInvoice("meta.invoiceNumber")}</span>{" "}
+                  <span className="font-medium">{tInvoice("preview.invoiceNumber")}</span>{" "}
                   <span className={getNumberFontClass()}>{invoice.number || "---"}</span>
                 </div>
                 <div>
-                  <span className="font-medium">{tInvoice("meta.date")}</span>{" "}
+                  <span className="font-medium">{tInvoice("preview.date")}</span>{" "}
                   <span className={getNumberFontClass()}>{invoice.date || "---"}</span>
                 </div>
                 <div>
-                  <span className="font-medium">{tInvoice("meta.dueDate")}</span>{" "}
+                  <span className="font-medium">{tInvoice("preview.dueDate")}</span>{" "}
                   <span className={getNumberFontClass()}>{invoice.dueDate || "---"}</span>
                 </div>
               </div>
@@ -117,7 +117,7 @@ export default function InvoicePreview({
             <div className="grid grid-cols-2 gap-6 mb-6">
               <div>
                 <h3 className={`text-sm font-medium text-slate-500 mb-2 ${getTextFontClass()}`}>
-                  {tInvoice("from")}
+                  {tInvoice("preview.from")}
                 </h3>
                 <div className={`text-sm text-slate-900 ${getTextFontClass()}`}>
                   <div style={{ color: themeColor !== '#2563EB' ? themeColor : undefined }}>
@@ -137,7 +137,7 @@ export default function InvoicePreview({
               </div>
               <div>
                 <h3 className={`text-sm font-medium text-slate-500 mb-2 ${getTextFontClass()}`}>
-                  {tInvoice("to")}
+                  {tInvoice("preview.to")}
                 </h3>
                 <div className={`text-sm text-slate-900 ${getTextFontClass()}`}>
                   <div style={{ color: themeColor !== '#2563EB' ? themeColor : undefined }}>
@@ -163,16 +163,16 @@ export default function InvoicePreview({
               <thead>
                 <tr className="border-b" style={{ borderColor: themeColor !== '#2563EB' ? themeColor : undefined }}>
                   <th className={`text-left text-sm font-medium text-slate-500 py-2 ${getTextFontClass()}`}>
-                    {tInvoice("table.description")}
+                    {tInvoice("preview.description")}
                   </th>
                   <th className={`text-right text-sm font-medium text-slate-500 py-2 ${getTextFontClass()}`}>
-                    {tInvoice("table.qty")}
+                    {tInvoice("preview.qty")}
                   </th>
                   <th className={`text-right text-sm font-medium text-slate-500 py-2 ${getTextFontClass()}`}>
-                    {tInvoice("table.rate")}
+                    {tInvoice("preview.rate")}
                   </th>
                   <th className={`text-right text-sm font-medium text-slate-500 py-2 ${getTextFontClass()}`}>
-                    {tInvoice("table.amount")}
+                    {tInvoice("preview.amount")}
                   </th>
                 </tr>
               </thead>
@@ -204,14 +204,14 @@ export default function InvoicePreview({
             <div className="flex justify-end">
               <div className="w-48 space-y-2">
                 <div className={`flex justify-between text-sm ${getTextFontClass()}`}>
-                  <span className="text-slate-600">{tInvoice("totals.subtotal")}</span>
+                  <span className="text-slate-600">{tInvoice("preview.subtotal")}</span>
                   <span className={`text-slate-900 ${getNumberFontClass()}`}>
                     <span className={getNumberFontClass()}>${totals.subtotal.toFixed(2)}</span>
                   </span>
                 </div>
                 <div className={`flex justify-between text-sm ${getTextFontClass()}`}>
                   <span className="text-slate-600">
-                    {tInvoice("totals.tax", { rate: invoice.taxRate })}
+                    {tInvoice("preview.taxLabel", { rate: invoice.taxRate })}
                   </span>
                   <span className={`text-slate-900 ${getNumberFontClass()}`}>
                     <span className={getNumberFontClass()}>${totals.taxAmount.toFixed(2)}</span>
@@ -223,7 +223,7 @@ export default function InvoicePreview({
                     borderColor: themeColor !== '#2563EB' ? themeColor : undefined
                   }}
                 >
-                  <span className="text-slate-900">{tInvoice("totals.total")}</span>
+                  <span className="text-slate-900">{tInvoice("preview.total")}</span>
                   <span
                     className={`text-slate-900 ${getNumberFontClass()}`}
                     style={{ color: themeColor !== '#2563EB' ? themeColor : undefined }}
@@ -241,7 +241,7 @@ export default function InvoicePreview({
                 {invoice.notes && (
                   <div>
                     <h3 className={`text-sm font-medium text-slate-500 mb-1 ${getTextFontClass()}`}>
-                      {tInvoice("notes")}
+                      {tInvoice("preview.notesLabel")}
                     </h3>
                     <p className={`text-sm text-slate-600 ${getTextFontClass()}`}>{invoice.notes}</p>
                   </div>
@@ -249,7 +249,7 @@ export default function InvoicePreview({
                 {invoice.terms && (
                   <div>
                     <h3 className={`text-sm font-medium text-slate-500 mb-1 ${getTextFontClass()}`}>
-                      {tInvoice("terms")}
+                      {tInvoice("preview.termsLabel")}
                     </h3>
                     <p className={`text-sm text-slate-600 ${getTextFontClass()}`}>{invoice.terms}</p>
                   </div>
