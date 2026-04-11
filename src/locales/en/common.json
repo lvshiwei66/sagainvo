@@ -15,6 +15,9 @@
     "save": "Save",
     "close": "Close"
   },
+  "logo": {
+    "alt": "Company Logo"
+  },
   "templates": {
     "title": "Invoice Templates",
     "subtitle": "Choose from our professionally designed templates to create beautiful invoices.",
@@ -31,6 +34,7 @@
     "selectedTemplateMessage3": " theme color, ",
     "selectedTemplateMessage4": " text font, and ",
     "selectedTemplateMessage5": " number font. Click the button below to start creating your invoice with this template.",
+    "selectedTemplateMessage": "You've selected the {{templateName}} template with {{themeColor}} theme color, {{textFont}} text font, and {{numberFont}} number font. Click the button below to start creating your invoice with this template.",
     "tags": "Tags",
     "builtIn": "Built-in",
     "category": {

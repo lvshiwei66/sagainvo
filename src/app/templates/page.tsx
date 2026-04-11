@@ -75,7 +75,12 @@ export default function TemplatesPage() {
 
               <div className="mt-6 p-4 bg-slate-50 rounded-lg">
                 <p className="text-slate-700">
-                  {tCommon('templates.selectedTemplateMessage1')}<strong>{selectedTemplate.name}</strong>{tCommon('templates.selectedTemplateMessage2')}{selectedTemplate.themeColor}{tCommon('templates.selectedTemplateMessage3')}{selectedTemplate.textFont}{tCommon('templates.selectedTemplateMessage4')}{selectedTemplate.numberFont}{tCommon('templates.selectedTemplateMessage5')}
+                  {tCommon('templates.selectedTemplateMessage', {
+                    templateName: selectedTemplate.name,
+                    themeColor: selectedTemplate.themeColor,
+                    textFont: selectedTemplate.textFont,
+                    numberFont: selectedTemplate.numberFont
+                  })}
                 </p>
                 <a
                   href="/editor"
