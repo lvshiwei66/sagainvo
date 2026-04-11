@@ -14,7 +14,6 @@ export default function TemplatesPage() {
   const handleTemplateSelect = (template: InvoiceTemplate) => {
     setSelectedTemplate(template);
     // Here we would typically redirect to the editor with the selected template
-    console.log('Selected template:', template);
   };
 
   return (

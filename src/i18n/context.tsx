@@ -24,7 +24,7 @@ interface I18nProviderProps {
 export const I18nProvider = ({ children, initialLocale }: I18nProviderProps) => {
   // Always use initialLocale from server-side to avoid hydration mismatch
   // User's language preference from localStorage will be loaded after mount
-  const [locale, setLocaleState] = useState<LanguageCode>(initialLocale);
+  const [locale, setLocaleState] = useState<LanguageCode>(initialLocale || getBrowserLocale());
 
   const [translations, setTranslations] = useState({
     common: {} as Record<string, string>,
