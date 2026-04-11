@@ -288,6 +288,10 @@ adr/README.md
 2. [ ] 从 main 创建新分支，命名要求 `fix/xxx` 或 `bug-fix/xxx`
 3. [ ] 必须使用 worktree 模式绑定新分支，确保并行开发不会冲突
 
+### 修复错误后
+
+- 生成的 Pull Request 必须与 Issue 关联, 记录链接和编号
+
 ### Git 操作前
 
 1. [ ] 查阅 [BRANCH_GUIDELINES.md](docs/BRANCH_GUIDELINES.md)
