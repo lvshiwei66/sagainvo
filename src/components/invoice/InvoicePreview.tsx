@@ -3,6 +3,9 @@
 import { Invoice, Totals, InvoiceTemplate } from "@/lib/types";
 import { exportPDFWithLogo, exportCSV } from "@/lib/pdf-export";
 
+// Default theme color constant
+const DEFAULT_THEME_COLOR = '#2563EB'; // Default to primary blue
+
 interface InvoicePreviewProps {
   invoice: Invoice;
   totals: Totals;
@@ -18,7 +21,7 @@ export default function InvoicePreview({
 }: InvoicePreviewProps) {
 
   // Default values when no template is applied
-  const themeColor = template?.themeColor || '#2563EB'; // Default to primary blue
+  const themeColor = template?.themeColor || DEFAULT_THEME_COLOR;
   const textFontFamily = template?.textFont || 'sans';
   const numberFontFamily = template?.numberFont || 'sans';
 
@@ -54,19 +57,13 @@ export default function InvoicePreview({
   return (
     <div className={className}>
       <div className="shadow-sm overflow-hidden">
-        {/* Preview Header */}
-        {/*<div className="px-6 py-4 bg-white flex gap-3">
-          <h2 className="text-lg font-medium text-slate-900">
-            Invoice Preview
-          </h2>
-        </div>*/}
         {/* Invoice Preview */}
         <div className="pb-6 drop-shadow-md">
           <div
             className="border p-6 bg-white"
             style={{
               // Apply theme color to borders if needed
-              borderColor: themeColor !== '#2563EB' ? themeColor : undefined
+              borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined
             }}
           >
             {/* Invoice Title and Logo */}
@@ -76,7 +73,7 @@ export default function InvoicePreview({
                   className={`text-2xl font-light text-slate-900 tracking-wide ${getTextFontClass()}`}
                   style={{
                     // Apply theme color to title if it's different from default
-                    color: themeColor !== '#2563EB' ? themeColor : undefined
+                    color: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined
                   }}
                 >
                   INVOICE
@@ -118,7 +115,7 @@ export default function InvoicePreview({
                   From:
                 </h3>
                 <div className={`text-sm text-slate-900 ${getTextFontClass()}`}>
-                  <div style={{ color: themeColor !== '#2563EB' ? themeColor : undefined }}>
+                  <div style={{ color: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined }}>
                     {invoice.from.businessName || "---"}
                   </div>
                   {invoice.from.address && <div>{invoice.from.address}</div>}
@@ -138,7 +135,7 @@ export default function InvoicePreview({
                   To:
                 </h3>
                 <div className={`text-sm text-slate-900 ${getTextFontClass()}`}>
-                  <div style={{ color: themeColor !== '#2563EB' ? themeColor : undefined }}>
+                  <div style={{ color: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined }}>
                     {invoice.to.clientName || "---"}
                   </div>
                   {invoice.to.company && <div>{invoice.to.company}</div>}
@@ -159,7 +156,7 @@ export default function InvoicePreview({
             {/* Line Items Table */}
             <table className="w-full mb-6">
               <thead>
-                <tr className="border-b" style={{ borderColor: themeColor !== '#2563EB' ? themeColor : undefined }}>
+                <tr className="border-b" style={{ borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined }}>
                   <th className={`text-left text-sm font-medium text-slate-500 py-2 ${getTextFontClass()}`}>
                     Description
                   </th>
@@ -179,7 +176,7 @@ export default function InvoicePreview({
                   <tr
                     key={index}
                     className="border-b last:border-0"
-                    style={{ borderColor: themeColor !== '#2563EB' ? themeColor : undefined }}
+                    style={{ borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined }}
                   >
                     <td className={`py-3 text-sm text-slate-900 ${getTextFontClass()}`}>
                       {item.description || "---"}
@@ -218,13 +215,13 @@ export default function InvoicePreview({
                 <div
                   className={`flex justify-between text-base font-medium border-t pt-2 ${getTextFontClass()}`}
                   style={{
-                    borderColor: themeColor !== '#2563EB' ? themeColor : undefined
+                    borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined
                   }}
                 >
                   <span className="text-slate-900">Total:</span>
                   <span
                     className={`text-slate-900 ${getNumberFontClass()}`}
-                    style={{ color: themeColor !== '#2563EB' ? themeColor : undefined }}
+                    style={{ color: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined }}
                   >
                     ${totals.total.toFixed(2)}
                   </span>
@@ -235,7 +232,7 @@ export default function InvoicePreview({
             {/* Notes and Terms */}
             {(invoice.notes || invoice.terms) && (
               <div className="grid grid-cols-2 gap-6 mt-6 pt-6 border-t"
-                style={{ borderColor: themeColor !== '#2563EB' ? themeColor : undefined }}>
+                style={{ borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined }}>
                 {invoice.notes && (
                   <div>
                     <h3 className={`text-sm font-medium text-slate-500 mb-1 ${getTextFontClass()}`}>
