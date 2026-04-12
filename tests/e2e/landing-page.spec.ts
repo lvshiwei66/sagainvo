@@ -3,6 +3,12 @@ import { test, expect } from '@playwright/test';
 test.describe('Landing Page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
+    // Set English language after page load to ensure consistent test environment
+    await page.waitForTimeout(300);
+    await page.evaluate(() => {
+      window.localStorage.setItem('sagainvo:language', 'en-US');
+    });
+    await page.reload();
   });
 
   test('should display correct page title', async ({ page }) => {

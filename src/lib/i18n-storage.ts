@@ -1,39 +1,11 @@
 // src/lib/i18n-storage.ts
-import { LanguageCode, defaultLanguage, supportedLanguages } from '@/i18n-config';
+import { LanguageCode, defaultLanguage, supportedLanguages, parseAcceptLanguage } from '@/i18n-config';
 
 // Cookie key used by middleware and server-side code
 export const LANGUAGE_COOKIE_KEY = 'NEXT_LOCALE';
 
 // LocalStorage key for client-side persistence
 const LANGUAGE_STORAGE_KEY = 'sagainvo:language';
-
-/**
- * Parse Accept-Language header and return the best matching supported language
- */
-const parseAcceptLanguage = (acceptLanguage: string | null): LanguageCode => {
-  if (!acceptLanguage) return defaultLanguage;
-
-  // Parse header like "zh-CN,zh;q=0.9,en;q=0.8"
-  const languages = acceptLanguage.split(',').map(lang => {
-    const [code, q = 'q=1'] = lang.trim().split(';');
-    const quality = parseFloat(q.replace('q=', ''));
-    return { code: code.toLowerCase(), quality };
-  });
-
-  // Find best matching supported language
-  for (const { code } of languages.sort((a, b) => b.quality - a.quality)) {
-    // Exact match
-    const exactMatch = supportedLanguages.find(lang => lang === code);
-    if (exactMatch) {
-      return exactMatch as LanguageCode;
-    }
-    // Prefix match (e.g., "zh" matches "zh-CN")
-    const prefixMatch = supportedLanguages.find(lang => lang.startsWith(code));
-    if (prefixMatch) return prefixMatch as LanguageCode;
-  }
-
-  return defaultLanguage;
-};
 
 /**
  * Get language from request headers (server-side)

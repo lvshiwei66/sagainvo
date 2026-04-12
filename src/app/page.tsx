@@ -1,4 +1,10 @@
 import { FileText, Zap, Shield, Download } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Saga Invoice - Professional Invoice Generator",
+  description: "Create professional invoices in 30 seconds. Free, no signup required. Perfect for Amazon, Shopify, and Etsy sellers.",
+};
 
 export default function Home() {
   return (
