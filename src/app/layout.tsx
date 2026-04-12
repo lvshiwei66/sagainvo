@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { I18nProvider } from "@/i18n/context";
 import { getStoredLanguageServerSafe } from "@/lib/i18n-storage";
+import { headers } from 'next/headers';
 import "./globals.css";
 
 const metadata: Metadata = {
@@ -14,8 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   // Use server-safe language detection to avoid hydration mismatch
+  // Get headers to pass to language detection function
+  const requestHeaders = headers();
+
   // Client will sync with localStorage after mount
-  const initialLocale = getStoredLanguageServerSafe();
+  const initialLocale = getStoredLanguageServerSafe(requestHeaders);
 
   return (
     <html lang={initialLocale} suppressHydrationWarning>

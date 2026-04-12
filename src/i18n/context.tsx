@@ -78,6 +78,8 @@ export const I18nProvider = ({ children, initialLocale }: I18nProviderProps) => 
 
   const setLocale = (newLocale: LanguageCode) => {
     setLocaleState(newLocale);
+    // Ensure stored language is updated in both localStorage and cookie
+    setStoredLanguage(newLocale);
   };
 
   const tCommon = (key: string, params?: Record<string, string | number>) => {

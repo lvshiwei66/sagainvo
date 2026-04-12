@@ -76,8 +76,18 @@ export const setStoredLanguage = (lang: LanguageCode): void => {
   if (typeof window !== 'undefined') {
     try {
       localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+
+      // Also set the cookie so server-side can recognize the preference
+      // Set cookie with 1-year expiration, ensure proper formatting
+      const expires = new Date();
+      expires.setTime(expires.getTime() + (365 * 24 * 60 * 60 * 1000)); // 1 year
+      let cookieString = `${LANGUAGE_COOKIE_KEY}=${encodeURIComponent(lang)};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
+      if (process.env.NODE_ENV === 'production') {
+        cookieString += ';Secure';
+      }
+      document.cookie = cookieString;
     } catch (error) {
-      console.warn('Could not write to localStorage:', error);
+      console.warn('Could not write to localStorage or cookie:', error);
     }
   }
 };
