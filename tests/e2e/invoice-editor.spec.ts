@@ -2,10 +2,17 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Invoice Editor - Core Functionality', () => {
   test.beforeEach(async ({ page }) => {
+    // Navigate to page first, then set English language to ensure consistent test environment
     await page.goto('/editor');
-    // Clear localStorage to start with a fresh state
-    await page.evaluate(() => window.localStorage.clear());
+    // Wait for page to load, then set English language
+    await page.waitForTimeout(500);
+    await page.evaluate(() => {
+      window.localStorage.setItem('sagainvo:language', 'en-US');
+    });
+    // Reload page to apply language setting
     await page.reload();
+    // Wait for editor to load
+    await page.waitForSelector('[placeholder*="Business Name"], [placeholder*="Invoice Number"]', { timeout: 10000 });
   });
 
   test('should display invoice editor with all sections', async ({ page }) => {
@@ -110,10 +117,12 @@ test.describe('Invoice Editor - Core Functionality', () => {
     const descriptions = page.getByPlaceholder('Description');
     await expect(descriptions).toHaveCount(2);
 
-    // Remove second item (hover to show delete button)
-    const removeButtons = page.getByRole('button').filter({ hasText: '×' });
-    await removeButtons.nth(1).hover();
-    await removeButtons.nth(1).click();
+    // Remove second item - click the delete button (X icon) in the second row
+    // Hover over the second row to reveal the delete button
+    await page.getByPlaceholder('Description').nth(1).hover();
+    // Find the delete button within the second row's group
+    const secondRow = page.locator('.group').nth(1);
+    await secondRow.locator('button').first().click();
 
     // Verify only one item remains
     await expect(page.getByPlaceholder('Description')).toHaveCount(1);
@@ -132,8 +141,13 @@ test.describe('Invoice Editor - Core Functionality', () => {
     // Change tax rate to 10%
     await taxRateInput.fill('10');
 
-    // Verify tax amount updated (should be $10 for $100 subtotal)
-    await expect(page.getByText(/Tax \(10%\):/)).toBeVisible();
+    // Wait for preview to update
+    await page.waitForTimeout(500);
+
+    // Verify the tax amount shows $10.00 in the preview
+    // Use exact text match to avoid conflicts with form labels
+    await expect(page.locator('span').filter({ hasText: 'Tax', exact: true }).first()).toBeVisible();
+    await expect(page.locator('span').filter({ hasText: '$10.00' }).first()).toBeVisible();
   });
 
   test('should update notes and terms fields', async ({ page }) => {

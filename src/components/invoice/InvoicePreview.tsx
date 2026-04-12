@@ -56,6 +56,7 @@ export default function InvoicePreview({
 
   return (
     <div className={className}>
+      <h2 className="text-lg font-medium text-slate-900 mb-4">Invoice Preview</h2>
       <div className="shadow-sm overflow-hidden">
         {/* Invoice Preview */}
         <div className="pb-6 drop-shadow-md">
