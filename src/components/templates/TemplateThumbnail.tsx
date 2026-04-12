@@ -21,10 +21,10 @@ const TemplateThumbnail: React.FC<TemplateThumbnailProps> = ({
   const numberFontClass = numberFont === 'sans' ? 'font-sans' : numberFont === 'serif' ? 'font-serif' : 'font-mono';
 
   return (
-    <div className={`relative bg-white border rounded-lg shadow-sm overflow-hidden w-full h-64 flex items-center justify-center ${className}`}>
+    <div className={`relative bg-white border rounded-lg shadow-sm overflow-hidden w-full aspect-[4/3] flex items-center justify-center scale-95 ${className}`}>
       {/* 发票主体容器 */}
       <div
-        className="absolute inset-4 border rounded p-3"
+        className="absolute inset-3 border rounded p-2"
         style={{ borderColor: themeColor }}
       >
         {/* 标题行 */}
