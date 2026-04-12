@@ -37,7 +37,7 @@ export default function TemplateCard({
         <p className="mt-1 text-sm text-slate-500 line-clamp-2">{template.description}</p>
       </div>
 
-      <div className="border-t border-slate-200 p-2 min-h-[120px]">
+      <div className="border-t border-slate-200 p-2">
         <TemplateThumbnail
           themeColor={template.themeColor}
           textFont={template.textFont}
