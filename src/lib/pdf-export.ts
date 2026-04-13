@@ -1,33 +1,37 @@
 import { Invoice, Totals } from "./types";
 import { jsPDF } from "jspdf";
 
-// Import Chinese font definition
-import registerChineseFont from './fonts/NotoSansSC-Regular';
+// Import Arial font definition
+import registerFont from './fonts/Arial-Regular';
 
 /**
  * Set consistent default styles for PDF
- * Uses NotoSansSC font which supports both Chinese and Latin characters
+ * Uses Arial font which supports both Latin and CJK characters (via Arial Unicode)
  */
 function setDefaultStyles(doc: jsPDF): void {
   doc.setTextColor(0, 0, 0); // Black text
-  doc.setFont("NotoSansSC");
+  doc.setFont("Arial");
   doc.setFontSize(12);
   doc.setLineWidth(0.5); // Consistent line width
 }
 
-// Async version that properly handles logo and Chinese characters
+// Async version that properly handles logo
 export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promise<void> {
   const doc = new jsPDF();
 
-  // Register Chinese font first (supports both Chinese and Latin)
-  registerChineseFont(doc);
+  // Register Arial font
+  try {
+    registerFont(doc);
+  } catch (error) {
+    console.warn('Font registration failed, using default font:', error);
+  }
 
-  // Set default styles (now using NotoSansSC)
+  // Set default styles (now using Arial)
   setDefaultStyles(doc);
 
   // Add title
   doc.setFontSize(20);
-  doc.setFont('NotoSansSC', 'bold');
+  doc.setFont('Arial', 'bold');
   doc.text("INVOICE", 20, 30);
 
   // Add logo if exists (align with the top of the invoice title)
@@ -44,13 +48,13 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
   // Add invoice number
   if (invoice.number) {
     doc.setFontSize(16);
-    doc.setFont('NotoSansSC', 'bold');
+    doc.setFont('Arial', 'bold');
     doc.text(`#${invoice.number}`, 20, 40);
   }
 
   // Add date and due date
   doc.setFontSize(12);
-  doc.setFont('NotoSansSC', 'normal');
+  doc.setFont('Arial', 'normal');
   let dateYOffset = invoice.number ? 50 : 40;
   if (invoice.date) {
     doc.text(`Date: ${invoice.date}`, 20, dateYOffset);
@@ -64,10 +68,10 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
 
   // From section
   doc.setFontSize(14);
-  doc.setFont('NotoSansSC', 'bold');
+  doc.setFont('Arial', 'bold');
   doc.text("From:", 20, fromToYOffset);
   doc.setFontSize(12);
-  doc.setFont('NotoSansSC', 'normal');
+  doc.setFont('Arial', 'normal');
   if (invoice.from.businessName) doc.text(invoice.from.businessName, 20, fromToYOffset + 10);
   if (invoice.from.address) doc.text(invoice.from.address, 20, fromToYOffset + 16);
   if (invoice.from.cityStateZip) doc.text(invoice.from.cityStateZip, 20, fromToYOffset + 22);
@@ -77,10 +81,10 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
 
   // To section
   doc.setFontSize(14);
-  doc.setFont('NotoSansSC', 'bold');
+  doc.setFont('Arial', 'bold');
   doc.text("To:", 120, fromToYOffset);
   doc.setFontSize(12);
-  doc.setFont('NotoSansSC', 'normal');
+  doc.setFont('Arial', 'normal');
   if (invoice.to.clientName) doc.text(invoice.to.clientName, 120, fromToYOffset + 10);
   if (invoice.to.company) doc.text(invoice.to.company, 120, fromToYOffset + 16);
   if (invoice.to.address) doc.text(invoice.to.address, 120, fromToYOffset + 22);
@@ -92,7 +96,7 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
   // Draw items table header
   const tableTopY = fromToYOffset + 55;
   doc.setFontSize(12);
-  doc.setFont('NotoSansSC', 'bold');
+  doc.setFont('Arial', 'bold');
   doc.text("Description", 20, tableTopY);
   doc.text("Qty", 100, tableTopY);
   doc.text("Rate", 130, tableTopY);
@@ -102,7 +106,7 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
   doc.line(20, tableTopY + 5, 190, tableTopY + 5);
 
   // Draw items table rows
-  doc.setFont('NotoSansSC', 'normal');
+  doc.setFont('Arial', 'normal');
   let currentY = tableTopY + 15;
   invoice.items.forEach((item) => {
     // Check if we need a new page
@@ -126,7 +130,7 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
 
   // Add totals section
   const totalsY = currentY + 15;
-  doc.setFont('NotoSansSC', 'bold');
+  doc.setFont('Arial', 'bold');
   doc.text(`Subtotal: $${totals.subtotal.toFixed(2)}`, 130, totalsY);
   if (invoice.taxRate && invoice.taxRate > 0) {
     doc.text(`Tax (${invoice.taxRate}%): $${totals.taxAmount.toFixed(2)}`, 130, totalsY + 7);
@@ -139,7 +143,7 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
   let notesY: number | undefined;
   if (invoice.notes) {
     notesY = totalsY + 25;
-    doc.setFont('NotoSansSC', 'normal');
+    doc.setFont('Arial', 'normal');
     doc.setFontSize(12);
     doc.text("Notes:", 20, notesY);
     const notesLines = doc.splitTextToSize(invoice.notes, 170);
@@ -149,7 +153,7 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
   // Add terms if any
   if (invoice.terms) {
     const termsY = notesY !== undefined ? notesY + 30 : totalsY + 25;
-    doc.setFont('NotoSansSC', 'normal');
+    doc.setFont('Arial', 'normal');
     doc.setFontSize(12);
     doc.text("Terms:", 20, termsY);
     const termsLines = doc.splitTextToSize(invoice.terms, 170);
