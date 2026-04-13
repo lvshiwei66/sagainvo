@@ -163,25 +163,23 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
     doc.text(totals.total.toFixed(2), 170, totalsY + 7);
   }
 
-  // Add notes if any
-  let notesY: number | undefined;
+  // Add notes and terms side by side (matching preview layout)
+  const notesAndTermsY = totalsY + 25;
+  doc.setFont('Inter', 'normal');
+  doc.setFontSize(12);
+
+  // Add notes if any (left column)
   if (invoice.notes) {
-    notesY = totalsY + 25;
-    doc.setFont('Inter', 'normal');
-    doc.setFontSize(12);
-    doc.text("Notes:", 20, notesY);
-    const notesLines = doc.splitTextToSize(invoice.notes, 170);
-    doc.text(notesLines, 20, notesY + 7);
+    doc.text("Notes:", 20, notesAndTermsY);
+    const notesLines = doc.splitTextToSize(invoice.notes, 80);
+    doc.text(notesLines, 20, notesAndTermsY + 7);
   }
 
-  // Add terms if any
+  // Add terms if any (right column)
   if (invoice.terms) {
-    const termsY = notesY !== undefined ? notesY + 30 : totalsY + 25;
-    doc.setFont('Inter', 'normal');
-    doc.setFontSize(12);
-    doc.text("Terms:", 20, termsY);
-    const termsLines = doc.splitTextToSize(invoice.terms, 170);
-    doc.text(termsLines, 20, termsY + 7);
+    doc.text("Terms:", 120, notesAndTermsY);
+    const termsLines = doc.splitTextToSize(invoice.terms, 80);
+    doc.text(termsLines, 120, notesAndTermsY + 7);
   }
 
   // Save the PDF
