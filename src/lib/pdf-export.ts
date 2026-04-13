@@ -1,16 +1,21 @@
 import { Invoice, Totals } from "./types";
 import { jsPDF } from "jspdf";
 
-// Import Arial font definition
-import registerFont from './fonts/Arial-Regular';
+// Import Inter font definitions (for text)
+import registerInterRegularFont from './fonts/Inter-Regular';
+import registerInterBoldFont from './fonts/Inter-Bold';
+
+// Import Courier Prime font definitions (for numbers)
+import registerCourierRegularFont from './fonts/CourierPrime-Regular';
+import registerCourierBoldFont from './fonts/CourierPrime-Bold';
 
 /**
  * Set consistent default styles for PDF
- * Uses Arial font which supports both Latin and CJK characters (via Arial Unicode)
+ * Uses Inter font for text, Courier Prime for numbers
  */
 function setDefaultStyles(doc: jsPDF): void {
   doc.setTextColor(0, 0, 0); // Black text
-  doc.setFont("Arial");
+  doc.setFont("Inter");
   doc.setFontSize(12);
   doc.setLineWidth(0.5); // Consistent line width
 }
@@ -19,19 +24,24 @@ function setDefaultStyles(doc: jsPDF): void {
 export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promise<void> {
   const doc = new jsPDF();
 
-  // Register Arial font
+  // Register fonts
   try {
-    registerFont(doc);
+    // Register Inter fonts (for text)
+    registerInterRegularFont(doc);
+    registerInterBoldFont(doc);
+    // Register Courier Prime fonts (for numbers)
+    registerCourierRegularFont(doc);
+    registerCourierBoldFont(doc);
   } catch (error) {
     console.warn('Font registration failed, using default font:', error);
   }
 
-  // Set default styles (now using Arial)
+  // Set default styles (using Inter for text)
   setDefaultStyles(doc);
 
   // Add title
   doc.setFontSize(20);
-  doc.setFont('Arial', 'bold');
+  doc.setFont('Inter', 'bold');
   doc.text("INVOICE", 20, 30);
 
   // Add logo if exists (align with the top of the invoice title)
@@ -48,13 +58,13 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
   // Add invoice number
   if (invoice.number) {
     doc.setFontSize(16);
-    doc.setFont('Arial', 'bold');
+    doc.setFont('Inter', 'bold');
     doc.text(`#${invoice.number}`, 20, 40);
   }
 
   // Add date and due date
   doc.setFontSize(12);
-  doc.setFont('Arial', 'normal');
+  doc.setFont('Inter', 'normal');
   let dateYOffset = invoice.number ? 50 : 40;
   if (invoice.date) {
     doc.text(`Date: ${invoice.date}`, 20, dateYOffset);
@@ -68,10 +78,10 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
 
   // From section
   doc.setFontSize(14);
-  doc.setFont('Arial', 'bold');
+  doc.setFont('Inter', 'bold');
   doc.text("From:", 20, fromToYOffset);
   doc.setFontSize(12);
-  doc.setFont('Arial', 'normal');
+  doc.setFont('Inter', 'normal');
   if (invoice.from.businessName) doc.text(invoice.from.businessName, 20, fromToYOffset + 10);
   if (invoice.from.address) doc.text(invoice.from.address, 20, fromToYOffset + 16);
   if (invoice.from.cityStateZip) doc.text(invoice.from.cityStateZip, 20, fromToYOffset + 22);
@@ -81,10 +91,10 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
 
   // To section
   doc.setFontSize(14);
-  doc.setFont('Arial', 'bold');
+  doc.setFont('Inter', 'bold');
   doc.text("To:", 120, fromToYOffset);
   doc.setFontSize(12);
-  doc.setFont('Arial', 'normal');
+  doc.setFont('Inter', 'normal');
   if (invoice.to.clientName) doc.text(invoice.to.clientName, 120, fromToYOffset + 10);
   if (invoice.to.company) doc.text(invoice.to.company, 120, fromToYOffset + 16);
   if (invoice.to.address) doc.text(invoice.to.address, 120, fromToYOffset + 22);
@@ -96,7 +106,7 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
   // Draw items table header
   const tableTopY = fromToYOffset + 55;
   doc.setFontSize(12);
-  doc.setFont('Arial', 'bold');
+  doc.setFont('Inter', 'bold');
   doc.text("Description", 20, tableTopY);
   doc.text("Qty", 100, tableTopY);
   doc.text("Rate", 130, tableTopY);
@@ -106,7 +116,6 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
   doc.line(20, tableTopY + 5, 190, tableTopY + 5);
 
   // Draw items table rows
-  doc.setFont('Arial', 'normal');
   let currentY = tableTopY + 15;
   invoice.items.forEach((item) => {
     // Check if we need a new page
@@ -115,12 +124,14 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
       currentY = 20;
     }
 
-    // Description (with multi-line handling if needed)
+    // Description (with multi-line handling if needed) - using Inter
+    doc.setFont('Inter', 'normal');
     const maxWidth = 70;
     const descriptionLines = doc.splitTextToSize(item.description, maxWidth);
     doc.text(descriptionLines, 20, currentY);
 
-    // Quantity, rate, and amount
+    // Quantity, rate, and amount - using Courier Prime for numbers
+    doc.setFont('Courier Prime', 'normal');
     doc.text(item.quantity.toString(), 105, currentY);
     doc.text(item.rate.toFixed(2), 135, currentY);
     doc.text((item.quantity * item.rate).toFixed(2), 165, currentY);
@@ -128,22 +139,35 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
     currentY += Math.max(10, descriptionLines.length * 6);
   });
 
-  // Add totals section
+  // Add totals section - using Courier Prime for numbers
   const totalsY = currentY + 15;
-  doc.setFont('Arial', 'bold');
-  doc.text(`Subtotal: $${totals.subtotal.toFixed(2)}`, 130, totalsY);
+  doc.setFont('Inter', 'bold');
+  doc.text(`Subtotal: $`, 130, totalsY);
+  doc.setFont('Courier Prime', 'bold');
+  doc.text(totals.subtotal.toFixed(2), 170, totalsY);
+
   if (invoice.taxRate && invoice.taxRate > 0) {
-    doc.text(`Tax (${invoice.taxRate}%): $${totals.taxAmount.toFixed(2)}`, 130, totalsY + 7);
-    doc.text(`Total: $${totals.total.toFixed(2)}`, 130, totalsY + 14);
+    doc.setFont('Inter', 'bold');
+    doc.text(`Tax (${invoice.taxRate}%): $`, 130, totalsY + 7);
+    doc.setFont('Courier Prime', 'bold');
+    doc.text(totals.taxAmount.toFixed(2), 170, totalsY + 7);
+
+    doc.setFont('Inter', 'bold');
+    doc.text(`Total: $`, 130, totalsY + 14);
+    doc.setFont('Courier Prime', 'bold');
+    doc.text(totals.total.toFixed(2), 170, totalsY + 14);
   } else {
-    doc.text(`Total: $${totals.total.toFixed(2)}`, 130, totalsY + 7);
+    doc.setFont('Inter', 'bold');
+    doc.text(`Total: $`, 130, totalsY + 7);
+    doc.setFont('Courier Prime', 'bold');
+    doc.text(totals.total.toFixed(2), 170, totalsY + 7);
   }
 
   // Add notes if any
   let notesY: number | undefined;
   if (invoice.notes) {
     notesY = totalsY + 25;
-    doc.setFont('Arial', 'normal');
+    doc.setFont('Inter', 'normal');
     doc.setFontSize(12);
     doc.text("Notes:", 20, notesY);
     const notesLines = doc.splitTextToSize(invoice.notes, 170);
@@ -153,7 +177,7 @@ export async function exportPDFWithLogo(invoice: Invoice, totals: Totals): Promi
   // Add terms if any
   if (invoice.terms) {
     const termsY = notesY !== undefined ? notesY + 30 : totalsY + 25;
-    doc.setFont('Arial', 'normal');
+    doc.setFont('Inter', 'normal');
     doc.setFontSize(12);
     doc.text("Terms:", 20, termsY);
     const termsLines = doc.splitTextToSize(invoice.terms, 170);
