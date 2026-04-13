@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,9 +12,9 @@
   --warning: #F59E0B;
   --error: #EF4444;
 
-  /* Font families */
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-serif: 'Georgia', 'Times New Roman', Times, serif;
+  /* Font families - Noto Sans SC for consistent PDF/preview rendering */
+  --font-sans: 'Noto Sans SC', 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: 'Noto Serif SC', 'Georgia', 'Times New Roman', Times, serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
 }
 
@@ -23,28 +25,6 @@ body {
 .font-family-sans { font-family: var(--font-sans); }
 .font-family-serif { font-family: var(--font-serif); }
 .font-family-mono { font-family: var(--font-mono); }
-
-.font-sans-zh {
-  /* System font stack that supports Chinese characters */
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    "PingFang SC",
-    "Hiragino Sans GB",
-    "Microsoft YaHei",
-    "微软雅黑",
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol",
-    "Noto Color Emoji";
-}
 
 /* Template thumbnail specific styles */
 .template-thumbnail {
