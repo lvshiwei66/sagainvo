@@ -10,10 +10,10 @@
   --warning: #F59E0B;
   --error: #EF4444;
 
-  /* Font families - Arial for consistent PDF/preview rendering */
-  --font-sans: 'Arial', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  /* Font families - Inter for text, Courier Prime for numbers */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
   --font-serif: 'Georgia', 'Times New Roman', Times, serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+  --font-mono: 'Courier Prime', 'Consolas', 'Monaco', monospace;
 }
 
 body {
