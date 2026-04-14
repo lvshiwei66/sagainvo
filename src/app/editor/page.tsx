@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useIsClient } from "usehooks-ts";
 import Sidebar from "@/components/layout/Sidebar";
 import InvoiceForm from "@/components/invoice/InvoiceForm";
-import InvoicePreview from "@/components/invoice/InvoicePreview";
+import InvoicePreview from "@/components/invoice/InvoicePreview.dompdf";
 import { Invoice, LineItem, defaultInvoice, InvoiceTemplate } from "@/lib/types";
 import { calculateTotals } from "@/lib/calculator";
 import { saveInvoice, loadInvoice } from "@/lib/storage";
