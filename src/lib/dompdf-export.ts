@@ -38,6 +38,11 @@ export async function exportPDFWithLogo(
       tempDiv.style.position = 'absolute';
       tempDiv.style.left = '-9999px';
       tempDiv.className = 'invoice-container';
+      // Ensure the temporary element has proper styling for accurate rendering
+      tempDiv.style.width = '210mm';
+      tempDiv.style.minHeight = '297mm';
+      tempDiv.style.boxSizing = 'border-box';
+      tempDiv.style.padding = '24px'; // Equivalent to p-6 in mm
 
       // Create the invoice content as HTML in the temp container
       createInvoiceHtmlContent(tempDiv, invoice, totals);
@@ -45,6 +50,7 @@ export async function exportPDFWithLogo(
 
       try {
         // Generate PDF using dompdf with A4 format and proper settings to avoid page numbers
+        // Use "best fit" scaling to ensure content fits on one page when possible
         const pdfResult = await dompdf(tempDiv, {
           format: 'a4',
           orientation: 'portrait',
@@ -58,7 +64,9 @@ export async function exportPDFWithLogo(
             left: '10mm',
             right: '10mm'
           },
-          // Explicitly disable page numbering if dompdf supports this option
+          // Attempt to scale content to fit on one page when possible
+          scale: 0.85, // Scale down slightly to ensure content fits
+          // Use a smaller font scaling factor if needed
         });
 
         // Create download link
@@ -81,38 +89,58 @@ export async function exportPDFWithLogo(
         document.body.removeChild(tempDiv);
       }
     } else {
-      // Generate PDF using dompdf with proper A4 settings
-      const pdfResult = await dompdf(invoiceElement, {
-        format: 'a4',
-        orientation: 'portrait',
-        useCORS: true,
-        backgroundColor: '#ffffff',
-        precision: 16,
-        // Avoid default page numbers by using proper margins
-        margin: {
-          top: '10mm',
-          bottom: '10mm',
-          left: '10mm',
-          right: '10mm'
-        },
-        // Explicitly disable page numbering if dompdf supports this option
-      });
+      // Ensure the element has proper dimensions for PDF generation
+      const originalStyles = {
+        width: invoiceElement.style.width,
+        minHeight: invoiceElement.style.minHeight,
+        boxSizing: invoiceElement.style.boxSizing,
+      };
 
-      // Create download link
-      const link = document.createElement('a');
-      // Since dompdf returns a Blob, we can use it directly
-      const pdfBlob = pdfResult as Blob;
+      // Temporarily set the proper A4 dimensions
+      invoiceElement.style.width = '210mm';
+      invoiceElement.style.minHeight = '297mm';
+      invoiceElement.style.boxSizing = 'border-box';
 
-      link.href = URL.createObjectURL(pdfBlob);
-      link.download = `${invoice.number || "invoice"}.pdf`;
+      try {
+        // Generate PDF using dompdf with proper A4 settings and content scaling
+        const pdfResult = await dompdf(invoiceElement, {
+          format: 'a4',
+          orientation: 'portrait',
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          precision: 16,
+          // Avoid default page numbers by using proper margins
+          margin: {
+            top: '10mm',
+            bottom: '10mm',
+            left: '10mm',
+            right: '10mm'
+          },
+          // Scale content to better fit the page
+          scale: 0.85, // Scale down slightly to ensure content fits
+        });
 
-      // Trigger download
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+        // Create download link
+        const link = document.createElement('a');
+        // Since dompdf returns a Blob, we can use it directly
+        const pdfBlob = pdfResult as Blob;
 
-      // Clean up
-      URL.revokeObjectURL(link.href);
+        link.href = URL.createObjectURL(pdfBlob);
+        link.download = `${invoice.number || "invoice"}.pdf`;
+
+        // Trigger download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Clean up
+        URL.revokeObjectURL(link.href);
+      } finally {
+        // Restore original styles
+        invoiceElement.style.width = originalStyles.width;
+        invoiceElement.style.minHeight = originalStyles.minHeight;
+        invoiceElement.style.boxSizing = originalStyles.boxSizing;
+      }
     }
   } catch (error) {
     console.error('Failed to generate PDF:', error);
@@ -129,6 +157,14 @@ function createInvoiceHtmlContent(container: HTMLElement, invoice: Invoice, tota
 
   // Create the invoice content as DOM elements instead of HTML string
   container.innerHTML = '';
+
+  // Apply A4 page styles to ensure proper sizing
+  container.style.width = '210mm';
+  container.style.minHeight = '297mm';
+  container.style.boxSizing = 'border-box';
+  container.style.padding = '24px';
+  container.style.backgroundColor = '#ffffff';
+  container.style.margin = '0 auto';
 
   // Title and Logo
   const headerDiv = document.createElement('div');

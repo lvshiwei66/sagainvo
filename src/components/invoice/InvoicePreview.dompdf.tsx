@@ -63,13 +63,14 @@ export default function InvoicePreview({
         <div className="pb-6 drop-shadow-md">
           <div
             ref={invoiceContainerRef} // Reference for potential direct DOM access
-            className="invoice-container border p-6 bg-white max-w-[210mm] mx-auto" // Added A4 width constraint
+            className="invoice-container border p-6 bg-white max-w-[210mm] mx-auto shadow-md" // Added A4 width constraint and shadow for better visibility
             style={{
               borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined,
               width: '210mm',  // A4 width
               minHeight: '297mm', // A4 height
               maxWidth: '100%',
-              boxSizing: 'border-box'
+              boxSizing: 'border-box',
+              margin: '0 auto',
             }}
           >
             {/* Title and Logo */}
