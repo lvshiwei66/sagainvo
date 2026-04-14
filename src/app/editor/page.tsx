@@ -100,14 +100,13 @@ export default function EditorPage() {
               onLineItemChange={updateLineItem}
               onAddLineItem={addLineItem}
               onRemoveLineItem={removeLineItem}
-              onLoadDemoData={loadDemoData}
               onApplyTemplate={applyTemplate}
             />
           </div>
 
           {/* Preview Section with independent scroll */}
           <div className="w-full lg:w-[50%] p-6 overflow-y-auto max-h-[calc(100vh-0px)] border-l ">
-            <InvoicePreview invoice={invoice} totals={totals} className="" />
+            <InvoicePreview invoice={invoice} totals={totals} className="" onLoadDemoData={loadDemoData} />
           </div>
         </div>
       </div>
