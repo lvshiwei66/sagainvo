@@ -76,7 +76,7 @@ export default function InvoicePreview({
         throw new Error('Invoice preview container not found');
       }
     } catch (error) {
-      // Removed console.error for production, keeping user feedback
+      console.error('Failed to export to JPG:', error);
       alert('Failed to export to JPG. Please try again.');
     }
   };

@@ -146,7 +146,7 @@ test.describe('Invoice Editor - Core Functionality', () => {
 
     // Verify the tax amount shows $10.00 in the preview
     // Use exact text match to avoid conflicts with form labels
-    await expect(page.locator('span').filter({ hasText: 'Tax', exact: true }).first()).toBeVisible();
+    await expect(page.locator('span').filter({ hasText: 'Tax' }).first()).toBeVisible();
     await expect(page.locator('span').filter({ hasText: '$10.00' }).first()).toBeVisible();
   });
 

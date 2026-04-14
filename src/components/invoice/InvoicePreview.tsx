@@ -1,9 +1,9 @@
 "use client";
 
 import { Invoice, Totals, InvoiceTemplate } from "@/lib/types";
-import { exportPDFWithLogo } from "@/lib/pdf-export";
+import { exportPDFWithLogo, exportCSV } from "@/lib/pdf-export";
 import { exportToJpg } from "@/lib/image-export";
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useState } from "react";
 
 // 本地定义 LayoutMeasurements 类型以避免导出问题
 interface LayoutMeasurements {
@@ -20,6 +20,7 @@ interface InvoicePreviewProps {
   totals: Totals;
   template?: InvoiceTemplate;
   className?: string;
+  onLoadDemoData?: () => void;
 }
 
 export default function InvoicePreview({
@@ -27,6 +28,7 @@ export default function InvoicePreview({
   totals,
   template,
   className,
+  onLoadDemoData,
 }: InvoicePreviewProps) {
   const headerRowRef = useRef<HTMLTableRowElement>(null);
   const bodyRowsRefs = useRef<HTMLTableRowElement[]>([]);
@@ -108,7 +110,7 @@ export default function InvoicePreview({
         throw new Error('Invoice preview container not found');
       }
     } catch (error) {
-      // Removed console.error for production, keeping user feedback
+      console.error('Failed to export to JPG:', error);
       alert('Failed to export to JPG. Please try again.');
     }
   };
