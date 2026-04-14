@@ -56,6 +56,13 @@ export default function EditorPage() {
   };
 
   const loadDemoData = () => {
+    // Confirm with user before loading demo data if there's existing data
+    if (invoice.items.length > 1 || invoice.from.businessName || invoice.to.clientName || invoice.number || invoice.date) {
+      if (!window.confirm('This will replace your current invoice data with demo data. Continue?')) {
+        return;
+      }
+    }
+
     setInvoice(demoInvoiceData);
   };
 

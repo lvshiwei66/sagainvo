@@ -11,7 +11,6 @@ interface InvoiceFormProps {
   onLineItemChange: (index: number, updates: Partial<LineItem>) => void;
   onAddLineItem: () => void;
   onRemoveLineItem: (index: number) => void;
-  onLoadDemoData: () => void;
   onApplyTemplate?: (template: InvoiceTemplate) => void;
 }
 
@@ -21,7 +20,6 @@ export default function InvoiceForm({
   onLineItemChange,
   onAddLineItem,
   onRemoveLineItem,
-  onLoadDemoData,
   onApplyTemplate,
 }: InvoiceFormProps) {
   const { tInvoice } = useI18n();
@@ -356,17 +354,6 @@ export default function InvoiceForm({
             />
           </div>
         </div>
-      </div>
-
-      {/* Demo Data Button */}
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <button
-          onClick={onLoadDemoData}
-          className="w-full py-3 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md font-medium transition-colors"
-        >
-          <RotateCcw className="h-4 w-4" />
-          {tInvoice('invoice.demo.button') || 'Try Demo'}
-        </button>
       </div>
     </div>
   );

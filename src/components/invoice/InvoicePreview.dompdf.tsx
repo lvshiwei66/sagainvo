@@ -4,6 +4,7 @@ import { Invoice, Totals, InvoiceTemplate } from "@/lib/types";
 import { exportPDFWithLogo } from "@/lib/dompdf-export"; // Use new dompdf export
 import { exportToJpg } from "@/lib/image-export";
 import { useRef, useLayoutEffect, useState } from "react";
+import { RotateCcw } from "lucide-react";
 
 const DEFAULT_THEME_COLOR = '#2563EB';
 const A4_HEIGHT_MM = 297; // Standard A4 height in mm
@@ -14,6 +15,7 @@ interface InvoicePreviewProps {
   totals: Totals;
   template?: InvoiceTemplate;
   className?: string;
+  onLoadDemoData?: () => void;
 }
 
 export default function InvoicePreview({
@@ -21,6 +23,7 @@ export default function InvoicePreview({
   totals,
   template,
   className,
+  onLoadDemoData,
 }: InvoicePreviewProps) {
   // We keep this ref to potentially share the DOM element with dompdf
   const invoiceContainerRef = useRef<HTMLDivElement>(null);
@@ -87,7 +90,18 @@ export default function InvoicePreview({
 
   return (
     <div className={className}>
-      <h2 className="text-lg font-medium text-slate-900 mb-4">Invoice Preview</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-medium text-slate-900">Invoice Preview</h2>
+        {onLoadDemoData && (
+          <button
+            onClick={onLoadDemoData}
+            className="py-2 px-3 border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-md text-sm font-medium transition-colors flex items-center gap-1"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Try Demo
+          </button>
+        )}
+      </div>
       <div className="shadow-sm overflow-hidden">
         <div className="pb-6 drop-shadow-md">
           <div
