@@ -1,7 +1,7 @@
 "use client";
 
 import { Invoice, Totals, InvoiceTemplate } from "@/lib/types";
-import { exportPDFWithLogo, exportCSV } from "@/lib/pdf-export";
+import { exportPDFWithLogo } from "@/lib/pdf-export";
 import { exportToJpg } from "@/lib/image-export";
 import { useRef, useLayoutEffect, useState } from "react";
 
