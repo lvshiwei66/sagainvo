@@ -491,7 +491,7 @@ Mobile (< 768px): Single column, edit/preview toggle
 │  │                                                       │ │
 │  └───────────────────────────────────────────────────────┘ │
 │                                                             │
-│         [Download PDF]  [Download CSV]  [Print]             │
+│         [Download PDF]  [Download JPG]  [Print]             │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```

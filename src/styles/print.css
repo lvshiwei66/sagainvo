@@ -1,0 +1,87 @@
+@media print {
+  /* 隐藏不需要打印的元素 */
+  body > *:not(.invoice-preview-container) {
+    display: none !important;
+  }
+
+  /* 隐藏非发票内容 */
+  .sidebar,
+  .header,
+  .export-actions,
+  button,
+  input,
+  textarea,
+  nav,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  /* 确保发票预览容器占据整个打印页面 */
+  .invoice-preview-container {
+    display: block !important;
+    position: static !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+    min-height: auto !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 隐藏预览相关的装饰元素 */
+  .invoice-preview-container * {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* 确保打印时的字体大小适合 */
+  .invoice-preview-container * {
+    font-size: 12pt !important;
+  }
+
+  /* 处理分页 */
+  .invoice-preview-container {
+    page-break-inside: avoid;
+  }
+
+  table {
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  /* 隐藏所有滚动条和阴影 */
+  .invoice-preview-container::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* 确保所有颜色在打印时可见 */
+  .invoice-preview-container * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* 重置可能影响打印的样式 */
+  .invoice-preview-container {
+    transform: none !important;
+    -webkit-transform: none !important;
+    zoom: 1 !important;
+  }
+}
+
+/* 添加打印预览容器的类名 */
+.invoice-print-mode {
+  box-shadow: none !important;
+  border: 1px solid #ddd !important;
+  margin: 0 !important;
+  padding: 20px !important;
+  background: white !important;
+}

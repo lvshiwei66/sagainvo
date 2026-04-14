@@ -8,7 +8,7 @@
   },
   "actions": {
     "downloadPDF": "Download PDF",
-    "downloadCSV": "Download CSV",
+    "downloadJPG": "Download JPG",
     "print": "Print",
     "addLineItem": "Add Line Item",
     "tryDemo": "Try Demo",

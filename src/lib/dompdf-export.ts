@@ -56,15 +56,20 @@ export async function exportPDFWithLogo(
         useCORS: true,
         backgroundColor: '#ffffff',
         precision: 16,
-        padding: 0,  // 移除额外的 padding
         pageConfig: {
           header: {
-            content: '',      // 删除页眉
+            content: '',
             height: 0,
+            contentPosition: 'center',
+            contentColor: '#000000',
+            contentFontSize: 10,
           },
           footer: {
-            content: '',      // 删除页脚
+            content: '',
             height: 0,
+            contentPosition: 'center',
+            contentColor: '#000000',
+            contentFontSize: 10,
           },
         },
       });
@@ -83,7 +88,11 @@ export async function exportPDFWithLogo(
       const contentHeightPx = rect.height;
       const contentHeightMm = contentHeightPx * PX_TO_MM;
 
-      // Store original styles for restoration
+      // Clone the invoice element to avoid modifying the original DOM
+      // dompdf.js may manipulate the DOM, so we work with a deep clone
+      const clonedElement = invoiceElement.cloneNode(true) as HTMLElement;
+
+      // Store original styles for restoration (in case we need them)
       const originalStyles = {
         width: invoiceElement.style.width,
         minHeight: invoiceElement.style.minHeight,
@@ -94,42 +103,45 @@ export async function exportPDFWithLogo(
         margin: invoiceElement.style.margin,
         transform: invoiceElement.style.transform,
         webkitTransform: invoiceElement.style.webkitTransform,
-        mozTransform: invoiceElement.style.mozTransform,
       };
 
-      // Set A4 width and let dompdf handle pagination automatically
-      invoiceElement.style.width = `${A4_WIDTH_MM}mm`;
-      invoiceElement.style.maxWidth = `${A4_WIDTH_MM}mm`;
-      invoiceElement.style.boxSizing = 'border-box';
-      invoiceElement.style.padding = '48px';  // 增大边距 (16px * 3 = 48px)
-      invoiceElement.style.fontSize = '12px';
-      invoiceElement.style.margin = '0';
-      invoiceElement.style.transform = 'none';
-      invoiceElement.style.webkitTransform = 'none';
-      invoiceElement.style.mozTransform = 'none';
+      // Set A4 width and let dompdf handle pagination automatically on the clone
+      clonedElement.style.width = `${A4_WIDTH_MM}mm`;
+      clonedElement.style.maxWidth = `${A4_WIDTH_MM}mm`;
+      clonedElement.style.boxSizing = 'border-box';
+      clonedElement.style.padding = '48px';  // 增大边距 (16px * 3 = 48px)
+      clonedElement.style.fontSize = '12px';
+      clonedElement.style.margin = '0';
+      clonedElement.style.transform = 'none';
+      clonedElement.style.webkitTransform = 'none';
 
-      // Force reflow to ensure the new width is applied
-      void invoiceElement.offsetHeight;
+      // Position clone off-screen for dompdf rendering
+      clonedElement.style.position = 'absolute';
+      clonedElement.style.left = '-9999px';
+      clonedElement.style.top = '0';
+      document.body.appendChild(clonedElement);
 
       try {
-        const pdfResult = await dompdf(invoiceElement, {
+        const pdfResult = await dompdf(clonedElement, {
           pagination: true,
           format: 'a4',
           useCORS: true,
           backgroundColor: '#ffffff',
           precision: 16,
-          // 设置页面边距 - 使用 mm 单位，dompdf 会自动处理
-          // A4 纸张 210mm 宽，内容宽度 = 210 - 左边距 - 右边距
-          // 设置较小的页边距让内容占据更多空间
-          padding: 0,  // 移除额外的 padding
           pageConfig: {
             header: {
-              content: '',      // 删除页眉
+              content: '',
               height: 0,
+              contentPosition: 'center',
+              contentColor: '#000000',
+              contentFontSize: 10,
             },
             footer: {
-              content: '',      // 删除页脚
+              content: '',
               height: 0,
+              contentPosition: 'center',
+              contentColor: '#000000',
+              contentFontSize: 10,
             },
           },
         });
@@ -143,21 +155,8 @@ export async function exportPDFWithLogo(
         document.body.removeChild(link);
         URL.revokeObjectURL(link.href);
       } finally {
-        // Restore original styles
-        invoiceElement.style.width = originalStyles.width;
-        invoiceElement.style.minHeight = originalStyles.minHeight;
-        invoiceElement.style.height = originalStyles.height;
-        invoiceElement.style.boxSizing = originalStyles.boxSizing;
-        invoiceElement.style.padding = originalStyles.padding;
-        invoiceElement.style.fontSize = originalStyles.fontSize;
-        invoiceElement.style.margin = originalStyles.margin;
-        invoiceElement.style.transform = originalStyles.transform || '';
-        invoiceElement.style.webkitTransform = originalStyles.webkitTransform || '';
-        invoiceElement.style.mozTransform = originalStyles.mozTransform || '';
-
-        // Force reflow to ensure styles are reapplied
-        // This triggers browser recalculation of layout
-        void invoiceElement.offsetHeight;
+        // Remove the clone from DOM
+        document.body.removeChild(clonedElement);
       }
     }
   } catch (error) {
@@ -193,7 +192,6 @@ function createInvoiceHtmlContent(container: HTMLElement, invoice: Invoice, tota
   container.style.fontSize = '12px';  // Consistent font size with preview
   container.style.transform = 'none';
   container.style.webkitTransform = 'none';
-  container.style.mozTransform = 'none';
 
   // Title and Logo
   const headerDiv = document.createElement('div');
@@ -592,23 +590,3 @@ function createInvoiceHtmlContent(container: HTMLElement, invoice: Invoice, tota
   }
 }
 
-export function exportCSV(invoice: Invoice, totals: Totals): void {
-  const headers = ["Description", "Quantity", "Rate", "Amount"];
-  const rows = invoice.items.map((item) => [
-    item.description,
-    item.quantity.toString(),
-    item.rate.toString(),
-    (item.quantity * item.rate).toFixed(2),
-  ]);
-  rows.push(["", "", "Subtotal:", totals.subtotal.toFixed(2)]);
-  rows.push(["", "", `Tax (${invoice.taxRate}%):`, totals.taxAmount.toFixed(2)]);
-  rows.push(["", "", "Total:", totals.total.toFixed(2)]);
-
-  const csvContent = [headers.join(","), ...rows.map((row) => row.map((cell) => `"${cell}"`).join(","))].join("\n");
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = `${invoice.number || "invoice"}.csv`;
-  link.click();
-  URL.revokeObjectURL(link.href);
-}
