@@ -67,7 +67,7 @@ export default function InvoicePreview({
             style={{
               borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined,
               width: '210mm',
-              minHeight: '297mm',
+              minHeight: '289mm', // A4 height (297mm) minus 8mm adjustment factor
               maxWidth: '100%',
               boxSizing: 'border-box',
               margin: '0 auto',
