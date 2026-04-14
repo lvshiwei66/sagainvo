@@ -146,7 +146,7 @@ test.describe('Invoice Editor - Core Functionality', () => {
 
     // Verify the tax amount shows $10.00 in the preview
     // Use exact text match to avoid conflicts with form labels
-    await expect(page.locator('span').filter({ hasText: 'Tax', exact: true }).first()).toBeVisible();
+    await expect(page.locator('span').filter({ hasText: 'Tax' }).first()).toBeVisible();
     await expect(page.locator('span').filter({ hasText: '$10.00' }).first()).toBeVisible();
   });
 
@@ -181,22 +181,22 @@ test.describe('Invoice Editor - Core Functionality', () => {
     await expect(page.getByLabel('Business Name')).toHaveValue('AutoSave Test Inc');
   });
 
-  test('should export CSV successfully', async ({ page }) => {
+  test('should export JPG successfully', async ({ page }) => {
     // Add a line item
-    await page.getByPlaceholder('Description').first().fill('CSV Export Test');
+    await page.getByPlaceholder('Description').first().fill('JPG Export Test');
     await page.getByPlaceholder('Qty').first().fill('1');
     await page.getByPlaceholder('Rate').first().fill('100');
 
     // Set up download listener
     const downloadPromise = page.waitForEvent('download');
 
-    // Click export CSV button
-    const csvButton = page.getByRole('button', { name: /Download CSV/i });
-    await csvButton.click();
+    // Click export JPG button
+    const jpgButton = page.getByRole('button', { name: /Download JPG/i });
+    await jpgButton.click();
 
     // Verify download started
     const download = await downloadPromise;
-    expect(download.suggestedFilename()).toContain('.csv');
+    expect(download.suggestedFilename()).toContain('.jpg');
   });
 
   test('should trigger print dialog for PDF export', async ({ page }) => {

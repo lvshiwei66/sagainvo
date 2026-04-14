@@ -140,13 +140,13 @@ test.describe('Invoice Preview Component - i18n Removed (Hardcoded English)', ()
     // 设置下载监听
     const downloadPromise = page.waitForEvent('download');
 
-    // 点击 Download CSV 按钮
-    const csvButton = page.getByRole('button', { name: /Download CSV/i });
-    await csvButton.click();
+    // 点击 Download JPG 按钮
+    const jpgButton = page.getByRole('button', { name: /Download JPG/i });
+    await jpgButton.click();
 
     // 验证下载开始
     const download = await downloadPromise;
-    expect(download.suggestedFilename()).toContain('.csv');
+    expect(download.suggestedFilename()).toContain('.jpg');
   });
 
   test('should trigger print for PDF export', async ({ page }) => {

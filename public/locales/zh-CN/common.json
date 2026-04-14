@@ -8,7 +8,7 @@
   },
   "actions": {
     "downloadPDF": "下载 PDF",
-    "downloadCSV": "下载 CSV",
+    "downloadJPG": "下载 JPG",
     "print": "打印",
     "addLineItem": "添加项目",
     "tryDemo": "试用演示",

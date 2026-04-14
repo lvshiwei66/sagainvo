@@ -1,8 +1,8 @@
 "use client";
 
 import { Invoice, Totals, InvoiceTemplate } from "@/lib/types";
-import { exportCSV } from "@/lib/pdf-export"; // Keep CSV export
 import { exportPDFWithLogo } from "@/lib/dompdf-export"; // Use new dompdf export
+import { exportToJpg } from "@/lib/image-export";
 import { useRef, useLayoutEffect, useState } from "react";
 
 const DEFAULT_THEME_COLOR = '#2563EB';
@@ -49,15 +49,36 @@ export default function InvoicePreview({
     // Get the actual rendered dimensions of the invoice container before export
     if (invoiceContainerRef.current) {
       const rect = invoiceContainerRef.current.getBoundingClientRect();
-      console.log(`Invoice container rendered dimensions: ${rect.width.toFixed(2)}x${rect.height.toFixed(2)}px`);
+      // Log removed for production: console.log(`Invoice container rendered dimensions: ${rect.width.toFixed(2)}x${rect.height.toFixed(2)}px`);
     }
 
     // Pass invoice data to dompdf export function
     await exportPDFWithLogo(invoice, totals);
   };
 
-  const handleExportCSV = () => {
-    exportCSV(invoice, totals);
+  const handleExportJPG = async () => {
+    try {
+      // 获取预览容器元素，使用更精确的选择器
+      const previewContainer = document.querySelector('.drop-shadow-md');
+      if (previewContainer) {
+        // 给预览容器添加一个临时ID以便截图
+        previewContainer.setAttribute('id', 'invoice-preview-container');
+
+        // 添加临时类名以确保在截图期间应用正确的样式
+        previewContainer.classList.add('screenshot-mode');
+
+        await exportToJpg(invoice, totals, 'invoice-preview-container');
+
+        // 移除临时ID和类名
+        previewContainer.removeAttribute('id');
+        previewContainer.classList.remove('screenshot-mode');
+      } else {
+        throw new Error('Invoice preview container not found');
+      }
+    } catch (error) {
+      console.error('Failed to export to JPG:', error);
+      alert('Failed to export to JPG. Please try again.');
+    }
   };
 
   const handlePrint = () => {
@@ -242,8 +263,8 @@ export default function InvoicePreview({
           <button onClick={handleExportPDF} className="flex-1 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md font-medium transition-colors">
             Download PDF
           </button>
-          <button onClick={handleExportCSV} className="flex-1 border border-slate-300 hover:bg-slate-100 text-slate-700 px-4 py-2 rounded-md font-medium transition-colors">
-            Download CSV
+          <button onClick={handleExportJPG} className="flex-1 border border-slate-300 hover:bg-slate-100 text-slate-700 px-4 py-2 rounded-md font-medium transition-colors">
+            Download JPG
           </button>
           <button onClick={handlePrint} className="flex-1 border border-slate-300 hover:bg-slate-100 text-slate-700 px-4 py-2 rounded-md font-medium transition-colors">
             Print

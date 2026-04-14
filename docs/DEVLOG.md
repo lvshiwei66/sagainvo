@@ -6,6 +6,37 @@
 
 ## 2026-04-14
 
+### 导出发票为 JPG 图片功能
+
+**功能**：
+- 删除原有的 CSV 导出功能，减少功能冗余
+- 实现 JPG 图片导出功能，使用 html2canvas 库
+- 在两个预览组件（InvoicePreview.tsx 和 InvoicePreview.dompdf.tsx）中都添加 JPG 导出支持
+- 更新所有相关的国际化文件（en/zh-CN），将 "Download CSV" 改为 "Download JPG"
+- 更新测试文件，将 CSV 导出测试改为 JPG 导出测试
+- 更新设计文档中的 UI 描述
+
+**涉及文件**：
+- src/lib/image-export.ts - 新增 JPG 导出函数
+- src/components/invoice/InvoicePreview.tsx - 更新导出功能，添加 JPG 导出处理
+- src/components/invoice/InvoicePreview.dompdf.tsx - 更新导出功能，添加 JPG 导出处理
+- src/lib/dompdf-export.ts - 删除 CSV 导出函数
+- src/lib/pdf-export.ts - 删除 CSV 导出函数
+- public/locales/en/invoice.json - 更新国际化文本
+- public/locales/en/common.json - 更新国际化文本
+- public/locales/zh-CN/invoice.json - 更新国际化文本
+- public/locales/zh-CN/common.json - 更新国际化文本
+- docs/design.md - 更新设计文档
+- tests/e2e/invoice-editor.spec.ts - 更新 E2E 测试
+- tests/e2e/i18n-edge-cases.test.ts - 更新 E2E 测试
+- tests/e2e/invoice-preview-i18n-removed.spec.ts - 更新 E2E 测试
+
+**技术实现**：
+- 使用 html2canvas 库将发票预览区域转换为图片
+- 高分辨率导出（scale: 2）确保图像质量
+- 适当地处理字体加载完成后再截图
+- 错误处理和用户反馈机制
+
 ### PDF 导出 dompdf 迁移 - 布局优化和 Bug 修复
 
 **参与者**: lvshiwei

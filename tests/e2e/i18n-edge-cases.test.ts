@@ -233,7 +233,7 @@ test.describe('i18n Translation Completeness', () => {
     // English
     await page.goto('/editor');
     await expect(page.locator('button:text("Download PDF")')).toBeVisible();
-    await expect(page.locator('button:text("Download CSV")')).toBeVisible();
+    await expect(page.locator('button:text("Download JPG")')).toBeVisible();
 
     // Switch to Chinese using helper
     await switchToLanguage(page, 'zh-CN');
@@ -243,6 +243,6 @@ test.describe('i18n Translation Completeness', () => {
     await page.waitForTimeout(500);
 
     await expect(page.locator('button:text("下载 PDF")')).toBeVisible();
-    await expect(page.locator('button:text("下载 CSV")')).toBeVisible();
+    await expect(page.locator('button:text("下载 JPG")')).toBeVisible();
   });
 });
