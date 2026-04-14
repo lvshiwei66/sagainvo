@@ -3,7 +3,7 @@
 import { Invoice, Totals, InvoiceTemplate } from "@/lib/types";
 import { exportPDFWithLogo } from "@/lib/pdf-export";
 import { exportToJpg } from "@/lib/image-export";
-import { useRef, useLayoutEffect, useState } from "react";
+import { useRef, useLayoutEffect } from "react";
 
 // 本地定义 LayoutMeasurements 类型以避免导出问题
 interface LayoutMeasurements {
@@ -108,7 +108,7 @@ export default function InvoicePreview({
         throw new Error('Invoice preview container not found');
       }
     } catch (error) {
-      console.error('Failed to export to JPG:', error);
+      // Removed console.error for production, keeping user feedback
       alert('Failed to export to JPG. Please try again.');
     }
   };
@@ -121,13 +121,19 @@ export default function InvoicePreview({
       // 为预览包装器添加打印类，激活CSS中的打印样式
       previewWrapper.classList.add('invoice-print-area');
 
+      // 定义清理函数
+      const cleanup = () => {
+        setTimeout(() => {
+          previewWrapper.classList.remove('invoice-print-area');
+        }, 100);
+        window.removeEventListener('afterprint', cleanup);
+      };
+
+      // 添加打印完成事件监听器
+      window.addEventListener('afterprint', cleanup);
+
       // 触发浏览器打印功能
       window.print();
-
-      // 移除打印类以恢复原始样式
-      setTimeout(() => {
-        previewWrapper.classList.remove('invoice-print-area');
-      }, 1000);
     } else {
       // 如果找不到发票预览元素，使用普通打印
       window.print();

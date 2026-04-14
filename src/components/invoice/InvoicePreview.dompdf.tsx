@@ -49,7 +49,7 @@ export default function InvoicePreview({
     // Get the actual rendered dimensions of the invoice container before export
     if (invoiceContainerRef.current) {
       const rect = invoiceContainerRef.current.getBoundingClientRect();
-      console.log(`Invoice container rendered dimensions: ${rect.width.toFixed(2)}x${rect.height.toFixed(2)}px`);
+      // Log removed for production: console.log(`Invoice container rendered dimensions: ${rect.width.toFixed(2)}x${rect.height.toFixed(2)}px`);
     }
 
     // Pass invoice data to dompdf export function
@@ -76,7 +76,7 @@ export default function InvoicePreview({
         throw new Error('Invoice preview container not found');
       }
     } catch (error) {
-      console.error('Failed to export to JPG:', error);
+      // Removed console.error for production, keeping user feedback
       alert('Failed to export to JPG. Please try again.');
     }
   };
