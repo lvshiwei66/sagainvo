@@ -4,6 +4,60 @@
 
 ---
 
+## 2026-04-14
+
+### PDF 导出 dompdf 迁移 - 布局优化和 Bug 修复
+
+**参与者**: lvshiwei
+
+#### 完成内容
+
+- [x] 修复 PDF 导出后右侧空白问题（水平居中渲染）
+- [x] 调整 PDF 边距至 48px（原始 16px 的 3 倍）
+- [x] 修复导出后预览组件样式恢复失效问题（添加强制 reflow）
+- [x] 修复导出后 Logo 元素丢失问题（使用 DOM 克隆而非直接操作）
+
+#### 问题与解决方案
+
+**问题 1: PDF 右侧出现较大空白**
+- **原因**: dompdf 渲染时可能对内容应用缩放，且 `margin: '0 auto'` 被解释为保留两侧边距
+- **解决方案**: 
+  - 设置 `margin: '0'` 移除自动边距
+  - 添加 `transform: 'none'` 移除可能的缩放变换
+  - 内容整体水平居中渲染
+
+**问题 2: 预览组件恢复样式失效**
+- **原因**: 恢复样式后浏览器未立即重新计算布局
+- **解决方案**: 
+  - 保存和恢复 `transform` 和 `webkitTransform` 属性
+  - 恢复后调用 `void element.offsetHeight` 强制 reflow
+
+**问题 3: 导出后 Logo 元素丢失**
+- **原因**: dompdf.js 在渲染时会操作传入的 DOM 元素，导致原始元素被移动或清空
+- **解决方案**: 
+  - 使用 `cloneNode(true)` 创建预览组件的深拷贝
+  - 将克隆元素放到离屏位置供 dompdf 使用
+  - 生成完成后删除克隆元素
+  - 原始预览组件完全不受影响
+
+#### 代码变更
+
+**文件**: `src/lib/dompdf-export.ts`
+
+主要修改：
+1. 导出时使用 DOM 克隆而非直接操作原始元素
+2. PDF 边距从 16px 增大到 48px
+3. 添加 transform 相关属性的保存和恢复
+4. 强制 reflow 确保样式立即生效
+5. 修复 dompdf.js pageConfig 类型定义
+
+#### 提交记录
+
+- `2d388c3` - fix: increase PDF export padding to 48px and improve style restoration
+- （后续提交）- fix: use DOM clone to prevent logo loss during PDF export
+
+---
+
 ## 2026-04-10
 
 ### 项目全面调查与文档同步
