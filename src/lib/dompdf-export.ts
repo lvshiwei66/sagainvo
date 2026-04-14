@@ -42,7 +42,9 @@ export async function exportPDFWithLogo(
       tempDiv.style.width = '210mm';
       tempDiv.style.minHeight = '297mm';
       tempDiv.style.boxSizing = 'border-box';
-      tempDiv.style.padding = '24px'; // Equivalent to p-6 in mm
+      tempDiv.style.padding = '16px'; // Reduced to save space
+      tempDiv.style.fontSize = '12px'; // Consistent font size
+      tempDiv.style.margin = '0 auto';
 
       // Create the invoice content as HTML in the temp container
       createInvoiceHtmlContent(tempDiv, invoice, totals);
@@ -65,7 +67,7 @@ export async function exportPDFWithLogo(
             right: '10mm'
           },
           // Attempt to scale content to fit on one page when possible
-          scale: 0.85, // Scale down slightly to ensure content fits
+          scale: 0.88, // Increased slightly from 0.85 to provide better readability while fitting content
           // Use a smaller font scaling factor if needed
         });
 
@@ -94,12 +96,18 @@ export async function exportPDFWithLogo(
         width: invoiceElement.style.width,
         minHeight: invoiceElement.style.minHeight,
         boxSizing: invoiceElement.style.boxSizing,
+        padding: invoiceElement.style.padding,
+        fontSize: invoiceElement.style.fontSize,
+        margin: invoiceElement.style.margin,
       };
 
-      // Temporarily set the proper A4 dimensions
+      // Temporarily set the proper A4 dimensions and compact styling
       invoiceElement.style.width = '210mm';
       invoiceElement.style.minHeight = '297mm';
       invoiceElement.style.boxSizing = 'border-box';
+      invoiceElement.style.padding = '16px'; // Reduce padding to save space
+      invoiceElement.style.fontSize = '12px'; // Use consistent font size
+      invoiceElement.style.margin = '0 auto';
 
       try {
         // Generate PDF using dompdf with proper A4 settings and content scaling
@@ -117,7 +125,7 @@ export async function exportPDFWithLogo(
             right: '10mm'
           },
           // Scale content to better fit the page
-          scale: 0.85, // Scale down slightly to ensure content fits
+          scale: 0.88, // Increased slightly to provide better readability while fitting content
         });
 
         // Create download link
@@ -162,9 +170,10 @@ function createInvoiceHtmlContent(container: HTMLElement, invoice: Invoice, tota
   container.style.width = '210mm';
   container.style.minHeight = '297mm';
   container.style.boxSizing = 'border-box';
-  container.style.padding = '24px';
+  container.style.padding = '16px';  // Reduced from 24px to save space
   container.style.backgroundColor = '#ffffff';
   container.style.margin = '0 auto';
+  container.style.fontSize = '12px';  // Consistent font size with preview
 
   // Title and Logo
   const headerDiv = document.createElement('div');

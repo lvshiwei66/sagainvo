@@ -63,7 +63,7 @@ export default function InvoicePreview({
         <div className="pb-6 drop-shadow-md">
           <div
             ref={invoiceContainerRef} // Reference for potential direct DOM access
-            className="invoice-container border p-6 bg-white max-w-[210mm] mx-auto shadow-md" // Added A4 width constraint and shadow for better visibility
+            className="invoice-container border p-4 bg-white max-w-[210mm] mx-auto shadow-md" // Reduced padding to p-4 to save space
             style={{
               borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined,
               width: '210mm',  // A4 width
@@ -71,10 +71,11 @@ export default function InvoicePreview({
               maxWidth: '100%',
               boxSizing: 'border-box',
               margin: '0 auto',
+              fontSize: '12px', // Reduced default font size to fit more content
             }}
           >
             {/* Title and Logo */}
-            <div className="flex justify-between items-start mb-6">
+            <div className="flex justify-between items-start mb-4"> {/* Reduced mb-4 from mb-6 */}
               <div className="text-center">
                 <h1
                   className={`text-2xl font-light text-slate-900 tracking-wide ${getTextFontClass()}`}
@@ -101,7 +102,7 @@ export default function InvoicePreview({
             </div>
 
             {/* Meta */}
-            <div className="flex justify-between mb-6">
+            <div className="flex justify-between mb-4"> {/* Reduced mb-6 to mb-4 */}
               <div className={`text-sm text-slate-600 ${getTextFontClass()}`}>
                 <div>
                   <span className="font-medium">Date:</span>{" "}
@@ -115,7 +116,7 @@ export default function InvoicePreview({
             </div>
 
             {/* From / To */}
-            <div className="grid grid-cols-2 gap-6 mb-6">
+            <div className="grid grid-cols-2 gap-4 mb-4"> {/* Reduced gap-6 to gap-4 and mb-6 to mb-4 */}
               <div>
                 <h3 className={`text-sm font-medium text-slate-500 mb-2 ${getTextFontClass()}`}>From:</h3>
                 <div className={`text-sm text-slate-900 ${getTextFontClass()}`}>
@@ -148,7 +149,7 @@ export default function InvoicePreview({
             </div>
 
             {/* Line Items Table */}
-            <table className="w-full mb-6">
+            <table className="w-full mb-4"> {/* Reduced mb-6 to mb-4 */}
               <thead>
                 <tr
                   className="border-b"
@@ -167,10 +168,10 @@ export default function InvoicePreview({
                     className="border-b last:border-0"
                     style={{ borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined }}
                   >
-                    <td className={`py-3 text-sm text-slate-900 ${getTextFontClass()}`}>{item.description || "---"}</td>
-                    <td className={`py-3 text-sm text-slate-600 text-right ${getNumberFontClass()}`}>{item.quantity}</td>
-                    <td className={`py-3 text-sm text-slate-600 text-right ${getNumberFontClass()}`}>${item.rate.toFixed(2)}</td>
-                    <td className={`py-3 text-sm text-slate-900 text-right ${getNumberFontClass()}`}>${(item.quantity * item.rate).toFixed(2)}</td>
+                    <td className={`py-2 text-sm text-slate-900 ${getTextFontClass()}`}>{item.description || "---"}</td> {/* Reduced py-3 to py-2 */}
+                    <td className={`py-2 text-sm text-slate-600 text-right ${getNumberFontClass()}`}>{item.quantity}</td> {/* Reduced py-3 to py-2 */}
+                    <td className={`py-2 text-sm text-slate-600 text-right ${getNumberFontClass()}`}>${item.rate.toFixed(2)}</td> {/* Reduced py-3 to py-2 */}
+                    <td className={`py-2 text-sm text-slate-900 text-right ${getNumberFontClass()}`}>${(item.quantity * item.rate).toFixed(2)}</td> {/* Reduced py-3 to py-2 */}
                   </tr>
                 ))}
               </tbody>
@@ -205,10 +206,10 @@ export default function InvoicePreview({
             {/* Notes and Terms */}
             {(invoice.notes || invoice.terms) && (
               <div
-                className="grid grid-cols-2 gap-6 mt-6 pt-6 border-t"
+                className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t" {/* Reduced gap-6 to gap-4, mt-6 to mt-4, pt-6 to pt-4 */}
                 style={{
                   borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined,
-                  minHeight: '80px',  // Ensure minimum height for Notes/Terms area
+                  minHeight: '60px',  {/* Reduced minimum height */}
                 }}
               >
                 {invoice.notes && (
