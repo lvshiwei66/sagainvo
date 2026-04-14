@@ -1,6 +1,11 @@
 import { Invoice, Totals } from "./types";
 import dompdf from "dompdf.js";
 
+// Define A4 dimensions and adjustment factors
+const A4_WIDTH_MM = 210;
+const A4_HEIGHT_MM = 297;
+const A4_HEIGHT_ADJUSTMENT_FACTOR_MM = 22.67; // 64px * 0.353mm/px ≈ 22.67mm
+
 /**
  * DOM measurements from InvoicePreview component
  * All values in pixels relative to viewport
@@ -102,8 +107,8 @@ export async function exportPDFWithLogo(
       };
 
       // Temporarily set the proper A4 dimensions and compact styling
-      invoiceElement.style.width = '210mm';
-      invoiceElement.style.minHeight = '281mm'; // A4 height (297mm) minus 16mm adjustment factor
+      invoiceElement.style.width = `${A4_WIDTH_MM}mm`;
+      invoiceElement.style.minHeight = `${A4_HEIGHT_MM - Math.round(A4_HEIGHT_ADJUSTMENT_FACTOR_MM)}mm`; // A4 height minus adjustment factor
       invoiceElement.style.boxSizing = 'border-box';
       invoiceElement.style.padding = '16px'; // Reduce padding to save space
       invoiceElement.style.fontSize = '12px'; // Use consistent font size
@@ -168,7 +173,7 @@ function createInvoiceHtmlContent(container: HTMLElement, invoice: Invoice, tota
 
   // Apply A4 page styles to ensure proper sizing
   container.style.width = '210mm';
-  container.style.minHeight = '281mm'; // A4 height (297mm) minus 16mm adjustment factor
+  container.style.minHeight = `${A4_HEIGHT_MM - Math.round(A4_HEIGHT_ADJUSTMENT_FACTOR_MM)}mm`; // A4 height minus adjustment factor
   container.style.boxSizing = 'border-box';
   container.style.padding = '16px';  // Reduced from 24px to save space
   container.style.backgroundColor = '#ffffff';

@@ -6,6 +6,9 @@ import { exportPDFWithLogo } from "@/lib/dompdf-export"; // Use new dompdf expor
 import { useRef, useLayoutEffect, useState } from "react";
 
 const DEFAULT_THEME_COLOR = '#2563EB';
+const A4_HEIGHT_ADJUSTMENT_FACTOR_MM = 22.67; // 64px * 0.353mm/px ≈ 22.67mm
+const A4_HEIGHT_MM = 297; // Standard A4 height in mm
+const A4_WIDTH_MM = 210; // Standard A4 width in mm
 
 interface InvoicePreviewProps {
   invoice: Invoice;
@@ -66,8 +69,8 @@ export default function InvoicePreview({
             className="invoice-container border p-4 bg-white max-w-[210mm] mx-auto shadow-md"
             style={{
               borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined,
-              width: '210mm',
-              minHeight: '281mm', // A4 height (297mm) minus 16mm adjustment factor
+              width: `${A4_WIDTH_MM}mm`,
+              minHeight: `${A4_HEIGHT_MM - Math.round(A4_HEIGHT_ADJUSTMENT_FACTOR_MM)}mm`, // A4 height (297mm) minus adjustment factor
               maxWidth: '100%',
               boxSizing: 'border-box',
               margin: '0 auto',
