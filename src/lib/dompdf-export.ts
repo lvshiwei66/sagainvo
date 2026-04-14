@@ -590,4 +590,3 @@ function createInvoiceHtmlContent(container: HTMLElement, invoice: Invoice, tota
   }
 }
 
-
