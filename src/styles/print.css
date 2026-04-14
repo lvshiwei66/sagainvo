@@ -1,56 +1,54 @@
 @media print {
-  /* 隐藏不需要打印的元素 */
-  body > *:not(.invoice-preview-container) {
-    display: none !important;
+  /* 移除浏览器页眉页脚和页码 */
+  @page {
+    margin: 10mm;
+    size: A4;
   }
 
-  /* 隐藏非发票内容 */
-  .sidebar,
-  .header,
-  .export-actions,
-  button,
-  input,
-  textarea,
-  nav,
-  footer,
-  .no-print {
-    display: none !important;
-  }
-
-  /* 确保发票预览容器占据整个打印页面 */
-  .invoice-preview-container {
-    display: block !important;
-    position: static !important;
-    margin: 0 !important;
-    padding: 20px !important;
-    box-shadow: none !important;
-    border: none !important;
-    background: white !important;
-    min-height: auto !important;
-    max-width: 100% !important;
+  /* Invoice container 打印样式 */
+  .invoice-container {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
     width: 100% !important;
     height: auto !important;
-    box-sizing: border-box !important;
-  }
-
-  /* 隐藏预览相关的装饰元素 */
-  .invoice-preview-container * {
-    box-shadow: none !important;
-    border-radius: 0 !important;
-  }
-
-  /* 确保打印时的字体大小适合 */
-  .invoice-preview-container * {
-    font-size: 12pt !important;
-  }
-
-  /* 处理分页 */
-  .invoice-preview-container {
+    margin: 0 !important;
+    padding: 10mm !important;
+    box-shadow: none !important; /* 移除阴影 */
+    border: none !important; /* 移除边框 */
+    background: white !important;
+    overflow: visible !important;
     page-break-inside: avoid;
   }
 
+  /* 覆盖 Tailwind 的边框和阴影类 */
+  .invoice-container.border {
+    border-width: 0 !important;
+  }
+
+  .invoice-container.shadow-md {
+    box-shadow: none !important;
+  }
+
+  .invoice-preview-wrapper.drop-shadow-md {
+    filter: none !important;
+  }
+
+  /* 颜色保真 */
+  .invoice-container *,
+  .invoice-container *::before,
+  .invoice-container *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    -webkit-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 表格分页处理 */
   table {
     page-break-inside: auto;
+    width: 100%;
   }
 
   tr {
@@ -58,30 +56,42 @@
     page-break-after: auto;
   }
 
-  /* 隐藏所有滚动条和阴影 */
-  .invoice-preview-container::-webkit-scrollbar {
-    display: none !important;
+  thead {
+    display: table-header-group;
   }
 
-  /* 确保所有颜色在打印时可见 */
-  .invoice-preview-container * {
-    -webkit-print-color-adjust: exact !important;
-    color-adjust: exact !important;
+  tfoot {
+    display: table-footer-group;
   }
 
-  /* 重置可能影响打印的样式 */
-  .invoice-preview-container {
+  /* 字体大小 */
+  .invoice-container {
+    font-size: 12pt !important;
+  }
+
+  /* 边框折叠 */
+  .invoice-container .border,
+  .invoice-container table {
+    border-collapse: collapse !important;
+  }
+
+  /* 移除变换 */
+  .invoice-container {
     transform: none !important;
     -webkit-transform: none !important;
     zoom: 1 !important;
   }
-}
 
-/* 添加打印预览容器的类名 */
-.invoice-print-mode {
-  box-shadow: none !important;
-  border: 1px solid #ddd !important;
-  margin: 0 !important;
-  padding: 20px !important;
-  background: white !important;
+  /* 确保打印时不显示屏幕上的按钮 */
+  .invoice-preview-wrapper,
+  .invoice-preview-wrapper * {
+    visibility: visible !important;
+  }
+
+  /* 隐藏导出和操作按钮 */
+  .invoice-preview-wrapper + div,
+  .invoice-preview-wrapper + div * {
+    visibility: hidden !important;
+    display: none !important;
+  }
 }

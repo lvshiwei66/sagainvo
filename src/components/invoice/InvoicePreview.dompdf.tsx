@@ -4,6 +4,7 @@ import { Invoice, Totals, InvoiceTemplate } from "@/lib/types";
 import { exportPDFWithLogo } from "@/lib/dompdf-export"; // Use new dompdf export
 import { exportToJpg } from "@/lib/image-export";
 import { useRef, useLayoutEffect, useState } from "react";
+import { useReactToPrint } from 'react-to-print';
 import { RotateCcw } from "lucide-react";
 
 const DEFAULT_THEME_COLOR = '#2563EB';
@@ -84,9 +85,39 @@ export default function InvoicePreview({
     }
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
+  const handlePrint = useReactToPrint({
+    contentRef: invoiceContainerRef,
+    documentTitle: `Invoice_${invoice.number || 'draft'}_${invoice.date || 'no-date'}`,
+    pageStyle: `
+      @page {
+        margin: 10mm;
+        size: A4;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      /* 移除边框和阴影 */
+      .invoice-container {
+        box-shadow: none !important;
+        border: none !important;
+        border-width: 0 !important;
+      }
+      .invoice-container.border {
+        border-width: 0 !important;
+      }
+      .invoice-container.shadow-md {
+        box-shadow: none !important;
+      }
+      .invoice-preview-wrapper.drop-shadow-md {
+        filter: none !important;
+      }
+    `,
+    onPrintError: (errorLocation, error) => {
+      console.error('Print error:', error);
+      alert('打印失败，请重试');
+    },
+  });
 
   return (
     <div className={className}>
@@ -103,7 +134,8 @@ export default function InvoicePreview({
         )}
       </div>
       <div className="shadow-sm overflow-hidden">
-        <div className="pb-6 drop-shadow-md">
+        {/* Invoice preview wrapper with specific class for print targeting */}
+        <div className="invoice-preview-wrapper pb-6 drop-shadow-md">
           <div
             ref={invoiceContainerRef} // Reference for potential direct DOM access
             className="invoice-container border p-4 bg-white max-w-[210mm] mx-auto shadow-md"

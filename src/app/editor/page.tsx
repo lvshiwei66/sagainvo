@@ -10,6 +10,9 @@ import { calculateTotals } from "@/lib/calculator";
 import { saveInvoice, loadInvoice } from "@/lib/storage";
 import { demoInvoiceData } from "@/lib/demo-data";
 
+// 导入打印样式
+import '@/styles/print.css';
+
 export default function EditorPage() {
   const isClient = useIsClient();
   const [invoice, setInvoice] = useState<Invoice>(() => {
