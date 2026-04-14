@@ -10,7 +10,7 @@ const PX_TO_MM = 0.264583;
 /**
  * DOM measurements from InvoicePreview component
  * All values in pixels relative to viewport
- * Kept for API compatibility, though not used with dompdf
+ * @deprecated Not used with dompdf.js - kept for API compatibility only
  */
 export interface LayoutMeasurements {
   // Table header top and bottom Y positions
@@ -32,6 +32,8 @@ export async function exportPDFWithLogo(
   // measurements parameter kept for compatibility but not used with dompdf
   measurements?: LayoutMeasurements | null
 ): Promise<void> {
+  let tempDiv: HTMLElement | null = null;
+
   try {
     // Find the invoice container in the DOM
     const invoiceElement = document.querySelector('.invoice-container') as HTMLElement;
@@ -39,7 +41,7 @@ export async function exportPDFWithLogo(
     if (!invoiceElement) {
       console.error('Invoice container not found in DOM');
       // If not found in DOM, we'll need to temporarily create it for conversion
-      const tempDiv = document.createElement('div');
+      tempDiv = document.createElement('div');
       tempDiv.style.position = 'absolute';
       tempDiv.style.left = '-9999px';
       tempDiv.className = 'invoice-container';
@@ -48,43 +50,37 @@ export async function exportPDFWithLogo(
       // Create the invoice content as HTML in the temp container
       createInvoiceHtmlContent(tempDiv, invoice, totals);
 
-      try {
-        const pdfResult = await dompdf(tempDiv, {
-          pagination: true,
-          format: 'a4',
-          useCORS: true,
-          backgroundColor: '#ffffff',
-          precision: 16,
-          pageConfig: {
-            header: {
-              content: '',      // 删除页眉
-              height: 0,
-            },
-            footer: {
-              content: '',      // 删除页脚
-              height: 0,
-            },
+      const pdfResult = await dompdf(tempDiv, {
+        pagination: true,
+        format: 'a4',
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        precision: 16,
+        pageConfig: {
+          header: {
+            content: '',      // 删除页眉
+            height: 0,
           },
-        });
+          footer: {
+            content: '',      // 删除页脚
+            height: 0,
+          },
+        },
+      });
 
-        const link = document.createElement('a');
-        const pdfBlob = pdfResult as Blob;
-        link.href = URL.createObjectURL(pdfBlob);
-        link.download = `${invoice.number || "invoice"}.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(link.href);
-      } finally {
-        document.body.removeChild(tempDiv);
-      }
+      const link = document.createElement('a');
+      const pdfBlob = pdfResult as Blob;
+      link.href = URL.createObjectURL(pdfBlob);
+      link.download = `${invoice.number || "invoice"}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
     } else {
       // Use getBoundingClientRect() to get the exact rendered dimensions
       const rect = invoiceElement.getBoundingClientRect();
       const contentHeightPx = rect.height;
       const contentHeightMm = contentHeightPx * PX_TO_MM;
-
-      console.log(`Invoice container dimensions: ${rect.width.toFixed(2)}x${contentHeightPx.toFixed(2)}px (${(contentHeightMm).toFixed(2)}mm height)`);
 
       // Store original styles for restoration
       const originalStyles = {
@@ -149,6 +145,11 @@ export async function exportPDFWithLogo(
     console.error('Failed to generate PDF:', error);
     alert('Failed to generate PDF: ' + (error as Error).message);
     throw error;
+  } finally {
+    // Ensure temporary container is always cleaned up
+    if (tempDiv && tempDiv.parentNode) {
+      document.body.removeChild(tempDiv);
+    }
   }
 }
 
