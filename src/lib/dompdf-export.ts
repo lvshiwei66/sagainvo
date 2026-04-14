@@ -44,12 +44,21 @@ export async function exportPDFWithLogo(
       document.body.appendChild(tempDiv);
 
       try {
-        // Generate PDF using dompdf
+        // Generate PDF using dompdf with A4 format and proper settings to avoid page numbers
         const pdfResult = await dompdf(tempDiv, {
           format: 'a4',
+          orientation: 'portrait',
           useCORS: true,
           backgroundColor: '#ffffff',
           precision: 16,
+          // Avoid default page numbers by using proper margins
+          margin: {
+            top: '10mm',
+            bottom: '10mm',
+            left: '10mm',
+            right: '10mm'
+          },
+          // Explicitly disable page numbering if dompdf supports this option
         });
 
         // Create download link
@@ -72,12 +81,21 @@ export async function exportPDFWithLogo(
         document.body.removeChild(tempDiv);
       }
     } else {
-      // Generate PDF using dompdf
+      // Generate PDF using dompdf with proper A4 settings
       const pdfResult = await dompdf(invoiceElement, {
         format: 'a4',
+        orientation: 'portrait',
         useCORS: true,
         backgroundColor: '#ffffff',
         precision: 16,
+        // Avoid default page numbers by using proper margins
+        margin: {
+          top: '10mm',
+          bottom: '10mm',
+          left: '10mm',
+          right: '10mm'
+        },
+        // Explicitly disable page numbering if dompdf supports this option
       });
 
       // Create download link

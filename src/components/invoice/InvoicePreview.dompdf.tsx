@@ -63,8 +63,14 @@ export default function InvoicePreview({
         <div className="pb-6 drop-shadow-md">
           <div
             ref={invoiceContainerRef} // Reference for potential direct DOM access
-            className="invoice-container border p-6 bg-white" // Added 'invoice-container' class for dompdf.js to identify
-            style={{ borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined }}
+            className="invoice-container border p-6 bg-white max-w-[210mm] mx-auto" // Added A4 width constraint
+            style={{
+              borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined,
+              width: '210mm',  // A4 width
+              minHeight: '297mm', // A4 height
+              maxWidth: '100%',
+              boxSizing: 'border-box'
+            }}
           >
             {/* Title and Logo */}
             <div className="flex justify-between items-start mb-6">
@@ -199,18 +205,21 @@ export default function InvoicePreview({
             {(invoice.notes || invoice.terms) && (
               <div
                 className="grid grid-cols-2 gap-6 mt-6 pt-6 border-t"
-                style={{ borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined }}
+                style={{
+                  borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined,
+                  minHeight: '80px',  // Ensure minimum height for Notes/Terms area
+                }}
               >
                 {invoice.notes && (
-                  <div>
+                  <div className="break-words">
                     <h3 className={`text-sm font-medium text-slate-500 mb-1 ${getTextFontClass()}`}>Notes:</h3>
-                    <p className={`text-sm text-slate-600 ${getTextFontClass()}`}>{invoice.notes}</p>
+                    <p className={`text-sm text-slate-600 ${getTextFontClass()} whitespace-pre-wrap`} style={{ wordBreak: 'break-word' }}>{invoice.notes}</p>
                   </div>
                 )}
                 {invoice.terms && (
-                  <div>
+                  <div className="break-words">
                     <h3 className={`text-sm font-medium text-slate-500 mb-1 ${getTextFontClass()}`}>Terms:</h3>
-                    <p className={`text-sm text-slate-600 ${getTextFontClass()}`}>{invoice.terms}</p>
+                    <p className={`text-sm text-slate-600 ${getTextFontClass()} whitespace-pre-wrap`} style={{ wordBreak: 'break-word' }}>{invoice.terms}</p>
                   </div>
                 )}
               </div>
