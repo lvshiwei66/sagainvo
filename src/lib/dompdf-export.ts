@@ -56,6 +56,7 @@ export async function exportPDFWithLogo(
         useCORS: true,
         backgroundColor: '#ffffff',
         precision: 16,
+        padding: 0,  // 移除额外的 padding
         pageConfig: {
           header: {
             content: '',      // 删除页眉
@@ -91,14 +92,21 @@ export async function exportPDFWithLogo(
         padding: invoiceElement.style.padding,
         fontSize: invoiceElement.style.fontSize,
         margin: invoiceElement.style.margin,
+        transform: invoiceElement.style.transform,
+        webkitTransform: invoiceElement.style.webkitTransform,
+        mozTransform: invoiceElement.style.mozTransform,
       };
 
       // Set A4 width and let dompdf handle pagination automatically
       invoiceElement.style.width = `${A4_WIDTH_MM}mm`;
+      invoiceElement.style.maxWidth = `${A4_WIDTH_MM}mm`;
       invoiceElement.style.boxSizing = 'border-box';
-      invoiceElement.style.padding = '16px';
+      invoiceElement.style.padding = '48px';  // 增大边距 (16px * 3 = 48px)
       invoiceElement.style.fontSize = '12px';
-      invoiceElement.style.margin = '0 auto';
+      invoiceElement.style.margin = '0';
+      invoiceElement.style.transform = 'none';
+      invoiceElement.style.webkitTransform = 'none';
+      invoiceElement.style.mozTransform = 'none';
 
       // Force reflow to ensure the new width is applied
       void invoiceElement.offsetHeight;
@@ -110,6 +118,10 @@ export async function exportPDFWithLogo(
           useCORS: true,
           backgroundColor: '#ffffff',
           precision: 16,
+          // 设置页面边距 - 使用 mm 单位，dompdf 会自动处理
+          // A4 纸张 210mm 宽，内容宽度 = 210 - 左边距 - 右边距
+          // 设置较小的页边距让内容占据更多空间
+          padding: 0,  // 移除额外的 padding
           pageConfig: {
             header: {
               content: '',      // 删除页眉
@@ -139,6 +151,13 @@ export async function exportPDFWithLogo(
         invoiceElement.style.padding = originalStyles.padding;
         invoiceElement.style.fontSize = originalStyles.fontSize;
         invoiceElement.style.margin = originalStyles.margin;
+        invoiceElement.style.transform = originalStyles.transform || '';
+        invoiceElement.style.webkitTransform = originalStyles.webkitTransform || '';
+        invoiceElement.style.mozTransform = originalStyles.mozTransform || '';
+
+        // Force reflow to ensure styles are reapplied
+        // This triggers browser recalculation of layout
+        void invoiceElement.offsetHeight;
       }
     }
   } catch (error) {
@@ -164,13 +183,17 @@ function createInvoiceHtmlContent(container: HTMLElement, invoice: Invoice, tota
 
   // Apply A4 page styles to ensure proper sizing
   container.style.width = '210mm';
+  container.style.maxWidth = '210mm';
   container.style.minHeight = 'unset'; // Allow content to determine actual height
   container.style.height = 'auto'; // Let DOMPDF calculate actual height
   container.style.boxSizing = 'border-box';
-  container.style.padding = '16px';  // Reduced from 24px to save space
+  container.style.padding = '48px';  // 增大边距 (16px * 3 = 48px)
   container.style.backgroundColor = '#ffffff';
-  container.style.margin = '0 auto';
+  container.style.margin = '0';  // 移除 auto margin，让 dompdf 处理居中
   container.style.fontSize = '12px';  // Consistent font size with preview
+  container.style.transform = 'none';
+  container.style.webkitTransform = 'none';
+  container.style.mozTransform = 'none';
 
   // Title and Logo
   const headerDiv = document.createElement('div');
