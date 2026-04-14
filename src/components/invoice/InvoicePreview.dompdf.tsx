@@ -6,7 +6,6 @@ import { exportPDFWithLogo } from "@/lib/dompdf-export"; // Use new dompdf expor
 import { useRef, useLayoutEffect, useState } from "react";
 
 const DEFAULT_THEME_COLOR = '#2563EB';
-const A4_HEIGHT_ADJUSTMENT_FACTOR_MM = 22.67; // 64px * 0.353mm/px ≈ 22.67mm
 const A4_HEIGHT_MM = 297; // Standard A4 height in mm
 const A4_WIDTH_MM = 210; // Standard A4 width in mm
 
@@ -47,6 +46,12 @@ export default function InvoicePreview({
   };
 
   const handleExportPDF = async () => {
+    // Get the actual rendered dimensions of the invoice container before export
+    if (invoiceContainerRef.current) {
+      const rect = invoiceContainerRef.current.getBoundingClientRect();
+      console.log(`Invoice container rendered dimensions: ${rect.width.toFixed(2)}x${rect.height.toFixed(2)}px`);
+    }
+
     // Pass invoice data to dompdf export function
     await exportPDFWithLogo(invoice, totals);
   };
@@ -70,7 +75,7 @@ export default function InvoicePreview({
             style={{
               borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined,
               width: `${A4_WIDTH_MM}mm`,
-              minHeight: `${A4_HEIGHT_MM - Math.round(A4_HEIGHT_ADJUSTMENT_FACTOR_MM)}mm`, // A4 height (297mm) minus adjustment factor
+              minHeight: 'unset', // Let content determine actual height instead of fixed A4 height
               maxWidth: '100%',
               boxSizing: 'border-box',
               margin: '0 auto',
@@ -212,7 +217,7 @@ export default function InvoicePreview({
                 className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t"
                 style={{
                   borderColor: themeColor !== DEFAULT_THEME_COLOR ? themeColor : undefined,
-                  minHeight: '60px',
+                  minHeight: 'unset',
                 }}
               >
                 {invoice.notes && (

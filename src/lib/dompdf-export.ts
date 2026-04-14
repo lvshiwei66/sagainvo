@@ -1,10 +1,11 @@
 import { Invoice, Totals } from "./types";
 import dompdf from "dompdf.js";
 
-// Define A4 dimensions and adjustment factors
+// Define A4 dimensions - use actual A4 size
 const A4_WIDTH_MM = 210;
 const A4_HEIGHT_MM = 297;
-const A4_HEIGHT_ADJUSTMENT_FACTOR_MM = 22.67; // 64px * 0.353mm/px ≈ 22.67mm
+// Pixel to mm conversion factor (96 DPI standard)
+const PX_TO_MM = 0.264583;
 
 /**
  * DOM measurements from InvoicePreview component
@@ -32,127 +33,116 @@ export async function exportPDFWithLogo(
   measurements?: LayoutMeasurements | null
 ): Promise<void> {
   try {
-    // Find the invoice container in the DOM and use dompdf to convert it
+    // Find the invoice container in the DOM
     const invoiceElement = document.querySelector('.invoice-container') as HTMLElement;
 
     if (!invoiceElement) {
       console.error('Invoice container not found in DOM');
       // If not found in DOM, we'll need to temporarily create it for conversion
-      // Create a temporary container in the document body
       const tempDiv = document.createElement('div');
       tempDiv.style.position = 'absolute';
       tempDiv.style.left = '-9999px';
       tempDiv.className = 'invoice-container';
-      // Ensure the temporary element has proper styling for accurate rendering
-      tempDiv.style.width = '210mm';
-      tempDiv.style.minHeight = '297mm';
-      tempDiv.style.boxSizing = 'border-box';
-      tempDiv.style.padding = '16px'; // Reduced to save space
-      tempDiv.style.fontSize = '12px'; // Consistent font size
-      tempDiv.style.margin = '0 auto';
+      document.body.appendChild(tempDiv);
 
       // Create the invoice content as HTML in the temp container
       createInvoiceHtmlContent(tempDiv, invoice, totals);
-      document.body.appendChild(tempDiv);
 
       try {
-        // Generate PDF using dompdf with A4 format and proper settings to avoid page numbers
-        // Use "best fit" scaling to ensure content fits on one page when possible
         const pdfResult = await dompdf(tempDiv, {
+          pagination: true,
           format: 'a4',
-          orientation: 'portrait',
           useCORS: true,
           backgroundColor: '#ffffff',
           precision: 16,
-          // Avoid default page numbers by using proper margins
-          margin: {
-            top: '10mm',
-            bottom: '10mm',
-            left: '10mm',
-            right: '10mm'
+          pageConfig: {
+            header: {
+              content: '',      // 删除页眉
+              height: 0,
+            },
+            footer: {
+              content: '',      // 删除页脚
+              height: 0,
+            },
           },
-          // Attempt to scale content to fit on one page when possible
-          scale: 0.88, // Increased slightly from 0.85 to provide better readability while fitting content
-          // Use a smaller font scaling factor if needed
         });
 
-        // Create download link
         const link = document.createElement('a');
-        // Since dompdf returns a Blob, we can use it directly
         const pdfBlob = pdfResult as Blob;
-
         link.href = URL.createObjectURL(pdfBlob);
         link.download = `${invoice.number || "invoice"}.pdf`;
-
-        // Trigger download
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-
-        // Clean up
         URL.revokeObjectURL(link.href);
       } finally {
-        // Remove the temporary element
         document.body.removeChild(tempDiv);
       }
     } else {
-      // Ensure the element has proper dimensions for PDF generation
+      // Use getBoundingClientRect() to get the exact rendered dimensions
+      const rect = invoiceElement.getBoundingClientRect();
+      const contentHeightPx = rect.height;
+      const contentHeightMm = contentHeightPx * PX_TO_MM;
+
+      console.log(`Invoice container dimensions: ${rect.width.toFixed(2)}x${contentHeightPx.toFixed(2)}px (${(contentHeightMm).toFixed(2)}mm height)`);
+
+      // Store original styles for restoration
       const originalStyles = {
         width: invoiceElement.style.width,
         minHeight: invoiceElement.style.minHeight,
+        height: invoiceElement.style.height,
         boxSizing: invoiceElement.style.boxSizing,
         padding: invoiceElement.style.padding,
         fontSize: invoiceElement.style.fontSize,
         margin: invoiceElement.style.margin,
       };
 
-      // Temporarily set the proper A4 dimensions and compact styling
+      // Set A4 width and let dompdf handle pagination automatically
       invoiceElement.style.width = `${A4_WIDTH_MM}mm`;
-      invoiceElement.style.minHeight = `${A4_HEIGHT_MM - Math.round(A4_HEIGHT_ADJUSTMENT_FACTOR_MM)}mm`; // A4 height minus adjustment factor
       invoiceElement.style.boxSizing = 'border-box';
-      invoiceElement.style.padding = '16px'; // Reduce padding to save space
-      invoiceElement.style.fontSize = '12px'; // Use consistent font size
+      invoiceElement.style.padding = '16px';
+      invoiceElement.style.fontSize = '12px';
       invoiceElement.style.margin = '0 auto';
 
+      // Force reflow to ensure the new width is applied
+      void invoiceElement.offsetHeight;
+
       try {
-        // Generate PDF using dompdf with proper A4 settings and content scaling
         const pdfResult = await dompdf(invoiceElement, {
+          pagination: true,
           format: 'a4',
-          orientation: 'portrait',
           useCORS: true,
           backgroundColor: '#ffffff',
           precision: 16,
-          // Avoid default page numbers by using proper margins
-          margin: {
-            top: '10mm',
-            bottom: '10mm',
-            left: '10mm',
-            right: '10mm'
+          pageConfig: {
+            header: {
+              content: '',      // 删除页眉
+              height: 0,
+            },
+            footer: {
+              content: '',      // 删除页脚
+              height: 0,
+            },
           },
-          // Scale content to better fit the page
-          scale: 0.88, // Increased slightly to provide better readability while fitting content
         });
 
-        // Create download link
         const link = document.createElement('a');
-        // Since dompdf returns a Blob, we can use it directly
         const pdfBlob = pdfResult as Blob;
-
         link.href = URL.createObjectURL(pdfBlob);
         link.download = `${invoice.number || "invoice"}.pdf`;
-
-        // Trigger download
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-
-        // Clean up
         URL.revokeObjectURL(link.href);
       } finally {
         // Restore original styles
         invoiceElement.style.width = originalStyles.width;
         invoiceElement.style.minHeight = originalStyles.minHeight;
+        invoiceElement.style.height = originalStyles.height;
         invoiceElement.style.boxSizing = originalStyles.boxSizing;
+        invoiceElement.style.padding = originalStyles.padding;
+        invoiceElement.style.fontSize = originalStyles.fontSize;
+        invoiceElement.style.margin = originalStyles.margin;
       }
     }
   } catch (error) {
@@ -173,7 +163,8 @@ function createInvoiceHtmlContent(container: HTMLElement, invoice: Invoice, tota
 
   // Apply A4 page styles to ensure proper sizing
   container.style.width = '210mm';
-  container.style.minHeight = `${A4_HEIGHT_MM - Math.round(A4_HEIGHT_ADJUSTMENT_FACTOR_MM)}mm`; // A4 height minus adjustment factor
+  container.style.minHeight = 'unset'; // Allow content to determine actual height
+  container.style.height = 'auto'; // Let DOMPDF calculate actual height
   container.style.boxSizing = 'border-box';
   container.style.padding = '16px';  // Reduced from 24px to save space
   container.style.backgroundColor = '#ffffff';
