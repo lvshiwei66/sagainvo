@@ -84,10 +84,58 @@
     },
     "lineItems": {
       "header": "Line Items",
+      "descriptionHeader": "Description",
+      "quantityHeader": "Quantity",
+      "rateHeader": "Rate",
       "descriptionPlaceholder": "Description",
       "quantityPlaceholder": "Qty",
       "ratePlaceholder": "Rate",
-      "addButton": "+ Add Line Item"
+      "addButton": "+ Add Line Item",
+      "bulkActions": {
+        "title": "Bulk Actions",
+        "label": "Bulk actions menu",
+        "importFile": "Import File",
+        "pasteText": "Paste Text",
+        "randomGenerate": "Random Generate"
+      },
+      "import": {
+        "title": "Import Line Items",
+        "dragAndDrop": "Drag & drop your file here, or click to browse",
+        "supportedFormats": "Supported formats: CSV, XLS, XLSX (max 50 rows)",
+        "invalidFileType": "Invalid file type. Please upload a CSV or Excel file.",
+        "processingError": "Error processing file. Please try again.",
+        "tryAgain": "Try Again",
+        "success": "Successfully parsed {{count}} items.",
+        "andMore": "... and {{count}} more items",
+        "cancel": "Cancel",
+        "confirm": "Import Items"
+      },
+      "paste": {
+        "title": "Paste CSV Data",
+        "instructions": "Paste your CSV data here:",
+        "placeholder": "Paste CSV data here... Example:\ndescription,quantity,rate\nWeb Development,1,500.00\nLogo Design,1,200.00",
+        "example": "Example CSV format:",
+        "formatNote": "Columns can be in any order and can include headers like \"description\", \"quantity\", \"rate\", \"desc\", \"price\", etc.",
+        "emptyError": "Please paste some CSV data",
+        "processingError": "Error processing CSV text. Please try again.",
+        "success": "Successfully parsed {{count}} items.",
+        "andMore": "... and {{count}} more items",
+        "cancel": "Cancel",
+        "confirm": "Import Items",
+        "preview": "Preview",
+        "clearError": "Clear error"
+      },
+      "random": {
+        "title": "Random Generate Items",
+        "countLabel": "Number of items to generate (max 50):",
+        "countDescription": "Generating {{count}} random items from our product catalog.",
+        "generateButton": "Generate Items",
+        "success": "Generated {{count}} items successfully.",
+        "andMore": "... and {{count}} more items",
+        "regenerate": "Regenerate",
+        "cancel": "Cancel",
+        "confirm": "Import Items"
+      }
     },
     "notes": {
       "label": "Notes",
@@ -95,7 +143,7 @@
     },
     "terms": {
       "label": "Terms",
-      "placeholder": "Payment due within 30 days"
+      "placeholder": "Thank you for your business!"
     },
     "preview": {
       "title": "INVOICE",

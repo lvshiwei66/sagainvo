@@ -4,6 +4,7 @@ import { Invoice, LineItem, InvoiceTemplate } from "@/lib/types";
 import { X, RotateCcw } from "lucide-react";
 import { useI18n } from '@/i18n/context';
 import ImageUpload from "@/components/ui/ImageUpload";
+import LineItemsBulkActions from "./LineItemsBulkActions";
 
 interface InvoiceFormProps {
   invoice: Invoice;
@@ -12,6 +13,7 @@ interface InvoiceFormProps {
   onAddLineItem: () => void;
   onRemoveLineItem: (index: number) => void;
   onApplyTemplate?: (template: InvoiceTemplate) => void;
+  onBulkItemsAdd?: (items: LineItem[]) => void;
 }
 
 export default function InvoiceForm({
@@ -21,6 +23,7 @@ export default function InvoiceForm({
   onAddLineItem,
   onRemoveLineItem,
   onApplyTemplate,
+  onBulkItemsAdd,
 }: InvoiceFormProps) {
   const { tInvoice } = useI18n();
 
@@ -265,7 +268,12 @@ export default function InvoiceForm({
 
       {/* Line Items */}
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <h2 className="text-lg font-medium text-slate-900 mb-4">{tInvoice('invoice.lineItems.header') || 'Line Items'}</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-medium text-slate-900">{tInvoice('invoice.lineItems.header') || 'Line Items'}</h2>
+          {onBulkItemsAdd && (
+            <LineItemsBulkActions onImportItems={onBulkItemsAdd} />
+          )}
+        </div>
         <div className="space-y-3">
           {invoice.items.map((item, index) => (
             <div key={index} className="flex gap-3 items-start group">
@@ -283,12 +291,13 @@ export default function InvoiceForm({
                 value={item.quantity}
                 onChange={(e) =>
                   onLineItemChange(index, {
-                    quantity: parseInt(e.target.value) || 0,
+                    quantity: parseFloat(e.target.value) || 0,
                   })
                 }
                 className="w-20 px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 placeholder={tInvoice('invoice.lineItems.quantityPlaceholder') || 'Qty'}
                 min="0"
+                step="any"
               />
               <input
                 type="number"

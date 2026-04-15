@@ -84,10 +84,58 @@
     },
     "lineItems": {
       "header": "明细项目",
+      "descriptionHeader": "描述",
+      "quantityHeader": "数量",
+      "rateHeader": "单价",
       "descriptionPlaceholder": "描述",
       "quantityPlaceholder": "数量",
       "ratePlaceholder": "单价",
-      "addButton": "+ 添加项目"
+      "addButton": "+ 添加项目",
+      "bulkActions": {
+        "title": "批量操作",
+        "label": "批量操作菜单",
+        "importFile": "导入文件",
+        "pasteText": "粘贴文本",
+        "randomGenerate": "随机生成"
+      },
+      "import": {
+        "title": "导入明细项目",
+        "dragAndDrop": "拖拽文件到此处，或点击浏览",
+        "supportedFormats": "支持格式：CSV, XLS, XLSX (最多50行)",
+        "invalidFileType": "文件类型无效。请上传CSV或Excel文件。",
+        "processingError": "处理文件时出错。请重试。",
+        "tryAgain": "重试",
+        "success": "成功解析了 {{count}} 个项目。",
+        "andMore": "… 以及其他 {{count}} 个项目",
+        "cancel": "取消",
+        "confirm": "导入项目"
+      },
+      "paste": {
+        "title": "粘贴CSV数据",
+        "instructions": "在此粘贴CSV数据：",
+        "placeholder": "在此粘贴CSV数据... 示例：\n描述,数量,单价\n网站开发,1,500.00\n图标设计,1,200.00",
+        "example": "CSV格式示例：",
+        "formatNote": "列可以任意顺序排列，并可包含\"描述\"、\"数量\"、\"单价\"、\"desc\"、\"价格\"等标题。",
+        "emptyError": "请粘贴一些CSV数据",
+        "processingError": "处理CSV文本时出错。请重试。",
+        "success": "成功解析了 {{count}} 个项目。",
+        "andMore": "… 以及其他 {{count}} 个项目",
+        "cancel": "取消",
+        "confirm": "导入项目",
+        "preview": "预览",
+        "clearError": "清除错误"
+      },
+      "random": {
+        "title": "随机生成项目",
+        "countLabel": "生成项目数量 (最多50个):",
+        "countDescription": "正在从我们的产品库中生成 {{count}} 个随机项目。",
+        "generateButton": "生成项目",
+        "success": "成功生成 {{count}} 个项目。",
+        "andMore": "… 以及其他 {{count}} 个项目",
+        "regenerate": "重新生成",
+        "cancel": "取消",
+        "confirm": "导入项目"
+      }
     },
     "notes": {
       "label": "备注",
