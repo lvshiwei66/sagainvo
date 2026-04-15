@@ -96,7 +96,9 @@
         "label": "Bulk actions menu",
         "importFile": "Import File",
         "pasteText": "Paste Text",
-        "randomGenerate": "Random Generate"
+        "randomGenerate": "Random Generate",
+        "clearList": "Clear List",
+        "confirmClear": "Are you sure you want to clear all items? This action cannot be undone."
       },
       "import": {
         "title": "Import Line Items",

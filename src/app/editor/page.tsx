@@ -58,6 +58,13 @@ export default function EditorPage() {
     }));
   };
 
+  const clearLineItems = () => {
+    setInvoice((prev) => ({
+      ...prev,
+      items: [],
+    }));
+  };
+
   const removeLineItem = (index: number) => {
     setInvoice((prev) => ({
       ...prev,
@@ -119,6 +126,7 @@ export default function EditorPage() {
               onRemoveLineItem={removeLineItem}
               onApplyTemplate={applyTemplate}
               onBulkItemsAdd={bulkAddLineItems}
+              onClearLineItems={clearLineItems}
             />
           </div>
 

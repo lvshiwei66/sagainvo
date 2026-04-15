@@ -144,17 +144,16 @@ Test Item 2,3,75`);
       const modal = heading.locator('..').locator('..').locator('..');
       const textarea = modal.locator('textarea').first();
 
-      // Paste invalid CSV (missing required columns)
-      await textarea.fill(`name,price
-Invalid Item,100`);
+      // Paste invalid CSV (non-numeric quantity - this will fail validation)
+      await textarea.fill(`description,quantity,rate
+Invalid Item,not-a-number,100`);
 
       // Click preview
       await page.getByRole('button', { name: /Preview/i }).click();
       await page.waitForTimeout(500);
 
-      // Should show error message - look for any error indicator in the modal
-      // The error could be in a div with red styling or text
-      await expect(modal.locator('[class*="red"], .text-red-800, [class*="error"], [class*="Error"]').first()).toBeVisible({ timeout: 3000 });
+      // Should show error message - use first() to avoid strict mode violation
+      await expect(page.getByText(/Invalid quantity/).first()).toBeVisible({ timeout: 3000 });
     });
 
     test('should close modal when clicking cancel', async ({ page }) => {
@@ -299,8 +298,9 @@ File Item 2,2,200`;
       const modal = heading.locator('..').locator('..').locator('..');
       const fileInput = modal.locator('input[type="file"]').first();
 
-      // Upload invalid CSV
-      const invalidContent = `invalid,csv,content`;
+      // Upload CSV with invalid data (non-numeric quantity)
+      const invalidContent = `description,quantity,rate
+Invalid Item,not-a-number,100`;
       await fileInput.setInputFiles({
         name: 'invalid.csv',
         mimeType: 'text/csv',
@@ -310,16 +310,15 @@ File Item 2,2,200`;
       // Wait for processing
       await page.waitForTimeout(1000);
 
-      // Should show error message - look for any error indicator in the modal
-      // The error could be in a div with red styling or text
-      await expect(modal.locator('[class*="red"], .text-red-800, [class*="error"], [class*="Error"]').first()).toBeVisible({ timeout: 3000 });
+      // Should show error message - look for error text
+      await expect(page.getByText(/Invalid quantity/).first()).toBeVisible({ timeout: 3000 });
 
       // Click try again button
       const tryAgainButton = page.getByRole('button', { name: /Try Again/i });
       await tryAgainButton.click();
 
-      // File input should be visible again
-      await expect(fileInput).toBeVisible();
+      // After reset, the drop zone should be visible again (not the file input which is hidden)
+      await expect(page.getByText(/Drag & drop your file/)).toBeVisible();
     });
 
     test('should close modal after successful import', async ({ page }) => {

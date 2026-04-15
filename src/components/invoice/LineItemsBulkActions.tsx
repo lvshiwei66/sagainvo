@@ -1,5 +1,5 @@
 import { useState, MouseEvent } from 'react';
-import { MoreHorizontal, Upload, ClipboardPaste, Shuffle } from 'lucide-react';
+import { MoreHorizontal, Upload, ClipboardPaste, Shuffle, Trash2 } from 'lucide-react';
 import { LineItem } from '@/lib/types';
 import ImportFileModal from './ImportFileModal';
 import PasteBulkModal from './PasteBulkModal';
@@ -8,9 +8,10 @@ import { useI18n } from '@/i18n/context';
 
 interface LineItemsBulkActionsProps {
   onImportItems: (items: LineItem[]) => void;
+  onClearItems?: () => void;
 }
 
-export default function LineItemsBulkActions({ onImportItems }: LineItemsBulkActionsProps) {
+export default function LineItemsBulkActions({ onImportItems, onClearItems }: LineItemsBulkActionsProps) {
   const { tInvoice } = useI18n();
   const [showDropdown, setShowDropdown] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
@@ -35,6 +36,12 @@ export default function LineItemsBulkActions({ onImportItems }: LineItemsBulkAct
   const handleRandomGenerate = (items: LineItem[]) => {
     onImportItems(items);
     setShowRandomModal(false);
+  };
+
+  const handleClearItems = () => {
+    if (onClearItems && window.confirm(tInvoice('invoice.lineItems.bulkActions.confirmClear') || 'Are you sure you want to clear all items? This action cannot be undone.')) {
+      onClearItems();
+    }
   };
 
   return (
@@ -89,6 +96,22 @@ export default function LineItemsBulkActions({ onImportItems }: LineItemsBulkAct
                 <Shuffle className="h-4 w-4 mr-2" />
                 {tInvoice('invoice.lineItems.bulkActions.randomGenerate') || 'Random Generate'}
               </button>
+
+              {onClearItems && (
+                <>
+                  <hr className="my-1" />
+                  <button
+                    onClick={() => {
+                      handleClearItems();
+                      setShowDropdown(false);
+                    }}
+                    className="flex items-center w-full px-4 py-2 text-sm text-left text-red-600 hover:bg-red-50"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    {tInvoice('invoice.lineItems.bulkActions.clearList') || 'Clear List'}
+                  </button>
+                </>
+              )}
             </div>
           </div>
         )}

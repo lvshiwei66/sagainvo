@@ -96,7 +96,9 @@
         "label": "批量操作菜单",
         "importFile": "导入文件",
         "pasteText": "粘贴文本",
-        "randomGenerate": "随机生成"
+        "randomGenerate": "随机生成",
+        "clearList": "清空列表",
+        "confirmClear": "确定要清空所有项目吗？此操作无法撤销。"
       },
       "import": {
         "title": "导入明细项目",

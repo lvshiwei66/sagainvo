@@ -14,6 +14,7 @@ interface InvoiceFormProps {
   onRemoveLineItem: (index: number) => void;
   onApplyTemplate?: (template: InvoiceTemplate) => void;
   onBulkItemsAdd?: (items: LineItem[]) => void;
+  onClearLineItems?: () => void;
 }
 
 export default function InvoiceForm({
@@ -24,6 +25,7 @@ export default function InvoiceForm({
   onRemoveLineItem,
   onApplyTemplate,
   onBulkItemsAdd,
+  onClearLineItems,
 }: InvoiceFormProps) {
   const { tInvoice } = useI18n();
 
@@ -271,7 +273,7 @@ export default function InvoiceForm({
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-medium text-slate-900">{tInvoice('invoice.lineItems.header') || 'Line Items'}</h2>
           {onBulkItemsAdd && (
-            <LineItemsBulkActions onImportItems={onBulkItemsAdd} />
+            <LineItemsBulkActions onImportItems={onBulkItemsAdd} onClearItems={onClearLineItems} />
           )}
         </div>
         <div className="space-y-3">
