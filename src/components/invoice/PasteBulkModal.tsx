@@ -55,7 +55,7 @@ export default function PasteBulkModal({ isOpen, onClose, onImport }: PasteBulkM
         setError(parseResult.error || 'Failed to parse CSV text');
       }
     } catch (err) {
-      console.error('Error processing CSV text:', err);
+      console.error('Error processing CSV text:', err); // TODO: Replace with proper error logging in production
       setError(tInvoice('invoice.lineItems.paste.processingError') || 'Error processing CSV text. Please try again.');
     } finally {
       setIsProcessing(false);
@@ -151,8 +151,8 @@ SEO Consultation,1,300.00`;
               <div className="space-y-4">
                 <div className="bg-green-50 border border-green-200 rounded p-4">
                   <p className="text-green-800">
-                    {tInvoice('invoice.lineItems.paste.success', { count: result.rowCount }) ||
-                      `Successfully parsed ${result.rowCount} items.`}
+                    {tInvoice('invoice.lineItems.paste.success', { count: result.rowCount ?? 0 }) ||
+                      `Successfully parsed ${result.rowCount ?? 0} items.`}
                   </p>
                 </div>
 

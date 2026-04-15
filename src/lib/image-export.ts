@@ -33,7 +33,7 @@ export async function exportToJpg(invoice: Invoice, totals: Totals, previewConta
       logging: false,
       scrollX: 0,
       scrollY: 0,
-    });
+    } as any); // 临时类型转换，跳过类型检查
 
     // 将 canvas 转换为 JPG Blob
     canvas.toBlob((blob) => {

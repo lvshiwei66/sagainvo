@@ -82,7 +82,7 @@ export default function ImportFileModal({ isOpen, onClose, onImport }: ImportFil
     return ext === 'csv' || ext === 'xlsx' || ext === 'xls';
   };
 
-  const processFile = async () => {
+  const processFile = useCallback(async () => {
     if (!file) return;
 
     setIsProcessing(true);
@@ -115,12 +115,12 @@ export default function ImportFileModal({ isOpen, onClose, onImport }: ImportFil
         setError(parseResult.error || 'Failed to parse file');
       }
     } catch (err) {
-      console.error('Error processing file:', err);
+      console.error('Error processing file:', err); // TODO: Replace with proper error logging in production
       setError(tInvoice('invoice.lineItems.import.processingError') || 'Error processing file. Please try again.');
     } finally {
       setIsProcessing(false);
     }
-  };
+  }, [file, tInvoice]);
 
   const handleImport = () => {
     if (result?.success && result.items) {
@@ -134,7 +134,7 @@ export default function ImportFileModal({ isOpen, onClose, onImport }: ImportFil
     if (file && !result && !error) {
       processFile();
     }
-  }, [file, result, error]);
+  }, [file, result, error, processFile]);
 
   // Reset state when modal closes
   useEffect(() => {
@@ -232,8 +232,8 @@ export default function ImportFileModal({ isOpen, onClose, onImport }: ImportFil
                 <div className="space-y-4">
                   <div className="bg-green-50 border border-green-200 rounded p-4">
                     <p className="text-green-800">
-                      {tInvoice('invoice.lineItems.import.success', { count: result.rowCount }) ||
-                        `Successfully parsed ${result.rowCount} items.`}
+                      {tInvoice('invoice.lineItems.import.success', { count: result.rowCount ?? 0 }) ||
+                        `Successfully parsed ${result.rowCount ?? 0} items.`}
                     </p>
                   </div>
 

@@ -146,7 +146,8 @@ export function parseExcel(buffer: ArrayBuffer, options: ParseOptions = {}): Par
     let descIndex = -1, qtyIndex = -1, rateIndex = -1;
 
     for (let i = 0; i < Math.min(jsonData.length, maxRows + 1); i++) { // +1 for header
-      const row: any[] = Array.isArray(jsonData[i]) ? jsonData[i] : [];
+      const rowData = jsonData[i];
+      const row = Array.isArray(rowData) ? rowData : [];
 
       if (row.length === 0) continue;
 
