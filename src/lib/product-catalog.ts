@@ -1,60 +1,427 @@
 export interface Product {
-  name: string;
+  name: {
+    en: string;
+    zh: string;
+  };
   defaultQuantity: number;
   defaultRate: number;
 }
 
 export const productCatalog: Product[] = [
-  { name: "Web Development Service", defaultQuantity: 1, defaultRate: 500.00 },
-  { name: "Website Design", defaultQuantity: 1, defaultRate: 800.00 },
-  { name: "Logo Design", defaultQuantity: 1, defaultRate: 200.00 },
-  { name: "SEO Consultation", defaultQuantity: 1, defaultRate: 300.00 },
-  { name: "Content Writing", defaultQuantity: 10, defaultRate: 50.00 },
-  { name: "Social Media Management", defaultQuantity: 1, defaultRate: 1000.00 },
-  { name: "Mobile App Development", defaultQuantity: 1, defaultRate: 2000.00 },
-  { name: "UI/UX Design", defaultQuantity: 1, defaultRate: 600.00 },
-  { name: "Cloud Hosting Setup", defaultQuantity: 1, defaultRate: 150.00 },
-  { name: "Database Administration", defaultQuantity: 1, defaultRate: 1200.00 },
-  { name: "System Integration", defaultQuantity: 1, defaultRate: 1500.00 },
-  { name: "API Development", defaultQuantity: 1, defaultRate: 750.00 },
-  { name: "Quality Assurance Testing", defaultQuantity: 1, defaultRate: 400.00 },
-  { name: "DevOps Consulting", defaultQuantity: 1, defaultRate: 900.00 },
-  { name: "E-commerce Development", defaultQuantity: 1, defaultRate: 1200.00 },
-  { name: "WordPress Maintenance", defaultQuantity: 1, defaultRate: 250.00 },
-  { name: "Security Audit", defaultQuantity: 1, defaultRate: 800.00 },
-  { name: "Data Analytics", defaultQuantity: 1, defaultRate: 1000.00 },
-  { name: "Technical Support", defaultQuantity: 1, defaultRate: 300.00 },
-  { name: "Training Workshop", defaultQuantity: 1, defaultRate: 450.00 },
-  { name: "Consulting Services", defaultQuantity: 1, defaultRate: 600.00 },
-  { name: "Graphic Design Package", defaultQuantity: 5, defaultRate: 100.00 },
-  { name: "Copywriting Services", defaultQuantity: 20, defaultRate: 30.00 },
-  { name: "Photography Package", defaultQuantity: 1, defaultRate: 400.00 },
-  { name: "Video Production", defaultQuantity: 1, defaultRate: 1500.00 },
-  { name: "Podcast Production", defaultQuantity: 1, defaultRate: 800.00 },
-  { name: "Email Marketing Setup", defaultQuantity: 1, defaultRate: 350.00 },
-  { name: "Marketing Strategy", defaultQuantity: 1, defaultRate: 1200.00 },
-  { name: "Brand Identity", defaultQuantity: 1, defaultRate: 1000.00 },
-  { name: "Business Analysis", defaultQuantity: 1, defaultRate: 700.00 },
-  { name: "Project Management", defaultQuantity: 1, defaultRate: 900.00 },
-  { name: "Virtual Assistant", defaultQuantity: 1, defaultRate: 300.00 },
-  { name: "Accounting Services", defaultQuantity: 1, defaultRate: 200.00 },
-  { name: "Legal Consultation", defaultQuantity: 1, defaultRate: 500.00 },
-  { name: "Insurance Premium", defaultQuantity: 1, defaultRate: 250.00 },
-  { name: "Office Supplies", defaultQuantity: 5, defaultRate: 20.00 },
-  { name: "Software License", defaultQuantity: 10, defaultRate: 150.00 },
-  { name: "Hardware Equipment", defaultQuantity: 1, defaultRate: 1200.00 },
-  { name: "Training Materials", defaultQuantity: 1, defaultRate: 150.00 },
-  { name: "Consultation Fee", defaultQuantity: 1, defaultRate: 300.00 },
-  { name: "Maintenance Contract", defaultQuantity: 1, defaultRate: 600.00 },
-  { name: "Support Package", defaultQuantity: 1, defaultRate: 400.00 },
-  { name: "Data Migration", defaultQuantity: 1, defaultRate: 1000.00 },
-  { name: "Custom Software", defaultQuantity: 1, defaultRate: 3000.00 },
-  { name: "Technical Writing", defaultQuantity: 15, defaultRate: 40.00 },
-  { name: "Documentation", defaultQuantity: 1, defaultRate: 300.00 },
-  { name: "Translation Services", defaultQuantity: 100, defaultRate: 0.15 },
-  { name: "Transcription", defaultQuantity: 50, defaultRate: 0.25 },
-  { name: "Data Entry", defaultQuantity: 200, defaultRate: 0.10 },
-  { name: "Market Research", defaultQuantity: 1, defaultRate: 800.00 },
-  { name: "Competitor Analysis", defaultQuantity: 1, defaultRate: 600.00 },
-  { name: "User Experience Study", defaultQuantity: 1, defaultRate: 1000.00 },
+  {
+    name: {
+      en: "Web Development Service",
+      zh: "网站开发服务"
+    },
+    defaultQuantity: 1,
+    defaultRate: 500.00
+  },
+  {
+    name: {
+      en: "Website Design",
+      zh: "网站设计"
+    },
+    defaultQuantity: 1,
+    defaultRate: 800.00
+  },
+  {
+    name: {
+      en: "Logo Design",
+      zh: "图标设计"
+    },
+    defaultQuantity: 1,
+    defaultRate: 200.00
+  },
+  {
+    name: {
+      en: "SEO Consultation",
+      zh: "SEO咨询"
+    },
+    defaultQuantity: 1,
+    defaultRate: 300.00
+  },
+  {
+    name: {
+      en: "Content Writing",
+      zh: "内容撰写"
+    },
+    defaultQuantity: 10,
+    defaultRate: 50.00
+  },
+  {
+    name: {
+      en: "Social Media Management",
+      zh: "社交媒体管理"
+    },
+    defaultQuantity: 1,
+    defaultRate: 1000.00
+  },
+  {
+    name: {
+      en: "Mobile App Development",
+      zh: "移动应用开发"
+    },
+    defaultQuantity: 1,
+    defaultRate: 2000.00
+  },
+  {
+    name: {
+      en: "UI/UX Design",
+      zh: "UI/UX设计"
+    },
+    defaultQuantity: 1,
+    defaultRate: 600.00
+  },
+  {
+    name: {
+      en: "Cloud Hosting Setup",
+      zh: "云托管设置"
+    },
+    defaultQuantity: 1,
+    defaultRate: 150.00
+  },
+  {
+    name: {
+      en: "Database Administration",
+      zh: "数据库管理"
+    },
+    defaultQuantity: 1,
+    defaultRate: 1200.00
+  },
+  {
+    name: {
+      en: "System Integration",
+      zh: "系统集成"
+    },
+    defaultQuantity: 1,
+    defaultRate: 1500.00
+  },
+  {
+    name: {
+      en: "API Development",
+      zh: "API开发"
+    },
+    defaultQuantity: 1,
+    defaultRate: 750.00
+  },
+  {
+    name: {
+      en: "Quality Assurance Testing",
+      zh: "质量保证测试"
+    },
+    defaultQuantity: 1,
+    defaultRate: 400.00
+  },
+  {
+    name: {
+      en: "DevOps Consulting",
+      zh: "DevOps咨询"
+    },
+    defaultQuantity: 1,
+    defaultRate: 900.00
+  },
+  {
+    name: {
+      en: "E-commerce Development",
+      zh: "电子商务开发"
+    },
+    defaultQuantity: 1,
+    defaultRate: 1200.00
+  },
+  {
+    name: {
+      en: "WordPress Maintenance",
+      zh: "WordPress维护"
+    },
+    defaultQuantity: 1,
+    defaultRate: 250.00
+  },
+  {
+    name: {
+      en: "Security Audit",
+      zh: "安全审计"
+    },
+    defaultQuantity: 1,
+    defaultRate: 800.00
+  },
+  {
+    name: {
+      en: "Data Analytics",
+      zh: "数据分析"
+    },
+    defaultQuantity: 1,
+    defaultRate: 1000.00
+  },
+  {
+    name: {
+      en: "Technical Support",
+      zh: "技术支持"
+    },
+    defaultQuantity: 1,
+    defaultRate: 300.00
+  },
+  {
+    name: {
+      en: "Training Workshop",
+      zh: "培训研讨会"
+    },
+    defaultQuantity: 1,
+    defaultRate: 450.00
+  },
+  {
+    name: {
+      en: "Consulting Services",
+      zh: "咨询服务"
+    },
+    defaultQuantity: 1,
+    defaultRate: 600.00
+  },
+  {
+    name: {
+      en: "Graphic Design Package",
+      zh: "平面设计套餐"
+    },
+    defaultQuantity: 5,
+    defaultRate: 100.00
+  },
+  {
+    name: {
+      en: "Copywriting Services",
+      zh: "文案写作服务"
+    },
+    defaultQuantity: 20,
+    defaultRate: 30.00
+  },
+  {
+    name: {
+      en: "Photography Package",
+      zh: "摄影套餐"
+    },
+    defaultQuantity: 1,
+    defaultRate: 400.00
+  },
+  {
+    name: {
+      en: "Video Production",
+      zh: "视频制作"
+    },
+    defaultQuantity: 1,
+    defaultRate: 1500.00
+  },
+  {
+    name: {
+      en: "Podcast Production",
+      zh: "播客制作"
+    },
+    defaultQuantity: 1,
+    defaultRate: 800.00
+  },
+  {
+    name: {
+      en: "Email Marketing Setup",
+      zh: "电子邮件营销设置"
+    },
+    defaultQuantity: 1,
+    defaultRate: 350.00
+  },
+  {
+    name: {
+      en: "Marketing Strategy",
+      zh: "营销策略"
+    },
+    defaultQuantity: 1,
+    defaultRate: 1200.00
+  },
+  {
+    name: {
+      en: "Brand Identity",
+      zh: "品牌标识"
+    },
+    defaultQuantity: 1,
+    defaultRate: 1000.00
+  },
+  {
+    name: {
+      en: "Business Analysis",
+      zh: "商业分析"
+    },
+    defaultQuantity: 1,
+    defaultRate: 700.00
+  },
+  {
+    name: {
+      en: "Project Management",
+      zh: "项目管理"
+    },
+    defaultQuantity: 1,
+    defaultRate: 900.00
+  },
+  {
+    name: {
+      en: "Virtual Assistant",
+      zh: "虚拟助手"
+    },
+    defaultQuantity: 1,
+    defaultRate: 300.00
+  },
+  {
+    name: {
+      en: "Accounting Services",
+      zh: "会计服务"
+    },
+    defaultQuantity: 1,
+    defaultRate: 200.00
+  },
+  {
+    name: {
+      en: "Legal Consultation",
+      zh: "法律咨询"
+    },
+    defaultQuantity: 1,
+    defaultRate: 500.00
+  },
+  {
+    name: {
+      en: "Insurance Premium",
+      zh: "保险费"
+    },
+    defaultQuantity: 1,
+    defaultRate: 250.00
+  },
+  {
+    name: {
+      en: "Office Supplies",
+      zh: "办公用品"
+    },
+    defaultQuantity: 5,
+    defaultRate: 20.00
+  },
+  {
+    name: {
+      en: "Software License",
+      zh: "软件许可"
+    },
+    defaultQuantity: 10,
+    defaultRate: 150.00
+  },
+  {
+    name: {
+      en: "Hardware Equipment",
+      zh: "硬件设备"
+    },
+    defaultQuantity: 1,
+    defaultRate: 1200.00
+  },
+  {
+    name: {
+      en: "Training Materials",
+      zh: "培训材料"
+    },
+    defaultQuantity: 1,
+    defaultRate: 150.00
+  },
+  {
+    name: {
+      en: "Consultation Fee",
+      zh: "咨询费"
+    },
+    defaultQuantity: 1,
+    defaultRate: 300.00
+  },
+  {
+    name: {
+      en: "Maintenance Contract",
+      zh: "维护合同"
+    },
+    defaultQuantity: 1,
+    defaultRate: 600.00
+  },
+  {
+    name: {
+      en: "Support Package",
+      zh: "支持套餐"
+    },
+    defaultQuantity: 1,
+    defaultRate: 400.00
+  },
+  {
+    name: {
+      en: "Data Migration",
+      zh: "数据迁移"
+    },
+    defaultQuantity: 1,
+    defaultRate: 1000.00
+  },
+  {
+    name: {
+      en: "Custom Software",
+      zh: "定制软件"
+    },
+    defaultQuantity: 1,
+    defaultRate: 3000.00
+  },
+  {
+    name: {
+      en: "Technical Writing",
+      zh: "技术写作"
+    },
+    defaultQuantity: 15,
+    defaultRate: 40.00
+  },
+  {
+    name: {
+      en: "Documentation",
+      zh: "文档编制"
+    },
+    defaultQuantity: 1,
+    defaultRate: 300.00
+  },
+  {
+    name: {
+      en: "Translation Services",
+      zh: "翻译服务"
+    },
+    defaultQuantity: 100,
+    defaultRate: 0.15
+  },
+  {
+    name: {
+      en: "Transcription",
+      zh: "转录服务"
+    },
+    defaultQuantity: 50,
+    defaultRate: 0.25
+  },
+  {
+    name: {
+      en: "Data Entry",
+      zh: "数据录入"
+    },
+    defaultQuantity: 200,
+    defaultRate: 0.10
+  },
+  {
+    name: {
+      en: "Market Research",
+      zh: "市场调研"
+    },
+    defaultQuantity: 1,
+    defaultRate: 800.00
+  },
+  {
+    name: {
+      en: "Competitor Analysis",
+      zh: "竞争对手分析"
+    },
+    defaultQuantity: 1,
+    defaultRate: 600.00
+  },
+  {
+    name: {
+      en: "User Experience Study",
+      zh: "用户体验研究"
+    },
+    defaultQuantity: 1,
+    defaultRate: 1000.00
+  },
 ];

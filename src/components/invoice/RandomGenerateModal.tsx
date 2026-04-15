@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { X } from 'lucide-react';
 import { LineItem } from '@/lib/types';
-import { productCatalog } from '@/lib/product-catalog';
+import { productCatalog, Product } from '@/lib/product-catalog';
 import { useI18n } from '@/i18n/context';
 
 interface RandomGenerateModalProps {
@@ -11,7 +11,7 @@ interface RandomGenerateModalProps {
 }
 
 export default function RandomGenerateModal({ isOpen, onClose, onImport }: RandomGenerateModalProps) {
-  const { tInvoice } = useI18n();
+  const { tInvoice, locale } = useI18n();
   const [count, setCount] = useState(10);
   const [previewItems, setPreviewItems] = useState<any[]>([]);
   const [generatedItems, setGeneratedItems] = useState<LineItem[]>([]);
@@ -31,8 +31,8 @@ export default function RandomGenerateModal({ isOpen, onClose, onImport }: Rando
     const shuffledProducts = [...productCatalog].sort(() => 0.5 - Math.random());
     const selectedProducts = shuffledProducts.slice(0, count);
 
-    const items: LineItem[] = selectedProducts.map(product => ({
-      description: product.name,
+    const items: LineItem[] = selectedProducts.map((product: Product) => ({
+      description: product.name[locale as keyof typeof product.name] || product.name.en,
       quantity: product.defaultQuantity,
       rate: product.defaultRate
     }));
